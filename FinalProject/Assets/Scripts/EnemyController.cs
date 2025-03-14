@@ -1,18 +1,22 @@
 using System.Collections;
 using UnityEngine;
+
 public class EnemyController : MonoBehaviour
 {
     public float moveTickDuration = 0.5f;
     public float moveDuration = 0.1f;
     private Transform player;
     private bool isMoving = false;
+
     void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
             player = playerObj.transform;
+        transform.position = new Vector3(SnapToGrid(transform.position.x), SnapToGrid(transform.position.y), transform.position.z);
         StartCoroutine(MoveTick());
     }
+
     IEnumerator MoveTick()
     {
         while (true)
@@ -22,15 +26,15 @@ public class EnemyController : MonoBehaviour
             {
                 Vector2 direction = GetMoveDirection();
                 if (direction != Vector2.zero)
-                {
                     StartCoroutine(Move(direction));
-                }
             }
         }
     }
+
     Vector2 GetMoveDirection()
     {
-        if (player == null) return Vector2.zero;
+        if (player == null)
+            return Vector2.zero;
         Vector2 pos = transform.position;
         Vector2 playerPos = player.position;
         Vector2 diff = playerPos - pos;
@@ -40,6 +44,7 @@ public class EnemyController : MonoBehaviour
             return new Vector2(0, Mathf.Sign(diff.y));
         return Vector2.zero;
     }
+
     IEnumerator Move(Vector2 direction)
     {
         isMoving = true;
@@ -52,7 +57,12 @@ public class EnemyController : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-        transform.position = endPos;
+        transform.position = new Vector3(SnapToGrid(endPos.x), SnapToGrid(endPos.y), endPos.z);
         isMoving = false;
+    }
+
+    float SnapToGrid(float value)
+    {
+        return Mathf.Round(value - 0.5f) + 0.5f;
     }
 }

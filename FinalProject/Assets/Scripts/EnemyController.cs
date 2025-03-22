@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour
     public float moveTickDuration = 0.5f;
     public float moveDuration = 0.1f;
     private Transform player;
-    private bool isMoving = false;
+    public bool isMoving = false;
 
     void Start()
     {
@@ -63,6 +63,7 @@ public class EnemyController : MonoBehaviour
 
     float SnapToGrid(float value)
     {
-        return Mathf.Round(value - 0.5f) + 0.5f;
+        return value;
+        //return Mathf.Round(value - 0.5f) + 0.5f;
     }
 }

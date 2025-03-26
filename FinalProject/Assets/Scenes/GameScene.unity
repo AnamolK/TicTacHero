@@ -179,6 +179,7 @@ GameObject:
   m_Component:
   - component: {fileID: 276943009}
   - component: {fileID: 276943011}
+  - component: {fileID: 276943012}
   m_Layer: 15
   m_Name: EnemyMovePoint
   m_TagString: Untagged
@@ -260,6 +261,21 @@ PolygonCollider2D:
       - {x: 0.2, y: 1.8}
       - {x: 0.2, y: 0.8}
   m_UseDelaunayMesh: 0
+--- !u!114 &276943012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276943008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfb3bbfff0bf95a4ea79b4c48588bd8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveTickDuration: 0.5
+  moveDuration: 0.1
+  isMoving: 0
 --- !u!1 &289709077
 GameObject:
   m_ObjectHideFlags: 0
@@ -4994,8 +5010,8 @@ Transform:
   m_GameObject: {fileID: 797102323}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1901113120}
   m_RootOrder: -1
@@ -5070,7 +5086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &921085898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5574,7 +5590,6 @@ GameObject:
   - component: {fileID: 1428407416}
   - component: {fileID: 1428407417}
   - component: {fileID: 1428407418}
-  - component: {fileID: 1428407419}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5662,33 +5677,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.95, y: 0.95}
   m_EdgeRadius: 0
---- !u!50 &1428407419
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1428407415}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!1 &1822986235 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3333210898188141371, guid: 06cb79a23bd234d26ac9fe9944d607fd, type: 3}
@@ -5793,13 +5781,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785b1c9bb21b7cd489ffe56a7412b362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 5
+  movePoint: {fileID: 276943009}
+  playerPosition: {fileID: 1428407416}
   BlockedArea:
     serializedVersion: 2
     m_Bits: 9
-  moveTickDuration: 1
-  moveDuration: 0.1
-  isMoving: 0
-  canMove: 1
 --- !u!60 &1901113123
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5940,7 +5927,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 525806421629632916, guid: 06cb79a23bd234d26ac9fe9944d607fd, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1757525550435808104, guid: 06cb79a23bd234d26ac9fe9944d607fd, type: 3}
       propertyPath: m_Pivot.x
@@ -6044,7 +6031,7 @@ PrefabInstance:
       objectReference: {fileID: 3333210898188141371, guid: 06cb79a23bd234d26ac9fe9944d607fd, type: 3}
     - target: {fileID: 8869858950603956771, guid: 06cb79a23bd234d26ac9fe9944d607fd, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

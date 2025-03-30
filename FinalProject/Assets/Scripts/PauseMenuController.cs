@@ -4,10 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuController : MonoBehaviour
 {
-    [Header("Pause Menu Prefab")]
-    public GameObject pauseMenuPrefab;  // Drag PAUSEMENU prefab here
-
-    private GameObject pauseMenuInstance;
+    public GameObject pauseMenuUI; // Assign PAUSEMENU object here
 
     private Button resumeButton;
     private Button restartButton;
@@ -17,25 +14,17 @@ public class PauseMenuController : MonoBehaviour
 
     void Start()
     {
-        // Instantiate PAUSEMENU
-        pauseMenuInstance = Instantiate(pauseMenuPrefab);
-        pauseMenuInstance.name = "PAUSEMENU"; // Optional, avoid (Clone) suffix
-        pauseMenuInstance.SetActive(false);
+        // Find buttons inside the existing PAUSEMENU
+        resumeButton = pauseMenuUI.transform.Find("Button_Resume").GetComponent<Button>();
+        restartButton = pauseMenuUI.transform.Find("Button_Restart").GetComponent<Button>();
+        quitButton = pauseMenuUI.transform.Find("Button_Quit").GetComponent<Button>();
 
-        // Find buttons directly inside the prefab
-        resumeButton = pauseMenuInstance.transform.Find("Button_Resume")?.GetComponent<Button>();
-        restartButton = pauseMenuInstance.transform.Find("Button_Restart")?.GetComponent<Button>();
-        quitButton = pauseMenuInstance.transform.Find("Button_Quit")?.GetComponent<Button>();
+        // Hook up buttons
+        resumeButton.onClick.AddListener(ResumeGame);
+        restartButton.onClick.AddListener(RestartGame);
+        quitButton.onClick.AddListener(QuitGame);
 
-        // Safety check
-        if (resumeButton == null) Debug.LogError("Button_Resume not found in prefab!");
-        if (restartButton == null) Debug.LogError("Button_Restart not found in prefab!");
-        if (quitButton == null) Debug.LogError("Button_Quit not found in prefab!");
-
-        // Hook up actions
-        if (resumeButton != null) resumeButton.onClick.AddListener(ResumeGame);
-        if (restartButton != null) restartButton.onClick.AddListener(RestartGame);
-        if (quitButton != null) quitButton.onClick.AddListener(QuitGame);
+        pauseMenuUI.SetActive(false); // Make sure it starts hidden
     }
 
     void Update()
@@ -51,14 +40,14 @@ public class PauseMenuController : MonoBehaviour
 
     public void PauseGame()
     {
-        pauseMenuInstance.SetActive(true);
+        pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
     }
 
     public void ResumeGame()
     {
-        pauseMenuInstance.SetActive(false);
+        pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
     }

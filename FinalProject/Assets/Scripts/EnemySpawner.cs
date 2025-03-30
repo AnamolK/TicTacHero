@@ -57,9 +57,9 @@ public class EnemySpawner : MonoBehaviour
         EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
         if (enemyHealth != null)
             enemyHealth.maxHealth = Mathf.CeilToInt(1 + distance / 10f);
-        EnemyController enemyController = enemy.GetComponent<EnemyController>();
-        if (enemyController != null)
-            enemyController.moveTickDuration = Mathf.Max(0.3f, 0.5f - distance / 100f);
+        EnemyPathfinder EnemyPathfinder = enemy.GetComponent<EnemyPathfinder>();
+        if (EnemyPathfinder != null)
+            EnemyPathfinder.moveTickDuration = Mathf.Max(0.3f, 0.5f - distance / 100f);
     }
 
     float SnapToGrid(float value)

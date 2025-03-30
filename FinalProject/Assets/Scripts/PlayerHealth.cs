@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -6,8 +7,8 @@ public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 3;
     private int currentHealth;
-    public Text healthText;
-    public Text gameOverText;
+    public TMP_Text healthText;
+    public TMP_Text gameOverText;
 
     void Start()
     {

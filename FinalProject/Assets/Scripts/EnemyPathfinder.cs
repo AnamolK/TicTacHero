@@ -1,10 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyPathfinder : MonoBehaviour
 {
-    public float moveTickDuration = 0.5f;
-    public float moveDuration = 0.1f;
+    public float moveTickDuration = 1f;
+    public float moveDuration = 0.05f;
     private Transform player;
     public bool isMoving = false;
 

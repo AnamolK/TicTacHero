@@ -4,36 +4,38 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuController : MonoBehaviour
 {
-    public GameObject pauseMenuPrefab;  // Assign the Pause Menu Prefab in the Inspector
+    [Header("Pause Menu Prefab")]
+    public GameObject pauseMenuPrefab;  // Drag PAUSEMENU prefab here
+
     private GameObject pauseMenuInstance;
-    public Button resumeButton;
-    public Button restartButton;
-    public Button quitButton;
+
+    private Button resumeButton;
+    private Button restartButton;
+    private Button quitButton;
 
     private bool isPaused = false;
 
     void Start()
     {
-        // Check if there's already a pause menu instance in the scene
-        if (GameObject.FindWithTag("PauseMenu") == null)
-        {
-            pauseMenuInstance = Instantiate(pauseMenuPrefab);
-            pauseMenuInstance.SetActive(false);
-        }
-        else
-        {
-            pauseMenuInstance = GameObject.FindWithTag("PauseMenu");
-        }
+        // Instantiate PAUSEMENU
+        pauseMenuInstance = Instantiate(pauseMenuPrefab);
+        pauseMenuInstance.name = "PAUSEMENU"; // Optional, avoid (Clone) suffix
+        pauseMenuInstance.SetActive(false);
 
-        // Assign buttons dynamically if not assigned
-        resumeButton = pauseMenuInstance.transform.Find("button_Resume").GetComponent<Button>();
-        restartButton = pauseMenuInstance.transform.Find("button_Restart").GetComponent<Button>();
-        quitButton = pauseMenuInstance.transform.Find("button_Quit").GetComponent<Button>();
+        // Find buttons directly inside the prefab
+        resumeButton = pauseMenuInstance.transform.Find("Button_Resume")?.GetComponent<Button>();
+        restartButton = pauseMenuInstance.transform.Find("Button_Restart")?.GetComponent<Button>();
+        quitButton = pauseMenuInstance.transform.Find("Button_Quit")?.GetComponent<Button>();
 
-        // Add button listeners
-        resumeButton.onClick.AddListener(ResumeGame);
-        restartButton.onClick.AddListener(RestartGame);
-        quitButton.onClick.AddListener(QuitGame);
+        // Safety check
+        if (resumeButton == null) Debug.LogError("Button_Resume not found in prefab!");
+        if (restartButton == null) Debug.LogError("Button_Restart not found in prefab!");
+        if (quitButton == null) Debug.LogError("Button_Quit not found in prefab!");
+
+        // Hook up actions
+        if (resumeButton != null) resumeButton.onClick.AddListener(ResumeGame);
+        if (restartButton != null) restartButton.onClick.AddListener(RestartGame);
+        if (quitButton != null) quitButton.onClick.AddListener(QuitGame);
     }
 
     void Update()
@@ -50,26 +52,28 @@ public class PauseMenuController : MonoBehaviour
     public void PauseGame()
     {
         pauseMenuInstance.SetActive(true);
-        Time.timeScale = 0f; // Pause game
+        Time.timeScale = 0f;
         isPaused = true;
     }
 
     public void ResumeGame()
     {
         pauseMenuInstance.SetActive(false);
-        Time.timeScale = 1f; // Resume game
+        Time.timeScale = 1f;
         isPaused = false;
     }
 
     public void RestartGame()
     {
-        Time.timeScale = 1f; // Ensure game runs before restarting
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void QuitGame()
     {
-        Debug.Log("Quitting game...");
         Application.Quit();
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
 }

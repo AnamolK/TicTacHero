@@ -5,7 +5,7 @@ public class LoseSceneUI : MonoBehaviour
 {
     public void RestartGame()
     {
-        SceneManager.LoadScene("SampleScene"); // or Sample Scene we can change
+        SceneManager.LoadScene("GameScene"); // or Sample Scene we can change
     }
 
     public void GoToMainMenu()

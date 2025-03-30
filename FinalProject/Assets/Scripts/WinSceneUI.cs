@@ -5,7 +5,7 @@ public class WinSceneUI : MonoBehaviour
 {
     public void RestartGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("GameScene");
     }
 
     public void GoToMainMenu()

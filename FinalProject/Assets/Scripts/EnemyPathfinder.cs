@@ -9,7 +9,7 @@ public class EnemyPathfinder : MonoBehaviour
     public bool isMoving = false;
 
     // Health settings
-    public int maxHealth = 3;
+    public int maxHealth = 10;
     private int currentHealth;
 
     // Dynamically updated attack side.

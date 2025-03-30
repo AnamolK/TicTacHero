@@ -8,6 +8,7 @@ TagManager:
   - PauseMenu
   - PauseMenuSlider
   - GameHandler
+  - Attackable
   layers:
   - Default
   - TransparentFX

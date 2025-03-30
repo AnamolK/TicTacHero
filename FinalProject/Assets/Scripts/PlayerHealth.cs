@@ -59,7 +59,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            // If a coroutine isnt running, start one
+            // If a coroutine isn't running, start one
             if (damageCoroutine == null)
             {
                 damageCoroutine = StartCoroutine(ApplyDamageOverTime());

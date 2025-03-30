@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     // cooldown
-    public float attackCooldown = 0.5f;
+    public float attackCooldown = 0f;
     private float lastAttackTime = -Mathf.Infinity;
 
     // we call when the player’s collider enters a trigger collider.
@@ -13,7 +13,7 @@ public class PlayerAttack : MonoBehaviour
         if (Time.time - lastAttackTime < attackCooldown)
             return;
 
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Attackable"))
         {
             EnemyPathfinder enemyPathfinder = collision.GetComponent<EnemyPathfinder>();
             if (enemyPathfinder != null)
@@ -23,21 +23,40 @@ public class PlayerAttack : MonoBehaviour
                 Vector2 playerPos = transform.position;
                 Vector2 diff = playerPos - enemyPos;
 
-                // Determine where collison happened
+                // Determine where collision happened
                 string hitSide = DetermineHitSide(diff);
-                Debug.Log("Player hit enemy on side: " + hitSide + " | Enemy current attack side: " + enemyPathfinder.currentAttackSide);
+                //Debug.Log("Player hit enemy on side: " + hitSide + " | Enemy current attack side: " + enemyPathfinder.currentAttackSide);
 
                 // Only register the attack if the hit side is not enemy attack side
-                if (hitSide != enemyPathfinder.currentAttackSide)
-                {
-                    enemyPathfinder.TakeDamage(1);
-                    lastAttackTime = Time.time;
+
+                if (checkInputAgainstHitside(hitSide)) {
+                    if (hitSide != enemyPathfinder.currentAttackSide)
+                    {   
+                        Debug.Log("Attack Hit: " + hitSide);
+                        enemyPathfinder.TakeDamage(1);
+                        lastAttackTime = Time.time;
+                    }
+                    else
+                    {
+                        Debug.Log("Attack failed: Hit enemy's active attack side.");
+                    }
                 }
-                else
-                {
-                    Debug.Log("Attack failed: Hit enemy's active attack side.");
-                }
+   
             }
+        }
+    }
+
+    bool checkInputAgainstHitside(string side) {
+        if (Input.GetAxisRaw("Horizontal") == 1f && side == "Left") {
+            return true;
+        } else if (Input.GetAxisRaw("Horizontal") == -1f && side == "Right") {
+            return true;
+        } else if (Input.GetAxisRaw("Vertical") == 1f && side == "Down") {
+            return true;
+        } else if (Input.GetAxisRaw("Vertical") == -1f && side == "Up") {
+            return true;
+        } else {
+            return false;
         }
     }
 

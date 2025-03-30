@@ -20,13 +20,11 @@ public class CameraFollower : MonoBehaviour
         //check if distance is greater on x
         if (Mathf.Abs(transform.position.x - player.position.x) > 8-borderDistance || Mathf.Abs(transform.position.y - player.position.y) > 4-borderDistance) {
 
-            Debug.Log("MOVING REQUIRED"); 
 
             //checks if player is at an integer position
             if ((player.position.x % 1 == 0 && player.position.y % 1 == 0) || !snapToGrid) {
 
                 moveTo = new Vector3(player.position.x, player.position.y, transform.position.z);
-                Debug.Log("Moving To: " + moveTo.x + "  , " + moveTo.y); 
                 transform.position = Vector3.MoveTowards(transform.position, moveTo, moveSpeed * Time.deltaTime);
                 
             }

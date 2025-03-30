@@ -36,7 +36,6 @@ public class EnemyMovementController : MonoBehaviour
             }
             else
             {
-                Debug.Log("COLLIDED W/: " + moveTo.x + " , " + moveTo.y);
                 rotateAsset(movePoint.position);
             }
         }

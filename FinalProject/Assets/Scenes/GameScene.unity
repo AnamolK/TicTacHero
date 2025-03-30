@@ -410,6 +410,8 @@ MonoBehaviour:
   moveTickDuration: 1
   moveDuration: 0.01
   isMoving: 0
+  maxHealth: 3
+  currentAttackSide: None
 --- !u!61 &276943013
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -42236,7 +42238,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: d75c7b9b7651b41678e48eeb6619a2cc, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 67babd21d9b1a4a50b3efa4ced9b10a0, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5e559a670910bc44db6db4f3a490b293, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -42583,6 +42585,7 @@ GameObject:
   - component: {fileID: 1428407417}
   - component: {fileID: 1428407418}
   - component: {fileID: 1428407419}
+  - component: {fileID: 1428407420}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -42684,6 +42687,20 @@ MonoBehaviour:
   maxHealth: 5
   healthText: {fileID: 1519122583}
   gameOverText: {fileID: 353655035}
+  damageInterval: 1
+--- !u!114 &1428407420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428407415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4e3da0ebc7a2442a13db7f7bef3333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCooldown: 0.5
 --- !u!1 &1519122581
 GameObject:
   m_ObjectHideFlags: 0

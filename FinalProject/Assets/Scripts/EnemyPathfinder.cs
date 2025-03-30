@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections; 
 using UnityEngine;
 
 public class EnemyPathfinder : MonoBehaviour
@@ -8,8 +8,16 @@ public class EnemyPathfinder : MonoBehaviour
     private Transform player;
     public bool isMoving = false;
 
+    // Health settings
+    public int maxHealth = 3;
+    private int currentHealth;
+
+    // Dynamically updated attack side.
+    public string currentAttackSide = "None";
+
     void Start()
     {
+        currentHealth = maxHealth;
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
             player = playerObj.transform;
@@ -26,7 +34,11 @@ public class EnemyPathfinder : MonoBehaviour
             {
                 Vector2 direction = GetMoveDirection();
                 if (direction != Vector2.zero)
+                {
+                    // Update the active attack side dynamically based on movement direction.
+                    currentAttackSide = GetDirectionString(direction);
                     StartCoroutine(Move(direction));
+                }
             }
         }
     }
@@ -64,6 +76,66 @@ public class EnemyPathfinder : MonoBehaviour
     float SnapToGrid(float value)
     {
         return value;
-        //return Mathf.Round(value - 0.5f) + 0.5f;
+    }
+
+    // Converts movement direction vector to a cardinal direction string.
+    string GetDirectionString(Vector2 direction)
+    {
+        direction.Normalize();
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            return direction.x > 0 ? "Right" : "Left";
+        else
+            return direction.y > 0 ? "Up" : "Down";
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        Debug.Log("Enemy took damage. Current health: " + currentHealth);
+        if (currentHealth <= 0)
+            Die();
+    }
+
+    void Die()
+    {
+        Debug.Log("Enemy died.");
+
+        // Stop all coroutines and disable this script.
+        StopAllCoroutines();
+        this.enabled = false;
+
+        // Disable all colliders in self and children.
+        Collider2D[] cols = transform.root.GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D col in cols)
+        {
+            col.enabled = false;
+        }
+
+        // Disable all sprite renderers in self and children.
+        SpriteRenderer[] srs = transform.root.GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer sr in srs)
+        {
+            sr.enabled = false;
+        }
+
+        // If you want to be extra sure, explicitly disable the visual children.
+        Transform enemyAsset = transform.root.Find("EnemyAsset");
+        if(enemyAsset != null)
+            enemyAsset.gameObject.SetActive(false);
+
+        Transform enemyAttackside = transform.root.Find("EnemyAttackside");
+        if(enemyAttackside != null)
+            enemyAttackside.gameObject.SetActive(false);
+
+        // Notify the movement controller to stop further processing.
+        EnemyMovementController moveCtrl = GetComponentInParent<EnemyMovementController>();
+        if (moveCtrl != null)
+            moveCtrl.Die();
+
+        // Deactivate the entire enemy by disabling the root.
+        transform.root.gameObject.SetActive(false);
+
+        // Optionally, destroy the enemy object after a short delay.
+        Destroy(transform.root.gameObject, 0.1f);
     }
 }

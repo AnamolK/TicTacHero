@@ -7,64 +7,77 @@ public class EnemyMovementController : MonoBehaviour
     public float moveSpeed = 999f;
     public Transform movePoint;
     public Transform playerPosition;
-
     public LayerMask BlockedArea;
 
-    private string mostRecentPress;
     private string facing;
+
+    // Flag to stop updates once the enemy is dead.
+    private bool isDead = false;
 
     void Start()
     {
-        movePoint.parent = null;
+        // Detach movePoint from this enemy.
+        if (movePoint != null)
+            movePoint.parent = null;
     }
 
     void FixedUpdate()
     {
-        var moveTo = new Vector3(transform.position.x, transform.position.y, 0f);
+        if (isDead)
+            return;
 
-        if (movePoint.position.x % 1 == 0 && movePoint.position.y % 1 == 0) {
+        Vector3 moveTo = new Vector3(transform.position.x, transform.position.y, 0f);
 
-            if (!(playerPosition.position == movePoint.position)) {
-                
+        if (movePoint != null && (movePoint.position.x % 1 == 0 && movePoint.position.y % 1 == 0))
+        {
+            if (!(playerPosition != null && playerPosition.position == movePoint.position))
+            {
                 moveTo = new Vector3(movePoint.position.x, movePoint.position.y, 0f);
-                
-            } else {
-                Debug.Log("COLLIDED W/: " + moveTo.x + "  , " + moveTo.y);
+            }
+            else
+            {
+                Debug.Log("COLLIDED W/: " + moveTo.x + " , " + moveTo.y);
                 rotateAsset(movePoint.position);
             }
-
         }
 
         rotateAsset(moveTo);
         transform.position = Vector3.MoveTowards(transform.position, moveTo, moveSpeed * Time.deltaTime);
-
     }
 
-    //set facing direction depending on where the obj has to move.
-    void rotateAsset(Vector3 target) {
-        if (transform.position.x < target.x) {
+    // Sets facing direction based on target position.
+    void rotateAsset(Vector3 target)
+    {
+        if (transform.position.x < target.x)
             facing = "E";
-        } else if (transform.position.x > target.x) {
+        else if (transform.position.x > target.x)
             facing = "W";
-        } else if (transform.position.y < target.y) {
+        else if (transform.position.y < target.y)
             facing = "N";
-        } else if (transform.position.y > target.y) {
+        else if (transform.position.y > target.y)
             facing = "S";
-        }
 
         transform.eulerAngles = new Vector3(transform.position.x, transform.position.y, getRotVal(facing));
     }
 
-    int getRotVal(string val) {
-        if (val == "N") {
+    int getRotVal(string val)
+    {
+        if (val == "N")
             return 0;
-        } else if (val == "E") {
+        else if (val == "E")
             return 270;
-        } else if (val == "W") {
+        else if (val == "W")
             return 90;
-        } else if (val == "S"){
+        else if (val == "S")
             return 180;
-        }
         return 180;
+    }
+
+    public void Die()
+    {
+        isDead = true;
+        this.enabled = false;
+        if (movePoint != null)
+            movePoint.gameObject.SetActive(false);
     }
 }

@@ -10,6 +10,7 @@ public class EnemyPathfinder : MonoBehaviour
 
     public string currentAttackSide = "None";
 
+
     public Transform movePoint;
 
     private Transform player;
@@ -27,7 +28,6 @@ public class EnemyPathfinder : MonoBehaviour
                                              SnapToGrid(transform.position.y),
                                              transform.position.z);
 
-
         StartCoroutine(MoveTick());
     }
 
@@ -41,13 +41,13 @@ public class EnemyPathfinder : MonoBehaviour
             Vector2 direction = GetMoveDirection();
             if (direction != Vector2.zero)
             {
-                // Update movePoint's position by one grid cell in the chosen direction.
+                // Update movePoint’s position by one grid cell.
                 Vector3 currentDestination = movePoint.position;
                 Vector3 newDestination = currentDestination + new Vector3(direction.x, direction.y, 0);
                 newDestination = new Vector3(SnapToGrid(newDestination.x), SnapToGrid(newDestination.y), newDestination.z);
                 movePoint.position = newDestination;
 
-                // Set the enemy's active attack side to match its movement direction.
+                // Set the enemy’s active attack side to match its movement direction.
                 currentAttackSide = GetDirectionString(direction);
 
                 Debug.Log("Enemy moving to: " + newDestination + " with active attack side: " + currentAttackSide);
@@ -60,12 +60,12 @@ public class EnemyPathfinder : MonoBehaviour
         if (player == null)
             return Vector2.zero;
 
-        // Use movePoint's position as the current grid position.
+        // Use movePoint’s position as the current grid cell.
         Vector2 pos = movePoint.position;
         Vector2 playerPos = player.position;
         Vector2 diff = playerPos - pos;
 
-        // Move alongdominant axis.
+        // Move along the dominant axis.
         if (Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
             return new Vector2(Mathf.Sign(diff.x), 0);
         else if (Mathf.Abs(diff.y) > 0)
@@ -79,7 +79,7 @@ public class EnemyPathfinder : MonoBehaviour
         return Mathf.Round(value);
     }
 
-    // Returns a cardinal direction string based on a normalized direction vector.
+    // Returns a cardinal direction string based on a normalized vector.
     string GetDirectionString(Vector2 direction)
     {
         direction.Normalize();
@@ -104,15 +104,22 @@ public class EnemyPathfinder : MonoBehaviour
         StopAllCoroutines();
         this.enabled = false;
 
-        // Disable all colliders and sprites in the enemy's hierarchy.
+        // Disable all colliders and sprites.
         Collider2D[] cols = transform.root.GetComponentsInChildren<Collider2D>();
         foreach (Collider2D col in cols)
             col.enabled = false;
-
         SpriteRenderer[] srs = transform.root.GetComponentsInChildren<SpriteRenderer>();
         foreach (SpriteRenderer sr in srs)
             sr.enabled = false;
 
+
+        if (movePoint != null)
+        {
+            Destroy(movePoint.gameObject);
+            movePoint = null;
+        }
+
+        // Finally, destroy the enemy root.
         Destroy(transform.root.gameObject, 0.1f);
     }
 }

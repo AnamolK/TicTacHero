@@ -2,32 +2,53 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    void OnTriggerStay2D(Collider2D collision)
+    // Reference to the enemy currently in the attackable area.
+    private EnemyPathfinder currentEnemy;
+
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Attackable"))
         {
-            // Get the EnemyPathfinder from the parent of the AttackableArea.
             EnemyPathfinder enemyPathfinder = collision.GetComponentInParent<EnemyPathfinder>();
             if (enemyPathfinder != null)
             {
-                Vector2 enemyPos = enemyPathfinder.transform.position;
-                Vector2 playerPos = transform.position;
-                Vector2 diff = playerPos - enemyPos;
+                currentEnemy = enemyPathfinder;
+            }
+        }
+    }
 
-                string hitSide = DetermineHitSide(diff);
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Attackable"))
+        {
+            EnemyPathfinder enemyPathfinder = collision.GetComponentInParent<EnemyPathfinder>();
+            if (enemyPathfinder != null && enemyPathfinder == currentEnemy)
+            {
+                currentEnemy = null;
+            }
+        }
+    }
 
-                if (CheckInputAgainstHitSide(hitSide))
+    void Update()
+    {
+        if (currentEnemy != null)
+        {
+            Vector2 enemyPos = currentEnemy.transform.position;
+            Vector2 playerPos = transform.position;
+            Vector2 diff = playerPos - enemyPos;
+            string hitSide = DetermineHitSide(diff);
+
+            if (CheckInputAgainstHitSide(hitSide))
+            {
+                // Only register damage if the hit side is not the enemy's active attack side.
+                if (hitSide != currentEnemy.currentAttackSide)
                 {
-                    // Only register damage if the hit side is not the enemy's active attack side.
-                    if (hitSide != enemyPathfinder.currentAttackSide)
-                    {
-                        Debug.Log("Attack Hit: " + hitSide);
-                        enemyPathfinder.TakeDamage(1);
-                    }
-                    else
-                    {
-                        Debug.Log("Attack failed: Hit enemy's active attack side.");
-                    }
+                    Debug.Log("Attack Hit: " + hitSide);
+                    currentEnemy.TakeDamage(1);
+                }
+                else
+                {
+                    Debug.Log("Attack failed: Hit enemy's active attack side.");
                 }
             }
         }

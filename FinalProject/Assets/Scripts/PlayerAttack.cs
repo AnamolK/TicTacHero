@@ -2,16 +2,10 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    // cooldown
-    public float attackCooldown = 0f;
-    private float lastAttackTime = -Mathf.Infinity;
 
     // we call when the player’s collider enters a trigger collider.
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerStay2D(Collider2D collision)
     {
-        // attack cooldown.
-        if (Time.time - lastAttackTime < attackCooldown)
-            return;
 
         if (collision.CompareTag("Attackable"))
         {
@@ -34,7 +28,6 @@ public class PlayerAttack : MonoBehaviour
                     {   
                         Debug.Log("Attack Hit: " + hitSide);
                         enemyPathfinder.TakeDamage(1);
-                        lastAttackTime = Time.time;
                     }
                     else
                     {
@@ -47,13 +40,13 @@ public class PlayerAttack : MonoBehaviour
     }
 
     bool checkInputAgainstHitside(string side) {
-        if (Input.GetAxisRaw("Horizontal") == 1f && side == "Left") {
+        if (Input.GetKeyDown(KeyCode.D) && side == "Left") {
             return true;
-        } else if (Input.GetAxisRaw("Horizontal") == -1f && side == "Right") {
+        } else if (Input.GetKeyDown(KeyCode.A) && side == "Right") {
             return true;
-        } else if (Input.GetAxisRaw("Vertical") == 1f && side == "Down") {
+        } else if (Input.GetKeyDown(KeyCode.W) && side == "Down") {
             return true;
-        } else if (Input.GetAxisRaw("Vertical") == -1f && side == "Up") {
+        } else if (Input.GetKeyDown(KeyCode.S) && side == "Up") {
             return true;
         } else {
             return false;

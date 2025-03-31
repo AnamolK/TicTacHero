@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovementController : MonoBehaviour
@@ -10,13 +8,11 @@ public class EnemyMovementController : MonoBehaviour
     public LayerMask BlockedArea;
 
     private string facing;
-
-    // Flag to stop updates once the enemy is dead.
     private bool isDead = false;
 
     void Start()
     {
-        // Detach movePoint from this enemy.
+        // Detach movePoint so it isn’t affected by the enemy's rotation.
         if (movePoint != null)
             movePoint.parent = null;
     }
@@ -44,7 +40,6 @@ public class EnemyMovementController : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, moveTo, moveSpeed * Time.deltaTime);
     }
 
-    // Sets facing direction based on target position.
     void rotateAsset(Vector3 target)
     {
         if (transform.position.x < target.x)
@@ -56,7 +51,7 @@ public class EnemyMovementController : MonoBehaviour
         else if (transform.position.y > target.y)
             facing = "S";
 
-        transform.eulerAngles = new Vector3(transform.position.x, transform.position.y, getRotVal(facing));
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, getRotVal(facing));
     }
 
     int getRotVal(string val)
@@ -77,6 +72,6 @@ public class EnemyMovementController : MonoBehaviour
         isDead = true;
         this.enabled = false;
         if (movePoint != null)
-            movePoint.gameObject.SetActive(false);
+            Destroy(movePoint.gameObject, 0.1f);
     }
 }

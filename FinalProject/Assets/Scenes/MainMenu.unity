@@ -305,9 +305,13 @@ PrefabInstance:
       value: button_QUIT
       objectReference: {fileID: 0}
     - target: {fileID: 2799796839907227374, guid: a35799010074441e8bbd70846418b762, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2799796839907227374, guid: a35799010074441e8bbd70846418b762, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 844619678}
     - target: {fileID: 2799796839907227374, guid: a35799010074441e8bbd70846418b762, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: QuitGame
@@ -524,6 +528,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1230212861486154844, guid: a35799010074441e8bbd70846418b762, type: 3}
   m_PrefabInstance: {fileID: 591039648}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &844619678 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8938495228585125986, guid: 3f714c4f622104e0dbe763c410d7996f, type: 3}
+  m_PrefabInstance: {fileID: 2115061201}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74479c07ab1aa449f9f12db81dd98e53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &850240473
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,7 +714,7 @@ PrefabInstance:
     - target: {fileID: 2799796839907227374, guid: a35799010074441e8bbd70846418b762, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 844619678}
     - target: {fileID: 2799796839907227374, guid: a35799010074441e8bbd70846418b762, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Credits
@@ -1121,7 +1136,7 @@ PrefabInstance:
     - target: {fileID: 2799796839907227374, guid: a35799010074441e8bbd70846418b762, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 844619678}
     - target: {fileID: 2799796839907227374, guid: a35799010074441e8bbd70846418b762, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: StartGame

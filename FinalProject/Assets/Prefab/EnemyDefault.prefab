@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3701186403938725531}
   - component: {fileID: 3514758495794117456}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: EnemyAtkSide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9176648176953324180}
   - component: {fileID: 3556953007525815131}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: EnemyAsset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -518,7 +518,7 @@ GameObject:
   - component: {fileID: 3418904213258064237}
   - component: {fileID: 2363896178217870654}
   m_Layer: 3
-  m_Name: Colider
+  m_Name: EnemyDefault
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

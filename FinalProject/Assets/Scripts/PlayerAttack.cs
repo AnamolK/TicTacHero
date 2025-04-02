@@ -2,8 +2,18 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+
+    private AudioSource audioSource;
+    public AudioClip[] soundList;
+    private AudioClip selected;
+
     // Reference to the enemy currently in the attackable area.
     private EnemyPathfinder currentEnemy;
+
+    void Start() {
+        
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -45,6 +55,7 @@ public class PlayerAttack : MonoBehaviour
                 {
                     Debug.Log("Attack Hit: " + hitSide);
                     currentEnemy.TakeDamage(1);
+                    playSFX();
                 }
                 else
                 {
@@ -75,5 +86,12 @@ public class PlayerAttack : MonoBehaviour
             return diff.x > 0 ? "Right" : "Left";
         else
             return diff.y > 0 ? "Up" : "Down";
+    }
+
+    void playSFX() {
+        int index = Random.Range(0, soundList.Length);
+        selected = soundList[index];
+        audioSource.clip = selected;
+        audioSource.Play();
     }
 }

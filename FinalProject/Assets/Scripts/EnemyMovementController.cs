@@ -10,9 +10,15 @@ public class EnemyMovementController : MonoBehaviour
     private string facing;
     private bool isDead = false;
 
+    
+
     void Start()
     {
-        // Detach movePoint so it isn’t affected by the enemy's rotation.
+
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+            playerPosition = playerObj.transform;
+                                             
         if (movePoint != null)
             movePoint.parent = null;
     }

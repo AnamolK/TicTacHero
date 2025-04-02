@@ -12,9 +12,16 @@ public class PlayerMove : MonoBehaviour
 
     private string mostRecentPress;
 
+    //audio manager
+    private AudioSource audioSource;
+    public AudioClip[] soundList;
+    private AudioClip selected;
+
+
     void Start()
     {
         movePoint.parent = null;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -26,15 +33,19 @@ public class PlayerMove : MonoBehaviour
             
             if (Input.GetKeyDown(KeyCode.A)) {
                 mostRecentPress = "left";
+                playSFX();
 
             } else if (Input.GetKeyDown(KeyCode.D)) {
                 mostRecentPress = "right";
+                playSFX();
 
             } else if (Input.GetKeyDown(KeyCode.S)) {
                 mostRecentPress = "down";
+                playSFX();
 
             } else if (Input.GetKeyDown(KeyCode.W)) {
                 mostRecentPress = "up";
+                playSFX();
                 
             } else {
                 mostRecentPress = "NaN";
@@ -73,5 +84,12 @@ public class PlayerMove : MonoBehaviour
 
         }
 
+    }
+
+    void playSFX() {
+        int index = Random.Range(0, soundList.Length);
+        selected = soundList[index];
+        audioSource.clip = selected;
+        audioSource.Play();
     }
 }

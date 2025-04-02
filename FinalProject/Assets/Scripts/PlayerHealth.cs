@@ -15,17 +15,26 @@ public class PlayerHealth : MonoBehaviour
 
     private Coroutine damageCoroutine;
 
+    //audio/sfx file holder
+    private AudioSource audioSource;
+    public AudioClip[] soundList;
+    private AudioClip selected;
+
     void Start()
     {
         currentHealth = maxHealth;
         UpdateUI();
         if (gameOverText != null)
             gameOverText.gameObject.SetActive(false);
+        
+        
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        playSFX();
         UpdateUI();
         Debug.Log("Player took damage. Current health: " + currentHealth);
         if (currentHealth <= 0)
@@ -92,5 +101,12 @@ public class PlayerHealth : MonoBehaviour
             TakeDamage(1);
             yield return new WaitForSeconds(damageInterval);
         }
+    }
+
+    void playSFX() {
+        int index = Random.Range(0, soundList.Length);
+        selected = soundList[index];
+        audioSource.clip = selected;
+        audioSource.Play();
     }
 }

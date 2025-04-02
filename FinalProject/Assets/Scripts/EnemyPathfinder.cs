@@ -7,11 +7,11 @@ public class EnemyPathfinder : MonoBehaviour
     public int maxHealth = 10;
     private int currentHealth;
 
-
     public string currentAttackSide = "None";
 
-
     public Transform movePoint;
+    // Radius used to check if the destination cell is occupied.
+    public float occupancyCheckRadius = 0.3f;
 
     private Transform player;
 
@@ -21,7 +21,6 @@ public class EnemyPathfinder : MonoBehaviour
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
             player = playerObj.transform;
-
 
         if (movePoint != null)
             movePoint.position = new Vector3(SnapToGrid(transform.position.x),
@@ -41,16 +40,22 @@ public class EnemyPathfinder : MonoBehaviour
             Vector2 direction = GetMoveDirection();
             if (direction != Vector2.zero)
             {
-                // Update movePoint’s position by one grid cell.
+                // Calculate new destination.
                 Vector3 currentDestination = movePoint.position;
                 Vector3 newDestination = currentDestination + new Vector3(direction.x, direction.y, 0);
                 newDestination = new Vector3(SnapToGrid(newDestination.x), SnapToGrid(newDestination.y), newDestination.z);
-                movePoint.position = newDestination;
 
-                // Set the enemy’s active attack side to match its movement direction.
-                currentAttackSide = GetDirectionString(direction);
-
-                Debug.Log("Enemy moving to: " + newDestination + " with active attack side: " + currentAttackSide);
+                // Check if the destination cell is occupied by another enemy.
+                if (!IsCellOccupied(newDestination))
+                {
+                    movePoint.position = newDestination;
+                    currentAttackSide = GetDirectionString(direction);
+                    Debug.Log("Enemy moving to: " + newDestination + " with active attack side: " + currentAttackSide);
+                }
+                else
+                {
+                    Debug.Log("Destination " + newDestination + " is occupied. Not moving.");
+                }
             }
         }
     }
@@ -60,7 +65,7 @@ public class EnemyPathfinder : MonoBehaviour
         if (player == null)
             return Vector2.zero;
 
-        // Use movePoint’s position as the current grid cell.
+        // Use movePoint's position as the current grid cell.
         Vector2 pos = movePoint.position;
         Vector2 playerPos = player.position;
         Vector2 diff = playerPos - pos;
@@ -75,7 +80,7 @@ public class EnemyPathfinder : MonoBehaviour
 
     float SnapToGrid(float value)
     {
-        // Assumes grid cells of size 1.
+        // Assumes grid cells are 1 unit in size.
         return Mathf.Round(value);
     }
 
@@ -87,6 +92,20 @@ public class EnemyPathfinder : MonoBehaviour
             return direction.x > 0 ? "Right" : "Left";
         else
             return direction.y > 0 ? "Up" : "Down";
+    }
+
+    // Checks if the destination cell is occupied by any enemy (excluding self).
+    bool IsCellOccupied(Vector3 destination)
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(destination, occupancyCheckRadius);
+        foreach (Collider2D col in colliders)
+        {
+            if (col.gameObject != this.gameObject && col.CompareTag("Enemy"))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void TakeDamage(int damage)
@@ -112,14 +131,13 @@ public class EnemyPathfinder : MonoBehaviour
         foreach (SpriteRenderer sr in srs)
             sr.enabled = false;
 
-
         if (movePoint != null)
         {
             Destroy(movePoint.gameObject);
             movePoint = null;
         }
 
-        // Finally, destroy the enemy root.
+        // Destroy the enemy's root GameObject.
         Destroy(transform.root.gameObject, 0.1f);
     }
 }

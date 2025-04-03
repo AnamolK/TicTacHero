@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-
     private AudioSource audioSource;
     public AudioClip[] soundList;
     private AudioClip selected;
@@ -10,9 +9,17 @@ public class PlayerAttack : MonoBehaviour
     // Reference to the enemy currently in the attackable area.
     private EnemyPathfinder currentEnemy;
 
-    void Start() {
-        
+    // Reference to the PlayerStats component for upgraded attack damage.
+    private PlayerStats playerStats;
+
+    void Start()
+    {
         audioSource = GetComponent<AudioSource>();
+        playerStats = GetComponent<PlayerStats>();
+        if (playerStats == null)
+        {
+            Debug.LogWarning("PlayerStats component not found on the PlayerAttack GameObject!");
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -54,8 +61,10 @@ public class PlayerAttack : MonoBehaviour
                 if (hitSide != currentEnemy.currentAttackSide)
                 {
                     Debug.Log("Attack Hit: " + hitSide);
-                    currentEnemy.TakeDamage(1);
-                    playSFX();
+                    // Get damage from PlayerStats; if not found, default to 1.
+                    int damage = (playerStats != null) ? playerStats.currentAttackDamage : 1;
+                    currentEnemy.TakeDamage(damage);
+                    PlaySFX();
                 }
                 else
                 {
@@ -88,7 +97,8 @@ public class PlayerAttack : MonoBehaviour
             return diff.y > 0 ? "Up" : "Down";
     }
 
-    void playSFX() {
+    void PlaySFX()
+    {
         int index = Random.Range(0, soundList.Length);
         selected = soundList[index];
         audioSource.clip = selected;

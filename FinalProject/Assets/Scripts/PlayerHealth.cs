@@ -1,56 +1,84 @@
-using TMPro;
 using UnityEngine;
+using TMPro;
 using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHealth = 3;
-    private int currentHealth;
+    // Reference to the PlayerStats component that holds health values.
+    private PlayerStats playerStats;
+
+    // UI elements for displaying health and game over text.
     public TMP_Text healthText;
     public TMP_Text gameOverText;
 
-    // Time in seconds between damage ticks
+    // Time (in seconds) between damage ticks.
     public float damageInterval = 1f;
-
 
     private Coroutine damageCoroutine;
 
-    //audio/sfx file holder
+    // Audio/SFX variables.
     private AudioSource audioSource;
     public AudioClip[] soundList;
     private AudioClip selected;
 
+    // Store the last displayed health to detect changes.
+    private int lastDisplayedHealth;
+
     void Start()
     {
-        currentHealth = maxHealth;
+        // Get the PlayerStats component.
+        playerStats = GetComponent<PlayerStats>();
+        if (playerStats == null)
+        {
+            Debug.LogError("PlayerStats component missing from Player!");
+        }
+        
         UpdateUI();
+        lastDisplayedHealth = playerStats.currentHealth;
+        
         if (gameOverText != null)
             gameOverText.gameObject.SetActive(false);
-        
-        
+
         audioSource = GetComponent<AudioSource>();
+    }
+
+    void Update()
+    {
+        // Check if current health has changed since the last UI update.
+        if (playerStats.currentHealth != lastDisplayedHealth ||
+            playerStats.currentMaxHealth != lastDisplayedHealth) // optional: if you want to update for max health changes too
+        {
+            UpdateUI();
+            lastDisplayedHealth = playerStats.currentHealth;
+        }
     }
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        // Subtract damage from current health in PlayerStats.
+        playerStats.currentHealth -= damage;
         playSFX();
         UpdateUI();
-        Debug.Log("Player took damage. Current health: " + currentHealth);
-        if (currentHealth <= 0)
+        lastDisplayedHealth = playerStats.currentHealth;
+        Debug.Log("Player took damage. Current health: " + playerStats.currentHealth);
+
+        if (playerStats.currentHealth <= 0)
             Die();
     }
 
     public void Heal(int amount)
     {
-        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        // Heal the player without exceeding the current maximum.
+        playerStats.currentHealth = Mathf.Min(playerStats.currentMaxHealth, playerStats.currentHealth + amount);
         UpdateUI();
+        lastDisplayedHealth = playerStats.currentHealth;
     }
 
     void UpdateUI()
     {
+        // Update the health text to display current and maximum health.
         if (healthText != null)
-            healthText.text = "Health: " + currentHealth;
+            healthText.text = "Health: " + playerStats.currentHealth + " / " + playerStats.currentMaxHealth;
     }
 
     void Die()
@@ -63,12 +91,11 @@ public class PlayerHealth : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    // Start damage coroutine when an enemy enters the trigger
+    // When an enemy collides, start applying damage over time.
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
-            // If a coroutine isn't running, start one
             if (damageCoroutine == null)
             {
                 damageCoroutine = StartCoroutine(ApplyDamageOverTime());
@@ -76,7 +103,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    // Stop coroutine when the enemy leaves the trigger
+    // When the enemy leaves, stop the damage coroutine.
     void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
@@ -89,10 +116,10 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    // Coroutine that repeatedly applies damage at fixed intervals
+    // Coroutine to apply damage repeatedly at fixed intervals.
     IEnumerator ApplyDamageOverTime()
     {
-        // Apply damage immediately upon entering
+        // Apply damage immediately.
         TakeDamage(1);
         yield return new WaitForSeconds(damageInterval);
 
@@ -103,7 +130,8 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    void playSFX() {
+    void playSFX()
+    {
         int index = Random.Range(0, soundList.Length);
         selected = soundList[index];
         audioSource.clip = selected;

@@ -5,9 +5,11 @@ using TMPro;
 public class WaveManager : MonoBehaviour
 {
     [Header("Enemy Settings")]
+
     public GameObject enemyPrefab;
     
     [Header("Spawn Points")]
+
     public Transform[] spawnPoints;
     
     [Header("Wave Settings")]
@@ -23,10 +25,10 @@ public class WaveManager : MonoBehaviour
     [Header("UI Elements")]
 
     public TMP_Text waveText;
-    // Duration to show the wave message.
+
     public float waveDisplayDuration = 2f;
     
-    // Current wave number.
+    // Current wave number
     private int waveNumber = 1;
     
     void Start()
@@ -45,13 +47,10 @@ public class WaveManager : MonoBehaviour
                 waveText.gameObject.SetActive(true);
             }
             
-            // Wait so the player sees the wave number.
+            // Wait for a short duration so the player sees the wave number.
             yield return new WaitForSeconds(waveDisplayDuration);
             
-            if (waveText != null)
-                waveText.gameObject.SetActive(false);
-            
-            // Determine enemy count for this wave.
+            // Determine how many enemies to spawn for this wave.
             int enemyCount = 0;
             if (waveNumber <= waveEnemyCounts.Length)
             {
@@ -59,7 +58,7 @@ public class WaveManager : MonoBehaviour
             }
             else
             {
-                // For waves beyond the predefined ones, scale enemy count further.
+                // For waves beyond the predefined ones, scale the enemy count further.
                 enemyCount = waveEnemyCounts[waveEnemyCounts.Length - 1] + (waveNumber - waveEnemyCounts.Length) * 2;
             }
             
@@ -75,22 +74,17 @@ public class WaveManager : MonoBehaviour
                 yield return new WaitForSeconds(spawnDelay);
             }
             
-
+           
+            if (waveText != null)
+            {
+                waveText.text = "";
+            }
+            
+            // Wait until all enemies from the current wave are cleared.
             yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Enemy").Length == 0);
             Debug.Log("Wave " + waveNumber + " cleared.");
             
-
-            int pointsAwarded = (waveNumber % 3 == 0) ? 2 : 1;
-            UpgradeManager.Instance.AwardPoints(pointsAwarded);
-            Debug.Log("Awarded " + pointsAwarded + " upgrade point(s).");
-            
-
-            UpgradeManager.Instance.ShowUpgradePanel();
-            
-
-            yield return new WaitUntil(() => !UpgradeManager.Instance.upgradePanel.activeSelf);
-            
-
+            // Wait a bit before starting the next wave.
             yield return new WaitForSeconds(timeBetweenWaves);
             
             waveNumber++;

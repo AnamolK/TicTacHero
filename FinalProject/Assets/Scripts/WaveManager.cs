@@ -6,6 +6,7 @@ public class WaveManager : MonoBehaviour
 {
     [Header("Enemy Settings")]
     public GameObject enemyPrefab;
+    public GameObject secondEnemyPrefab;
     
     [Header("Spawn Points")]
     public Transform[] spawnPoints;
@@ -70,10 +71,29 @@ public class WaveManager : MonoBehaviour
             {
                 // Choose a random spawn point.
                 Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-                // Instantiate enemy at the chosen spawn point.
-                Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+                
+                // Decide which prefab to spawn.
+                // Wave 1: always the original prefab.
+                // Wave 2+: 50/50 chance to spawn original or second prefab.
+                GameObject prefabToSpawn;
+                if (waveNumber == 1)
+                {
+                    prefabToSpawn = enemyPrefab;
+                }
+                else
+                {
+                    // 50/50 split between enemy types
+                    if (Random.value < 0.5f)
+                        prefabToSpawn = enemyPrefab;
+                    else
+                        prefabToSpawn = secondEnemyPrefab;
+                }
+                
+                Instantiate(prefabToSpawn, spawnPoint.position, spawnPoint.rotation);
+                
                 yield return new WaitForSeconds(spawnDelay);
             }
+
             
 
             yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Enemy").Length == 0);

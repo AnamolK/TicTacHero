@@ -24,6 +24,10 @@ public class PlayerHealth : MonoBehaviour
     // Store the last displayed health to detect changes.
     private int lastDisplayedHealth;
 
+    //animation/asset manager
+    [SerializeField] private GameObject asset;
+    private new AnimationGeneric animation;
+
     void Start()
     {
         // Get the PlayerStats component.
@@ -40,6 +44,7 @@ public class PlayerHealth : MonoBehaviour
             gameOverText.gameObject.SetActive(false);
 
         audioSource = GetComponent<AudioSource>();
+        animation = asset.GetComponent<AnimationGeneric>();
     }
 
     void Update()
@@ -58,6 +63,7 @@ public class PlayerHealth : MonoBehaviour
         // Subtract damage from current health in PlayerStats.
         playerStats.currentHealth -= damage;
         playSFX();
+        animation.DamageTaken(0.3f);
         UpdateUI();
         lastDisplayedHealth = playerStats.currentHealth;
         Debug.Log("Player took damage. Current health: " + playerStats.currentHealth);

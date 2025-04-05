@@ -3,22 +3,65 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
+/*******************************************************************************
+    Within script that wants to trigger animation on event, add:
+
+        //animation/asset manager
+        [SerializeField] private GameObject asset;
+        private new AnimationGeneric animation;
+            
+    In Start(), add:
+
+        animation = asset.GetComponent<AnimationGeneric>();
+
+    In Unity Editor, set asset to the asset object/container that needs to
+    be animated.
+*******************************************************************************/
+
 public class AnimationGeneric : MonoBehaviour
 {
-
     [SerializeField] private Transform asset;
+    
     // Start is called before the first frame update
     void Start()
+    {
+    }
+    private void FixedUpdate()
     {
         
     }
 
     public void MoveBounce(float duration) {
-        asset.DOLocalJump(transform.position, 0.2f, 1, duration, true);
+        asset.localPosition = Vector3.zero;
+        asset.DOLocalJump(new Vector3(0,0,0), 0.4f, 1, duration, false).OnComplete(() => {
+            resetPosition(0.001f);
+        });
     }
 
     public void MoveShift(Vector3 direction, float duration) {
-        asset.DOPunchPosition(direction, duration, 2, 0.5f, true);
+        asset.localPosition = Vector3.zero;
+        asset.DOPunchPosition(direction, duration, 2, 0.5f, false).OnComplete(() => {
+            //resetPosition(2f);
+        });
+        Debug.Log("Animation Played: MoveShift");
     }
 
+    public void AttackMelee(Vector3 direction, float duration) {
+        asset.localPosition = Vector3.zero;
+        asset.DOPunchPosition(direction, duration, 3, 0.5f, false).OnComplete(() => {
+            resetPosition(2f);
+        });
+        Debug.Log("Animation Played: AttackMelee");
+    }
+
+    public void DamageTaken(float duration) {
+        asset.DOShakePosition (duration, 0.1f, 10, 90, false, true, ShakeRandomnessMode.Harmonic);
+        Debug.Log("Animation Played: DamageTaken");
+    }
+
+    private void resetPosition(float duration) {
+        if (asset.localPosition != new Vector3(0,0,0)) {
+            asset.DOLocalMove(new Vector3(0,0,0), duration, false);
+        }
+    }
 }

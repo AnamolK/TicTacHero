@@ -12,6 +12,10 @@ public class PlayerAttack : MonoBehaviour
     // Reference to the PlayerStats component for upgraded attack damage.
     private PlayerStats playerStats;
 
+    //animation/asset manager
+    [SerializeField] private GameObject asset;
+    private new AnimationGeneric animation;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -20,6 +24,8 @@ public class PlayerAttack : MonoBehaviour
         {
             Debug.LogWarning("PlayerStats component not found on the PlayerAttack GameObject!");
         }
+        
+        animation = asset.GetComponent<AnimationGeneric>();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -64,6 +70,7 @@ public class PlayerAttack : MonoBehaviour
                     // Get damage from PlayerStats; if not found, default to 1.
                     int damage = (playerStats != null) ? playerStats.currentAttackDamage : 1;
                     currentEnemy.TakeDamage(damage);
+                    animation.AttackMelee(AttackAnimationDirection(hitSide), 0.2f);
                     PlaySFX();
                 }
                 else
@@ -86,6 +93,20 @@ public class PlayerAttack : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    Vector3 AttackAnimationDirection(string side)
+    {
+        if (side == "Left")
+            return new Vector3(1f,0,0);
+        else if (side == "Right")
+            return new Vector3(-1f,0,0);
+        else if (side == "Down")
+            return new Vector3(0,1f,0);
+        else if (side == "Up")
+            return new Vector3(0,-1f,0);
+        else
+            return new Vector3(0,0,0);
     }
 
     string DetermineHitSide(Vector2 diff)

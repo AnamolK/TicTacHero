@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4166520625261806315}
   - component: {fileID: 8759570105443023954}
   - component: {fileID: 8056185728391435882}
+  - component: {fileID: 8189007781879901748}
   - component: {fileID: 8946049399214454262}
   - component: {fileID: 7576993357446184198}
   m_Layer: 0
@@ -123,6 +124,24 @@ MonoBehaviour:
   damageInterval: 1.5
   soundList:
   - {fileID: 8300000, guid: 7942a6e4e36c77d499f39eb7632c6e6f, type: 3}
+  asset: {fileID: 7296475643305464596}
+--- !u!114 &8189007781879901748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3563559185194465737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0baa07b983a7e7742b9734a42ce63491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseMaxHealth: 5
+  currentMaxHealth: 0
+  currentHealth: 0
+  baseAttackDamage: 1
+  currentAttackDamage: 0
 --- !u!114 &8946049399214454262
 MonoBehaviour:
   m_ObjectHideFlags: 0

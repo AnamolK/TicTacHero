@@ -10,6 +10,9 @@ public class EnemyMovementController : MonoBehaviour
     private string facing;
     private bool isDead = false;
 
+    //animation/asset manager
+    [SerializeField] private GameObject asset;
+    private new AnimationGeneric animation;
     
 
     void Start()
@@ -21,6 +24,8 @@ public class EnemyMovementController : MonoBehaviour
                                              
         if (movePoint != null)
             movePoint.parent = null;
+
+        animation = asset.GetComponent<AnimationGeneric>();
     }
 
     void FixedUpdate()
@@ -35,6 +40,7 @@ public class EnemyMovementController : MonoBehaviour
             if (!(playerPosition != null && playerPosition.position == movePoint.position))
             {
                 moveTo = new Vector3(movePoint.position.x, movePoint.position.y, 0f);
+                
             }
             else
             {
@@ -57,7 +63,7 @@ public class EnemyMovementController : MonoBehaviour
         else if (transform.position.y > target.y)
             facing = "S";
 
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, getRotVal(facing));
+        //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, getRotVal(facing));
     }
 
     int getRotVal(string val)

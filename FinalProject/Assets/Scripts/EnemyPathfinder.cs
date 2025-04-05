@@ -15,6 +15,10 @@ public class EnemyPathfinder : MonoBehaviour
 
     private Transform player;
 
+    //animation/asset manager
+    [SerializeField] private GameObject asset;
+    private new AnimationGeneric animation;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -28,6 +32,7 @@ public class EnemyPathfinder : MonoBehaviour
                                              transform.position.z);
 
         StartCoroutine(MoveTick());
+        animation = asset.GetComponent<AnimationGeneric>();
     }
 
     IEnumerator MoveTick()
@@ -51,6 +56,7 @@ public class EnemyPathfinder : MonoBehaviour
                     movePoint.position = newDestination;
                     currentAttackSide = GetDirectionString(direction);
                     Debug.Log("Enemy moving to: " + newDestination + " with active attack side: " + currentAttackSide);
+                    animation.MoveBounce(0.4f);
                 }
                 else
                 {

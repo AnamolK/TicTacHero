@@ -67,28 +67,28 @@ public class PlayerMove : MonoBehaviour
 
             if (!(Physics2D.OverlapCircle(movePoint.position + new Vector3(-1f, 0f, 0f), 0.05f, BlockedArea))) {
                 movePoint.position += new Vector3(-1f, 0f, 0f);
-                animation.MoveShift(new Vector3(-0.5f, 0f, 0f), 0.2f);
+                animation.MoveShift(new Vector3(-0.4f, 0f, 0f), 0.1f);
             }
 
         } else if (direction == "right") {
 
             if (!(Physics2D.OverlapCircle(movePoint.position + new Vector3(1f, 0f, 0f), 0.05f, BlockedArea))) {
                 movePoint.position += new Vector3(1f, 0f, 0f);
-                animation.MoveShift(new Vector3(0.5f, 0f, 0f), 0.2f);
+                animation.MoveShift(new Vector3(0.4f, 0f, 0f), 0.1f);
             }
 
         } else if (direction == "down") {
 
             if (!(Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, -1f, 0f), 0.05f, BlockedArea))) {
                 movePoint.position += new Vector3(0f, -1f, 0f);
-                animation.MoveShift(new Vector3(0f, -0.5f, 0f), 0.2f);
+                animation.MoveShift(new Vector3(0f, -0.4f, 0f), 0.1f);
             }
 
         } else if (direction == "up") {
 
             if (!(Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, 1f, 0f), 0.05f, BlockedArea))) {
                 movePoint.position += new Vector3(0f, 1f, 0f);
-                animation.MoveShift(new Vector3(0f, 0.5f, 0f), 0.2f);
+                animation.MoveShift(new Vector3(0f, 0.4f, 0f), 0.1f);
             }
 
         }

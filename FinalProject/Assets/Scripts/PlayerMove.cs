@@ -9,6 +9,10 @@ public class PlayerMove : MonoBehaviour
     public Transform movePoint;
 
     public LayerMask BlockedArea;
+    
+    //animation/asset manager
+    [SerializeField] private GameObject asset;
+    private new AnimationGeneric animation;
 
     private string mostRecentPress;
 
@@ -22,6 +26,7 @@ public class PlayerMove : MonoBehaviour
     {
         movePoint.parent = null;
         audioSource = GetComponent<AudioSource>();
+        animation = asset.GetComponent<AnimationGeneric>();
     }
 
     // Update is called once per frame
@@ -62,24 +67,28 @@ public class PlayerMove : MonoBehaviour
 
             if (!(Physics2D.OverlapCircle(movePoint.position + new Vector3(-1f, 0f, 0f), 0.05f, BlockedArea))) {
                 movePoint.position += new Vector3(-1f, 0f, 0f);
+                animation.MoveShift(new Vector3(-0.5f, 0f, 0f), 0.2f);
             }
 
         } else if (direction == "right") {
 
             if (!(Physics2D.OverlapCircle(movePoint.position + new Vector3(1f, 0f, 0f), 0.05f, BlockedArea))) {
                 movePoint.position += new Vector3(1f, 0f, 0f);
+                animation.MoveShift(new Vector3(0.5f, 0f, 0f), 0.2f);
             }
 
         } else if (direction == "down") {
 
             if (!(Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, -1f, 0f), 0.05f, BlockedArea))) {
                 movePoint.position += new Vector3(0f, -1f, 0f);
+                animation.MoveShift(new Vector3(0f, -0.5f, 0f), 0.2f);
             }
 
         } else if (direction == "up") {
 
             if (!(Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, 1f, 0f), 0.05f, BlockedArea))) {
                 movePoint.position += new Vector3(0f, 1f, 0f);
+                animation.MoveShift(new Vector3(0f, 0.5f, 0f), 0.2f);
             }
 
         }

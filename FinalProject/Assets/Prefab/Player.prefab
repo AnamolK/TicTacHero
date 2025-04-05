@@ -37,7 +37,7 @@ Transform:
   - {fileID: 3915093028361454382}
   - {fileID: 1504253669722096697}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4166520625261806315
 MonoBehaviour:
@@ -117,7 +117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2818e4a4f8f2e2b4ba1edf304289d36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
   healthText: {fileID: 0}
   gameOverText: {fileID: 0}
   damageInterval: 1.5
@@ -348,7 +347,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3795315548681982269}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

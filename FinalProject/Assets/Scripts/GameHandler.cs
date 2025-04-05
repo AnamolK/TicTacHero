@@ -20,7 +20,7 @@ public class GameHandler : MonoBehaviour
         else
         {
             Debug.Log("✅ DialogueManager found. Starting dialogue...");
-            dm.StartDialogue();
+            dm.StartDialogue(); // ✅ this will activate the DialogueBox
         }
     }
 

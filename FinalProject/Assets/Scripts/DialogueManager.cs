@@ -15,9 +15,10 @@ public class DialogueManager : MonoBehaviour
     private int currentLine = 0;
     private bool dialogueActive = false;
 
+    
     void Start()
     {
-        dialogueBox.SetActive(false); // Start hidden
+        //dialogueBox.SetActive(false); // Start hidden
 
         if (nextButton != null)
             nextButton.onClick.AddListener(DisplayNextLine);
@@ -33,6 +34,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue()
     {
+
         Debug.Log("🟢 DialogueManager: StartDialogue called!");
 
         if (lines.Length == 0)
@@ -42,6 +44,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         dialogueBox.SetActive(true);
+        Debug.Log("✅ dialogueBox should now be active: " + dialogueBox.activeInHierarchy);
         currentLine = 0;
         dialogueText.text = lines[currentLine];
         dialogueActive = true;

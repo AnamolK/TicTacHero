@@ -4,9 +4,9 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     [Header("UI References")]
-    public GameObject dialogueBox;       // Assign the DialogueBox panel
-    public Text dialogueText;            // Assign the DialogueText (Legacy)
-    public Button nextButton;            // Optional: assign Button_Next
+    public GameObject dialogueBox;      
+    public Text dialogueText;           
+    public Button nextButton;           
 
     [Header("Dialogue Lines")]
     [TextArea(2, 5)]
@@ -15,7 +15,6 @@ public class DialogueManager : MonoBehaviour
     private int currentLine = 0;
     private bool dialogueActive = false;
 
-    
     void Start()
     {
         //dialogueBox.SetActive(false); // Start hidden
@@ -44,13 +43,12 @@ public class DialogueManager : MonoBehaviour
         }
 
         dialogueBox.SetActive(true);
+        FindObjectOfType<WaveManager>().enabled = false;
         Debug.Log("✅ dialogueBox should now be active: " + dialogueBox.activeInHierarchy);
         currentLine = 0;
         dialogueText.text = lines[currentLine];
         dialogueActive = true;
     }
-
-
 
     public void DisplayNextLine()
     {
@@ -68,6 +66,7 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         dialogueBox.SetActive(false);
+        FindObjectOfType<WaveManager>().enabled = true;
         dialogueActive = false;
     }
 }

@@ -40,8 +40,8 @@ public class AnimationGeneric : MonoBehaviour
 
     public void MoveShift(Vector3 direction, float duration) {
         asset.localPosition = Vector3.zero;
-        asset.DOPunchPosition(direction, duration, 2, 0.5f, false).OnComplete(() => {
-            //resetPosition(2f);
+        asset.DOPunchPosition(direction, duration, 1, 0.5f, false).OnComplete(() => {
+            resetPosition(0.3f);
         });
         Debug.Log("Animation Played: MoveShift");
     }
@@ -55,7 +55,7 @@ public class AnimationGeneric : MonoBehaviour
     }
 
     public void DamageTaken(float duration) {
-        asset.DOShakePosition (duration, 0.1f, 10, 90, false, true, ShakeRandomnessMode.Harmonic);
+        asset.DOShakePosition (duration, 0.3f, 20, 90, false, true, ShakeRandomnessMode.Full);
         Debug.Log("Animation Played: DamageTaken");
     }
 

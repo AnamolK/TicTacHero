@@ -89,12 +89,15 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        if (gameOverText != null)
+        GameHandler handler = FindObjectOfType<GameHandler>();
+        if (handler != null)
         {
-            gameOverText.gameObject.SetActive(true);
-            gameOverText.text = "Game Over!";
+            handler.LoseGame();
         }
-        Time.timeScale = 0f;
+        else
+        {
+            Debug.LogError("GameHandler not found! Cannot switch to LoseScene.");
+        }
     }
 
     // When an enemy collides, start applying damage over time.

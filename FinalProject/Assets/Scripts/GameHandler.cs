@@ -8,6 +8,22 @@ public class GameHandler : MonoBehaviour
     public string winSceneName = "WinScene";
     public string loseSceneName = "LoseScene";
 
+    void Start()
+    {
+        Debug.Log("🟢 GameHandler.Start() called");
+
+        DialogueManager dm = FindObjectOfType<DialogueManager>();
+        if (dm == null)
+        {
+            Debug.LogWarning("⚠️ No DialogueManager found in this scene!");
+        }
+        else
+        {
+            Debug.Log("✅ DialogueManager found. Starting dialogue...");
+            dm.StartDialogue();
+        }
+    }
+
     public void StartGame()
     {
         SceneManager.LoadScene("GameScene");

@@ -587,7 +587,7 @@ Transform:
   - {fileID: 7318825270291879427}
   - {fileID: 6817851173497780043}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3779764873409761429
 MonoBehaviour:
@@ -723,7 +723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb3bbfff0bf95a4ea79b4c48588bd8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveTickDuration: 0.5
+  moveTickDuration: 1
   maxHealth: 3
   currentAttackSide: None
   movePoint: {fileID: 7318825270291879427}

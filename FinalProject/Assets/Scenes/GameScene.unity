@@ -42997,7 +42997,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -496.4, y: -308.1}
+  m_AnchoredPosition: {x: -496.4, y: -279}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1519122583
@@ -43520,11 +43520,14 @@ MonoBehaviour:
   dialogueBox: {fileID: 52535269}
   dialogueText: {fileID: 140794258}
   nextButton: {fileID: 1907061146}
-  lines:
+  tutorialBefore:
   - Hero! Fight against the seemingly endless hordes of monsters!
-  - Use arrows or WASD to move.
-  - Defeat enemies by flanking them and moving towards their direction! Don't touch
-    the colored side.
+  - Use WASD to move and attack.
+  - Defeat enemies by dashing into them.
+  - But careful, remember to avoid their vicious attacks!
+  tutorialAfter: []
+  currentLines: []
+  dialogueSequence: 0
 --- !u!1 &1907061145
 GameObject:
   m_ObjectHideFlags: 0

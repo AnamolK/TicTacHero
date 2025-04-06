@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+    //audio manager
     private AudioSource audioSource;
     public AudioClip[] soundList;
     private AudioClip selected;
@@ -20,12 +21,13 @@ public class PlayerAttack : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         playerStats = GetComponent<PlayerStats>();
+        animation = asset.GetComponent<AnimationGeneric>();
+        
         if (playerStats == null)
         {
             Debug.LogWarning("PlayerStats component not found on the PlayerAttack GameObject!");
         }
         
-        animation = asset.GetComponent<AnimationGeneric>();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -69,9 +71,9 @@ public class PlayerAttack : MonoBehaviour
                     Debug.Log("Attack Hit: " + hitSide);
                     // Get damage from PlayerStats; if not found, default to 1.
                     int damage = (playerStats != null) ? playerStats.currentAttackDamage : 1;
+                    playSFX();
                     currentEnemy.TakeDamage(damage);
                     animation.AttackMelee(AttackAnimationDirection(hitSide), 0.2f);
-                    PlaySFX();
                 }
                 else
                 {
@@ -118,11 +120,10 @@ public class PlayerAttack : MonoBehaviour
             return diff.y > 0 ? "Up" : "Down";
     }
 
-    void PlaySFX()
-    {
+    void playSFX() {
         int index = Random.Range(0, soundList.Length);
         selected = soundList[index];
         audioSource.clip = selected;
-        audioSource.Play();
+        audioSource.PlayOneShot(selected);
     }
 }

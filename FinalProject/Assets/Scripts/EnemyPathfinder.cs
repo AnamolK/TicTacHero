@@ -59,7 +59,11 @@ public class EnemyPathfinder : MonoBehaviour
                     movePoint.position = newDestination;
                     currentAttackSide = GetDirectionString(direction);
                     Debug.Log("Enemy moving to: " + newDestination + " with active attack side: " + currentAttackSide);
-                    animation.MoveBounce(0.4f);
+
+                    if (!IsCellOccupiedForAnimation(newDestination))
+                    {
+                        animation.MoveBounce(0.4f);
+                    }
                 }
                 else
                 {
@@ -117,12 +121,28 @@ public class EnemyPathfinder : MonoBehaviour
         return false;
     }
 
+    bool IsCellOccupiedForAnimation(Vector3 destination)
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(destination, occupancyCheckRadius);
+        foreach (Collider2D col in colliders)
+        {
+            if (col.gameObject != this.gameObject && (col.CompareTag("Enemy") || col.CompareTag("Player")))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         Debug.Log("Enemy took damage. Current health: " + currentHealth);
-        if (currentHealth <= 0)
+        if (currentHealth <= 0) {
             Die();
+        } else {
+            animation.DamageTakenEnemy(0.1f);
+        }
     }
 
     void Die()
@@ -149,7 +169,8 @@ public class EnemyPathfinder : MonoBehaviour
         if(willDropPotion && healthPotionPrefab != null)
             Instantiate(healthPotionPrefab, transform.position, transform.rotation);
 
+        animation.DieEnemy(0.3f);
         // Destroy the enemy's root GameObject.
-        Destroy(transform.root.gameObject, 0.1f);
+        Destroy(transform.root.gameObject, 0.5f);
     }
 }

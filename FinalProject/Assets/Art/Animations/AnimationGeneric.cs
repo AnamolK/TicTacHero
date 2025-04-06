@@ -49,19 +49,35 @@ public class AnimationGeneric : MonoBehaviour
     public void AttackMelee(Vector3 direction, float duration) {
         asset.localPosition = Vector3.zero;
         asset.DOPunchPosition(direction, duration, 3, 0.5f, false).OnComplete(() => {
-            resetPosition(2f);
+            resetPosition(1f);
         });
         Debug.Log("Animation Played: AttackMelee");
     }
 
     public void DamageTaken(float duration) {
-        asset.DOShakePosition (duration, 0.3f, 20, 90, false, true, ShakeRandomnessMode.Full);
+        asset.DOShakePosition (duration, 0.3f, 20, 90, false, true, ShakeRandomnessMode.Full).OnComplete(() => {
+            resetPosition(1f);
+        });
         Debug.Log("Animation Played: DamageTaken");
+    }
+
+    public void DamageTakenEnemy(float duration) {
+        asset.DOPunchRotation(new Vector3(0,0,0), duration, 20, 0.3f).OnComplete(() => {
+            resetPosition(1f);
+        });
+        Debug.Log("Animation Played: DamageTakenEnemy");
+    }
+
+    public void DieEnemy(float duration) {
+        asset.DOLocalRotate(new Vector3(0,0,110), duration-0.05f, RotateMode.Fast);
+        asset.DOLocalRotate(new Vector3(0,0,-20), 0.05f, RotateMode.Fast);
     }
 
     private void resetPosition(float duration) {
         if (asset.localPosition != new Vector3(0,0,0)) {
             asset.DOLocalMove(new Vector3(0,0,0), duration, false);
+            asset.DOLocalRotate(new Vector3(0,0,0), duration);
+            
         }
     }
 }

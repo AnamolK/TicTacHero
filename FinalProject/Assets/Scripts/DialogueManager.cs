@@ -10,8 +10,11 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Dialogue Lines")]
     [TextArea(2, 5)]
-    public string[] lines;
+    [SerializeField] private string[] tutorialBefore;
+    [SerializeField] private string[] tutorialAfter;
+    [SerializeField] private string[] currentLines;
 
+    public int dialogueSequence = 0;
     private int currentLine = 0;
     private bool dialogueActive = false;
 
@@ -32,12 +35,13 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void StartDialogue()
+    public void StartDialogue(int sequence)
     {
+        dialogueSequenceSelector(sequence);
 
         Debug.Log("🟢 DialogueManager: StartDialogue called!");
 
-        if (lines.Length == 0)
+        if (currentLines.Length == 0)
         {
             Debug.LogWarning("⚠️ No dialogue lines assigned!");
             return;
@@ -46,18 +50,24 @@ public class DialogueManager : MonoBehaviour
         dialogueBox.SetActive(true);
         Debug.Log("✅ dialogueBox should now be active: " + dialogueBox.activeInHierarchy);
         currentLine = 0;
-        dialogueText.text = lines[currentLine];
+        dialogueText.text = currentLines[currentLine];
         dialogueActive = true;
     }
 
-
+    private void dialogueSequenceSelector(int sequence) {
+        if (sequence == 0) {
+            currentLines = tutorialBefore;
+        } else if (sequence == 1) {
+            currentLines = tutorialAfter;
+        }
+    }
 
     public void DisplayNextLine()
     {
         currentLine++;
-        if (currentLine < lines.Length)
+        if (currentLine < currentLines.Length)
         {
-            dialogueText.text = lines[currentLine];
+            dialogueText.text = currentLines[currentLine];
         }
         else
         {

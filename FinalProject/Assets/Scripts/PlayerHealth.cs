@@ -63,7 +63,7 @@ public class PlayerHealth : MonoBehaviour
         // Subtract damage from current health in PlayerStats.
         playerStats.currentHealth -= damage;
         playSFX();
-        animation.DamageTaken(0.3f);
+        animation.DamageTaken(0.5f);
         UpdateUI();
         lastDisplayedHealth = playerStats.currentHealth;
         Debug.Log("Player took damage. Current health: " + playerStats.currentHealth);
@@ -144,6 +144,6 @@ public class PlayerHealth : MonoBehaviour
         int index = Random.Range(0, soundList.Length);
         selected = soundList[index];
         audioSource.clip = selected;
-        audioSource.Play();
+        audioSource.PlayOneShot(selected);
     }
 }

@@ -106,6 +106,6 @@ public class PlayerMove : MonoBehaviour
         int index = Random.Range(0, soundList.Length);
         selected = soundList[index];
         audioSource.clip = selected;
-        audioSource.Play();
+        audioSource.PlayOneShot(selected);
     }
 }

@@ -86,6 +86,7 @@ public class EnemyMovementController : MonoBehaviour
         isDead = true;
         this.enabled = false;
         if (movePoint != null)
-            Destroy(movePoint.gameObject, 0.1f);
+            animation.DieEnemy(0.2f);
+            Destroy(movePoint.gameObject, 0.2f);
     }
 }

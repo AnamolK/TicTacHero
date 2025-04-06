@@ -4,9 +4,9 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     [Header("UI References")]
-    public GameObject dialogueBox;       // Assign the DialogueBox panel
-    public Text dialogueText;            // Assign the DialogueText (Legacy)
-    public Button nextButton;            // Optional: assign Button_Next
+    public GameObject dialogueBox;     
+    public Text dialogueText;            
+    public Button nextButton;            
 
     [Header("Dialogue Lines")]
     [TextArea(2, 5)]

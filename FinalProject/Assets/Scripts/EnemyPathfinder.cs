@@ -18,6 +18,9 @@ public class EnemyPathfinder : MonoBehaviour
     //animation/asset manager
     [SerializeField] private GameObject asset;
     private new AnimationGeneric animation;
+    
+    public bool willDropPotion = false;
+    public GameObject healthPotionPrefab;
 
     void Start()
     {
@@ -142,6 +145,9 @@ public class EnemyPathfinder : MonoBehaviour
             Destroy(movePoint.gameObject);
             movePoint = null;
         }
+
+        if(willDropPotion && healthPotionPrefab != null)
+            Instantiate(healthPotionPrefab, transform.position, transform.rotation);
 
         // Destroy the enemy's root GameObject.
         Destroy(transform.root.gameObject, 0.1f);

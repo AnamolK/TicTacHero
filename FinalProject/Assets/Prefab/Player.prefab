@@ -38,7 +38,7 @@ Transform:
   - {fileID: 196919662512329192}
   - {fileID: 1504253669722096697}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4166520625261806315
 MonoBehaviour:
@@ -58,6 +58,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   asset: {fileID: 7296475643305464596}
+  images:
+  - {fileID: 21300000, guid: 0b0abcb854efb1044bbce75795cb5fa1, type: 3}
+  - {fileID: 21300000, guid: 4cf374d20c8aa514bb83f61fbeed0516, type: 3}
+  - {fileID: 21300000, guid: dcf0df8a282b39d45bde120ca9aeb338, type: 3}
+  - {fileID: 21300000, guid: 7c6ac0e9965ca5543b1e817d0d63783b, type: 3}
+  imageContainer: {fileID: 3795315548681982269}
   soundList:
   - {fileID: 8300000, guid: be467090ef2cd624f9df5d50da1af1c9, type: 3}
   - {fileID: 8300000, guid: 8bdf161829b364347b004f4825e1e2f2, type: 3}
@@ -156,6 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundList:
   - {fileID: 8300000, guid: 8d68e09bd5b92fd4abcf8a0f4da49741, type: 3}
+  asset: {fileID: 7296475643305464596}
 --- !u!82 &7576993357446184198
 AudioSource:
   m_ObjectHideFlags: 0
@@ -366,7 +373,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3795315548681982269}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.45, z: 0}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -414,7 +421,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 999
-  m_Sprite: {fileID: 21300000, guid: 68b25a53879ef3649aff80fa4ce126c7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b0abcb854efb1044bbce75795cb5fa1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -424,7 +431,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &6294668020768860437
 GameObject:
   m_ObjectHideFlags: 0

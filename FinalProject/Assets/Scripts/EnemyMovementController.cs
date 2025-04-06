@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyMovementController : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class EnemyMovementController : MonoBehaviour
     //animation/asset manager
     [SerializeField] private GameObject asset;
     private new AnimationGeneric animation;
+    public Sprite[] images;
+    public GameObject imageContainer;
     
 
     void Start()
@@ -63,20 +66,19 @@ public class EnemyMovementController : MonoBehaviour
         else if (transform.position.y > target.y)
             facing = "S";
 
-        //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, getRotVal(facing));
+        setImage(facing);
     }
 
-    int getRotVal(string val)
+    void setImage(string val)
     {
         if (val == "N")
-            return 0;
+            imageContainer.GetComponent<SpriteRenderer>().sprite = images[1];
         else if (val == "E")
-            return 270;
+            imageContainer.GetComponent<SpriteRenderer>().sprite = images[3];
         else if (val == "W")
-            return 90;
+            imageContainer.GetComponent<SpriteRenderer>().sprite = images[2];
         else if (val == "S")
-            return 180;
-        return 180;
+            imageContainer.GetComponent<SpriteRenderer>().sprite = images[0];
     }
 
     public void Die()

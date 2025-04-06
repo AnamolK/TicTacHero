@@ -729,6 +729,8 @@ MonoBehaviour:
   movePoint: {fileID: 7318825270291879427}
   occupancyCheckRadius: 0.3
   asset: {fileID: 2926859044733998614}
+  willDropPotion: 0
+  healthPotionPrefab: {fileID: 5676807617435308758, guid: 1b91245b846ebe440be5eac50e8d69e9, type: 3}
 --- !u!1 &5496485408107937801
 GameObject:
   m_ObjectHideFlags: 0

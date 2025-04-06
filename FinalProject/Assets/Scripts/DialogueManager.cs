@@ -18,7 +18,6 @@ public class DialogueManager : MonoBehaviour
     private int currentLine = 0;
     private bool dialogueActive = false;
 
-    
     void Start()
     {
         //dialogueBox.SetActive(false); // Start hidden
@@ -38,7 +37,7 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(int sequence)
     {
         dialogueSequenceSelector(sequence);
-
+        Time.timeScale = 0;
         Debug.Log("🟢 DialogueManager: StartDialogue called!");
 
         if (currentLines.Length == 0)
@@ -79,5 +78,6 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueBox.SetActive(false);
         dialogueActive = false;
+        Time.timeScale = 1;
     }
 }

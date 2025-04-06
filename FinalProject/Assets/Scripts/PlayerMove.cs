@@ -18,6 +18,7 @@ public class PlayerMove : MonoBehaviour
     public GameObject imageContainer;
 
     private string mostRecentPress;
+    private bool isHeld;
 
     //audio manager
     private AudioSource audioSource;
@@ -37,23 +38,27 @@ public class PlayerMove : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, movePoint.position) <= 0.1f) {
+        if (Vector3.Distance(transform.position, movePoint.position) <= 0.1f && isHeld == false) {
             
-            if (Input.GetKeyDown(KeyCode.A)) {
+            if (Input.GetAxisRaw("Horizontal") == -1f) {
                 mostRecentPress = "left";
                 playSFX();
+                checkForHold();
 
-            } else if (Input.GetKeyDown(KeyCode.D)) {
+            } else if (Input.GetAxisRaw("Horizontal") == 1f) {
                 mostRecentPress = "right";
                 playSFX();
+                checkForHold();
 
-            } else if (Input.GetKeyDown(KeyCode.S)) {
+            } else if (Input.GetAxisRaw("Vertical") == -1f) {
                 mostRecentPress = "down";
                 playSFX();
+                checkForHold();
 
-            } else if (Input.GetKeyDown(KeyCode.W)) {
+            } else if (Input.GetAxisRaw("Vertical") == 1f) {
                 mostRecentPress = "up";
                 playSFX();
+                checkForHold();
                 
             } else {
                 mostRecentPress = "NaN";
@@ -61,7 +66,8 @@ public class PlayerMove : MonoBehaviour
 
             checkKeyPressChange(mostRecentPress);
 
-        }        
+        }      
+        checkForHold();  
     }
 
     void checkKeyPressChange (string direction) {
@@ -100,6 +106,15 @@ public class PlayerMove : MonoBehaviour
 
         }
 
+    }
+
+    bool checkForHold() {
+        if (Input.GetAxisRaw("Horizontal") == 0f && Input.GetAxisRaw("Vertical") == 0f) {
+            isHeld = false;
+        } else {
+            isHeld = true;
+        }
+        return isHeld;
     }
 
     void playSFX() {

@@ -608,6 +608,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 9
   asset: {fileID: 2926859044733998614}
+  images: []
+  imageContainer: {fileID: 2926859044733998614}
 --- !u!61 &3206640182839788183
 BoxCollider2D:
   m_ObjectHideFlags: 0

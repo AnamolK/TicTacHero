@@ -26,7 +26,7 @@ public class WaveManager : MonoBehaviour
     public float waveDisplayDuration = 2f;
     
     // Current wave number.
-    private int waveNumber = 1;
+    public int waveNumber = 1;
     
     void Start()
     {

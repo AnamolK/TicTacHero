@@ -9,6 +9,7 @@ TagManager:
   - PauseMenuSlider
   - GameHandler
   - Attackable
+  - Turret
   layers:
   - Default
   - TransparentFX

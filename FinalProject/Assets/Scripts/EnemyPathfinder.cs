@@ -52,7 +52,7 @@ public class EnemyPathfinder : MonoBehaviour
                 Vector3 currentDestination = movePoint.position;
                 Vector3 newDestination = currentDestination + new Vector3(direction.x, direction.y, 0);
                 newDestination = new Vector3(SnapToGrid(newDestination.x), SnapToGrid(newDestination.y), newDestination.z);
-
+                
                 // Check if the destination cell is occupied by another enemy.
                 if (!IsCellOccupied(newDestination))
                 {
@@ -67,7 +67,37 @@ public class EnemyPathfinder : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Destination " + newDestination + " is occupied. Not moving.");
+                    // Try alternative direction if direct move is blocked
+                    Vector2 alternativeDirection = Vector2.zero;
+                    if (direction.x != 0)
+                        alternativeDirection = new Vector2(0, Mathf.Sign(player.position.y - movePoint.position.y));
+                    else if (direction.y != 0)
+                        alternativeDirection = new Vector2(Mathf.Sign(player.position.x - movePoint.position.x), 0);
+
+                    if (alternativeDirection != Vector2.zero)
+                    {
+                        Vector3 altDestination = currentDestination + new Vector3(alternativeDirection.x, alternativeDirection.y, 0);
+                        altDestination = new Vector3(SnapToGrid(altDestination.x), SnapToGrid(altDestination.y), altDestination.z);
+                        if (!IsCellOccupied(altDestination))
+                        {
+                            movePoint.position = altDestination;
+                            currentAttackSide = GetDirectionString(alternativeDirection);
+                            Debug.Log("Enemy moving to: " + altDestination + " with active attack side: " + currentAttackSide);
+
+                            if (!IsCellOccupiedForAnimation(altDestination))
+                            {
+                                animation.MoveBounce(0.4f);
+                            }
+                        }
+                        else
+                        {
+                            Debug.Log("Destination " + newDestination + " and alternative " + altDestination + " are occupied. Not moving.");
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Destination " + newDestination + " is occupied. Not moving.");
+                    }
                 }
             }
         }
@@ -113,7 +143,7 @@ public class EnemyPathfinder : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapCircleAll(destination, occupancyCheckRadius);
         foreach (Collider2D col in colliders)
         {
-            if (col.gameObject != this.gameObject && col.CompareTag("Enemy"))
+            if (col.gameObject != this.gameObject && (col.CompareTag("Enemy") || col.CompareTag("Turret")))
             {
                 return true;
             }

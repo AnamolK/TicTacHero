@@ -89,16 +89,9 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        GameHandler handler = FindObjectOfType<GameHandler>();
-        if (handler != null)
-        {
-            handler.LoseGame();
-        }
-        else
-        {
-            Debug.LogError("GameHandler not found! Cannot switch to LoseScene.");
-        }
+        CheckpointManager.Instance.RestartFromCheckpoint();
     }
+
 
     // When an enemy collides, start applying damage over time.
     void OnTriggerEnter2D(Collider2D collision)

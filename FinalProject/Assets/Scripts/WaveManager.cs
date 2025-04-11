@@ -31,6 +31,7 @@ public class WaveManager : MonoBehaviour
 
     void Start()
     {
+        if (CheckpointManager.checkpointWave > 0) { waveNumber = CheckpointManager.checkpointWave; CheckpointManager.checkpointWave = 0; }
         StartCoroutine(SpawnWaves());
     }
 
@@ -109,12 +110,8 @@ public class WaveManager : MonoBehaviour
                 if (i == dropIndex)
                 {
                     EnemyPathfinder ep = enemyInstance.GetComponent<EnemyPathfinder>();
-                    if (ep != null) 
+                    if (ep != null)
                         ep.willDropPotion = true;
-
-                    // If the third enemy uses "DragonPathfinder" instead, you can do:
-                    // DragonPathfinder dp = enemyInstance.GetComponent<DragonPathfinder>();
-                    // if (dp != null) dp.willDropPotion = true;
                 }
 
                 yield return new WaitForSeconds(spawnDelay);
@@ -128,6 +125,10 @@ public class WaveManager : MonoBehaviour
             int pointsAwarded = (waveNumber % 3 == 0) ? 2 : 1;
             UpgradeManager.Instance.AwardPoints(pointsAwarded);
             Debug.Log("Awarded " + pointsAwarded + " upgrade point(s).");
+
+            // Set checkpoint if wave is a multiple of 3
+            if (waveNumber % 3 == 0)
+                CheckpointManager.Instance.SetCheckpoint(waveNumber);
 
             // Show upgrade panel
             UpgradeManager.Instance.ShowUpgradePanel();

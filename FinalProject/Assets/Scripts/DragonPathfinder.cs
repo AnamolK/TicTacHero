@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DragonPathfinder : MonoBehaviour
 {
-    [Header("Dragon Stats")]
+   [Header("Dragon Stats")]
     public float moveTickDuration = 1f; // Movement frequency
     public int maxHealth = 30;         // More HP for a boss
     private int currentHealth;
@@ -14,9 +14,9 @@ public class DragonPathfinder : MonoBehaviour
 
     private Transform player;             // Player reference
 
-    // We rename 'animation' to avoid clash with Unity's built-in 'Component.animation'
+   //animation/asset manager
     [SerializeField] private GameObject asset;
-    private AnimationGeneric animGeneric;  // The new name for the animation reference
+    private new AnimationGeneric animTween;
 
     // Dragon-specific attack fields
     [Header("Dragon Attack Settings")]
@@ -28,7 +28,7 @@ public class DragonPathfinder : MonoBehaviour
     // If you want to keep the “attack side” logic from your original script:
     public string currentAttackSide = "None";
 
-    // If you want to optionally drop items on death
+ // If you want to optionally drop items on death
     public bool willDropPotion = false;
     public GameObject healthPotionPrefab;
 
@@ -55,7 +55,7 @@ public class DragonPathfinder : MonoBehaviour
         StartCoroutine(MoveTick());
 
         // Grab the AnimationGeneric component from the 'asset' child object
-        animGeneric = asset.GetComponent<AnimationGeneric>();
+        animTween = asset.GetComponent<AnimationGeneric>();
     }
 
     IEnumerator MoveTick()
@@ -87,10 +87,12 @@ public class DragonPathfinder : MonoBehaviour
 
         // Optional telegraph animation
         Debug.Log("Dragon telegraphs attack...");
-        // E.g.: animGeneric.AttackMelee(...) or a custom method
+        // E.g.: animTween.AttackMelee(...) or a custom method
 
         // Wait for the telegraph/wind-up duration
+        GetComponent<VFX_ColorChange>().AnticipateAttack();
         yield return new WaitForSeconds(telegraphDuration);
+        
 
         // Actually breathe fire
         if (player != null && firePrefab != null)
@@ -138,9 +140,9 @@ public class DragonPathfinder : MonoBehaviour
                 Debug.Log("Dragon moving to: " + newDestination);
 
                 // Optional bounce animation
-                if (!IsCellOccupiedForAnimation(newDestination) && animGeneric != null)
+                if (!IsCellOccupiedForAnimation(newDestination) && animTween != null)
                 {
-                    animGeneric.MoveBounce(0.4f);
+                    animTween.MoveBounce(0.4f);
                 }
             }
             else
@@ -210,11 +212,12 @@ public class DragonPathfinder : MonoBehaviour
             return direction.y > 0 ? "Up" : "Down";
     }
 
-    // Same damage logic from your original pathfinder
+// Same damage logic from your original pathfinder
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         Debug.Log("Dragon took damage. Current health: " + currentHealth);
+        GetComponent<VFX_ColorChange>().GetHit();
 
         if (currentHealth <= 0)
         {
@@ -222,8 +225,8 @@ public class DragonPathfinder : MonoBehaviour
         }
         else
         {
-            if (animGeneric != null)
-                animGeneric.DamageTakenEnemy(0.1f);
+            if (animTween != null)
+                animTween.DamageTakenEnemy(0.1f);
         }
     }
 
@@ -231,7 +234,7 @@ public class DragonPathfinder : MonoBehaviour
     {
         Debug.Log("Dragon died.");
 
-        StopAllCoroutines();
+        StopAllCoroutines(); // does this need to send a message to pathfinder?
         this.enabled = false;
 
         // Disable collisions and visuals
@@ -254,10 +257,13 @@ public class DragonPathfinder : MonoBehaviour
             Instantiate(healthPotionPrefab, transform.position, transform.rotation);
 
         // Play death animation
-        if (animGeneric != null)
-            animGeneric.DieEnemy(0.3f);
+        if (animTween != null)
+            animTween.DieEnemy(0.3f);
 
         // Destroy the dragon object after a short delay
         Destroy(transform.root.gameObject, 0.5f);
     }
+
+
+    
 }

@@ -6,17 +6,24 @@ public class DialogueManager : MonoBehaviour
     [Header("UI References")]
     public GameObject dialogueBox;     
     public Text dialogueText;            
-    public Button nextButton;            
+    public Button nextButton;      
 
     [Header("Dialogue Lines")]
     [TextArea(2, 5)]
+    
+    private string[] currentLines;
     [SerializeField] private string[] tutorialBefore;
     [SerializeField] private string[] tutorialAfter;
-    [SerializeField] private string[] currentLines;
+    
+    [SerializeField] private string[] dragonBefore;
+    [SerializeField] private string[] dragonAfter;
+    [SerializeField] private string[] WarningAfter;
+    [SerializeField] private string[] Warning2After;
+    [SerializeField] private string[] SlimeBefore;
+    [SerializeField] private string[] SlimeAfter;
 
-    public int dialogueSequence = 0;
     private int currentLine = 0;
-    private bool dialogueActive = false;
+    public bool dialogueActive = false;
 
     void Start()
     {
@@ -58,6 +65,18 @@ public class DialogueManager : MonoBehaviour
             currentLines = tutorialBefore;
         } else if (sequence == 1) {
             currentLines = tutorialAfter;
+        } else if (sequence == 2) {
+            currentLines = dragonBefore;
+        } else if (sequence == 3) {
+            currentLines = dragonAfter;
+        } else if (sequence == 4) {
+            currentLines = WarningAfter;
+        } else if (sequence == 5) {
+            currentLines = Warning2After;
+        } else if (sequence == 6) {
+            currentLines = SlimeBefore;
+        } else if (sequence == 7) {
+            currentLines = SlimeAfter;
         }
     }
 

@@ -5,7 +5,7 @@ public class EnemyPathfinder : MonoBehaviour
 {
     public float moveTickDuration = 1f;
     public int maxHealth = 10;
-    private int currentHealth;
+    [SerializeField] private int currentHealth;
 
     public string currentAttackSide = "None";
 

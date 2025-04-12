@@ -347,9 +347,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbb95afec9111949bb923e64aaa30ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5168872523443544771, guid: 0984675420878f340b07933a0d0bd69a, type: 3}
-  secondEnemyPrefab: {fileID: 5168872523443544771, guid: e3f160fca56251d4f93ab99a691640fb, type: 3}
-  thirdEnemyPrefab: {fileID: 5168872523443544771, guid: 2b2bb8a374b364491b70711ee29231b5, type: 3}
+  enemiesTypes:
+  - {fileID: 5168872523443544771, guid: 0984675420878f340b07933a0d0bd69a, type: 3}
+  - {fileID: 5168872523443544771, guid: e3f160fca56251d4f93ab99a691640fb, type: 3}
+  - {fileID: 5168872523443544771, guid: 2b2bb8a374b364491b70711ee29231b5, type: 3}
   spawnPoints:
   - {fileID: 1799518150}
   - {fileID: 1665769440}
@@ -358,7 +359,136 @@ MonoBehaviour:
   - {fileID: 1681606904}
   spawnDelay: 2
   timeBetweenWaves: 3
-  waveEnemyCounts: 010000000200000004000000060000000600000008000000
+  waveArray:
+  - enemies:
+    - typeInd: 0
+      health: 8
+      atk: 1
+      dropHp: 1
+      spawnDelay: 0
+    numEnemies: 1
+    StartDialogue: -1
+    EndDialogue: 1
+  - enemies:
+    - typeInd: 0
+      health: 10
+      atk: 1
+      dropHp: 0
+      spawnDelay: 0
+    - typeInd: 0
+      health: 10
+      atk: 1
+      dropHp: 0
+      spawnDelay: 0
+    - typeInd: 0
+      health: 10
+      atk: 1
+      dropHp: 0
+      spawnDelay: 0
+    numEnemies: 3
+    StartDialogue: -1
+    EndDialogue: -1
+  - enemies:
+    - typeInd: 1
+      health: 20
+      atk: 1
+      dropHp: 0
+      spawnDelay: 0
+    - typeInd: 1
+      health: 5
+      atk: 1
+      dropHp: 1
+      spawnDelay: 0
+    - typeInd: 1
+      health: 5
+      atk: 1
+      dropHp: 1
+      spawnDelay: 0
+    numEnemies: 3
+    StartDialogue: 2
+    EndDialogue: 3
+  - enemies:
+    - typeInd: 1
+      health: 8
+      atk: 1
+      dropHp: 0
+      spawnDelay: 0
+    - typeInd: 1
+      health: 8
+      atk: 1
+      dropHp: 1
+      spawnDelay: 0
+    - typeInd: 1
+      health: 8
+      atk: 1
+      dropHp: 0
+      spawnDelay: 4
+    - typeInd: 0
+      health: 16
+      atk: 1
+      dropHp: 0
+      spawnDelay: 0
+    - typeInd: 0
+      health: 16
+      atk: 1
+      dropHp: 1
+      spawnDelay: 0
+    numEnemies: 5
+    StartDialogue: -1
+    EndDialogue: 4
+  - enemies:
+    - typeInd: 0
+      health: 16
+      atk: 1
+      dropHp: 0
+      spawnDelay: 0
+    - typeInd: 0
+      health: 16
+      atk: 1
+      dropHp: 0
+      spawnDelay: 0
+    - typeInd: 0
+      health: 16
+      atk: 1
+      dropHp: 0
+      spawnDelay: 8
+    - typeInd: 1
+      health: 10
+      atk: 1
+      dropHp: 0
+      spawnDelay: 0
+    - typeInd: 1
+      health: 10
+      atk: 1
+      dropHp: 0
+      spawnDelay: 0
+    - typeInd: 1
+      health: 10
+      atk: 1
+      dropHp: 1
+      spawnDelay: 3
+    - typeInd: 0
+      health: 20
+      atk: 1
+      dropHp: 1
+      spawnDelay: 0
+    - typeInd: 0
+      health: 20
+      atk: 1
+      dropHp: 0
+      spawnDelay: 0
+    numEnemies: 8
+    StartDialogue: -1
+    EndDialogue: 5
+  - enemies:
+    - typeInd: 0
+      health: 50
+      atk: 1
+      dropHp: 0
+      spawnDelay: 0
+    numEnemies: 1
+    StartDialogue: 6
+    EndDialogue: 7
   waveText: {fileID: 385203418}
   waveDisplayDuration: 1.5
   waveNumber: 1
@@ -44014,9 +44144,38 @@ MonoBehaviour:
   - Use WASD to move and attack.
   - Defeat enemies by dashing into them.
   - But careful, remember to avoid their vicious attacks!
-  tutorialAfter: []
-  currentLines: []
-  dialogueSequence: 0
+  tutorialAfter:
+  - Wonderful! But those are not the last of them.
+  - Here, some upgrades to prepare you for what's to com
+  dragonBefore:
+  - YOU!!! Ahem- What are you doing in my turf?
+  - Who am I? Well, I'm the son of the great dragon, the heir!!!
+  - To the prime real estate of this clearing.
+  - So please, move along, or we are going to have problems.
+  dragonAfter:
+  - YOU!!!!! HOW COULD YOU!
+  - YOU WILL BE HEARING FROM MY FATHER!!!
+  WarningAfter:
+  - STOP, stop!! Okay!
+  - Don't come after us anymore...
+  - We admit it, we are just scouts!
+  - But you are in deep trouble for who you beat up, just saying.
+  - Let's get out of here.
+  Warning2After:
+  - '*Gloop glop* :('
+  - '*Gloop bubble bubble "Shlime King"'
+  - Hired by *pop* young dragon *pop*
+  SlimeBefore:
+  - So, you are the unfortuate soul that crossed the dragons...
+  - As an investor in the dragon empire, I have personally come to deliver your downfall.
+  - Now, kindly, die :)
+  SlimeAfter:
+  - This... this is preposterous!!
+  - I will not be defeated by the likes of you!
+  - You can mock thee in your clearing,
+  - You have trampled on the property of the dragon empire
+  - This will not be the end!! Muahahaha *bubble*
+  dialogueActive: 0
 --- !u!1 &1907061145
 GameObject:
   m_ObjectHideFlags: 0

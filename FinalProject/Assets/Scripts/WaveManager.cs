@@ -5,9 +5,8 @@ using TMPro;
 public class WaveManager : MonoBehaviour
 {
     [Header("Enemy Settings")]
-    public GameObject enemyPrefab;         // The original enemy
-    public GameObject secondEnemyPrefab;   // The second enemy
-    public GameObject thirdEnemyPrefab;    // The new third enemy (e.g. Dragon)
+
+    public GameObject[] enemiesTypes;
 
     [Header("Spawn Points")]
     public Transform[] spawnPoints;
@@ -18,14 +17,28 @@ public class WaveManager : MonoBehaviour
     // Delay after a wave is cleared before the next wave begins.
     public float timeBetweenWaves = 2f;
 
-    [Header("Wave Enemy Counts")]
-    public int[] waveEnemyCounts = new int[] { 1, 2, 4, 6, 6, 8 };
+    public waveContent[] waveArray;
+    [System.Serializable] public struct EnemySettings {
+        public int typeInd;
+        public int health;
+        public int atk;
+        public bool dropHp;
+        public float spawnDelay;
+    }
+
+    [System.Serializable] public struct waveContent {
+        public EnemySettings[] enemies;
+        public int numEnemies;
+        public int StartDialogue;
+        public int EndDialogue;
+    }
+
 
     [Header("UI Elements")]
     public TMP_Text waveText;
     // Duration to show the wave message.
     public float waveDisplayDuration = 2f;
-
+ 
     // Current wave number.
     public int waveNumber = 1;
 
@@ -37,6 +50,7 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator SpawnWaves()
     {
+        DialogueManager dm = FindObjectOfType<DialogueManager>();
         while (true)
         {
             // 1) Display wave text
@@ -45,71 +59,42 @@ public class WaveManager : MonoBehaviour
                 waveText.text = "Wave " + waveNumber;
                 waveText.gameObject.SetActive(true);
             }
-
-            // Wait so the player sees the wave number
             yield return new WaitForSeconds(waveDisplayDuration);
 
             if (waveText != null)
                 waveText.gameObject.SetActive(false);
 
-            // 2) Determine enemy count for this wave
-            int enemyCount;
-            if (waveNumber <= waveEnemyCounts.Length)
-            {
-                enemyCount = waveEnemyCounts[waveNumber - 1];
-            }
-            else
-            {
-                // For waves beyond predefined ones, scale up further
-                enemyCount = waveEnemyCounts[waveEnemyCounts.Length - 1]
-                             + (waveNumber - waveEnemyCounts.Length) * 2;
-            }
+            // get enemy type and count for this wave
+            int enemyCount = waveArray[waveNumber-1].numEnemies;
+            waveContent currWave = waveArray[waveNumber-1];
 
             Debug.Log("Wave " + waveNumber + " starting with " + enemyCount + " enemies.");
 
-            // 3) Decide which enemy will drop a potion
-            int dropIndex = Random.Range(0, enemyCount);
+            if (currWave.StartDialogue != -1) {
+                dm.StartDialogue(currWave.StartDialogue);
+            }
 
-            // 4) Spawn enemies
-            for (int i = 0; i < enemyCount; i++)
-            {
+            for (int i = 0; i < enemyCount; i++) {
+                
                 // Choose random spawn point
-                Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-
-                // Decide which prefab to spawn
+                Transform spawnPoint = spawnPoints[i % 5];
                 GameObject prefabToSpawn = null;
-                if (waveNumber == 1)
-                {
-                    // Wave 1 => only the original enemy
-                    prefabToSpawn = enemyPrefab;
-                }
-                else if (waveNumber == 2)
-                {
-                    // Wave 2 => 50/50 between enemyPrefab & secondEnemyPrefab
-                    if (Random.value < 0.5f)
-                        prefabToSpawn = enemyPrefab;
-                    else
-                        prefabToSpawn = secondEnemyPrefab;
-                }
-                else
-                {
-                    // Wave 3+ => random among all three enemies
-                    float r = Random.value;
-                    if (r < 0.33f)
-                        prefabToSpawn = enemyPrefab;
-                    else if (r < 0.66f)
-                        prefabToSpawn = secondEnemyPrefab;
-                    else
-                        prefabToSpawn = thirdEnemyPrefab;
-                }
+
+                EnemySettings currEnemy = currWave.enemies[i];
 
                 // Instantiate the enemy
+                prefabToSpawn = enemiesTypes[currEnemy.typeInd];
                 GameObject enemyInstance = Instantiate(prefabToSpawn, spawnPoint.position, spawnPoint.rotation);
 
+                //set enemy stats
+                EnemyPathfinder ep = enemyInstance.GetComponent<EnemyPathfinder>();
+
+                ep.maxHealth = currEnemy.health;
+                
+
                 // Possibly mark this enemy to drop a potion
-                if (i == dropIndex)
+                if (currEnemy.dropHp)
                 {
-                    EnemyPathfinder ep = enemyInstance.GetComponent<EnemyPathfinder>();
                     if (ep != null)
                         ep.willDropPotion = true;
                 }
@@ -117,7 +102,11 @@ public class WaveManager : MonoBehaviour
                 yield return new WaitForSeconds(spawnDelay);
             }
 
-            // 5) Wait until all enemies with Tag "Enemy" are gone
+
+            
+    
+
+            // After Each wave (all enemies dead) ----------------------------------------------------
             yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Enemy").Length == 0);
             Debug.Log("Wave " + waveNumber + " cleared.");
 
@@ -129,6 +118,12 @@ public class WaveManager : MonoBehaviour
             // Set checkpoint if wave is a multiple of 3
             if (waveNumber % 3 == 0)
                 CheckpointManager.Instance.SetCheckpoint(waveNumber);
+
+            //trigger end dialogue
+            if (currWave.EndDialogue != -1) {
+                dm.StartDialogue(currWave.EndDialogue);
+                yield return new WaitUntil(() => !dm.dialogueActive);
+            }
 
             // Show upgrade panel
             UpgradeManager.Instance.ShowUpgradePanel();

@@ -480,6 +480,7 @@ GameObject:
   - component: {fileID: 3418904213258064237}
   - component: {fileID: 2363896178217870654}
   - component: {fileID: -8538647889282488464}
+  - component: {fileID: 2755829629162401612}
   m_Layer: 3
   m_Name: EnemyDefault
   m_TagString: Enemy
@@ -680,6 +681,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &2755829629162401612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5168872523443544771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9a45cd9682ad482598b65072f261d00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  getHitColor: {r: 0.8679245, g: 0.045033824, b: 0.045033824, a: 1}
+  returnGetHitDelay: 0.5
+  anticipationColor: {r: 0.8838397, g: 0.9245283, b: 0.15263437, a: 1}
+  returnAnticipateDelay: 1
+  characterSpriteRenderer: {fileID: 3556953007525815131}
 --- !u!1 &5496485408107937801
 GameObject:
   m_ObjectHideFlags: 0

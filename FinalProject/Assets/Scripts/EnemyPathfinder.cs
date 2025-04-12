@@ -17,7 +17,7 @@ public class EnemyPathfinder : MonoBehaviour
 
     //animation/asset manager
     [SerializeField] private GameObject asset;
-    private new AnimationGeneric animation;
+    private new AnimationGeneric animTween;
     
     public bool willDropPotion = false;
     public GameObject healthPotionPrefab;
@@ -35,7 +35,7 @@ public class EnemyPathfinder : MonoBehaviour
                                              transform.position.z);
 
         StartCoroutine(MoveTick());
-        animation = asset.GetComponent<AnimationGeneric>();
+        animTween = asset.GetComponent<AnimationGeneric>();
     }
 
     IEnumerator MoveTick()
@@ -62,7 +62,7 @@ public class EnemyPathfinder : MonoBehaviour
 
                     if (!IsCellOccupiedForAnimation(newDestination))
                     {
-                        animation.MoveBounce(0.4f);
+                        animTween.MoveBounce(0.4f);
                     }
                 }
                 else
@@ -86,7 +86,7 @@ public class EnemyPathfinder : MonoBehaviour
 
                             if (!IsCellOccupiedForAnimation(altDestination))
                             {
-                                animation.MoveBounce(0.4f);
+                                animTween.MoveBounce(0.4f);
                             }
                         }
                         else
@@ -168,10 +168,11 @@ public class EnemyPathfinder : MonoBehaviour
     {
         currentHealth -= damage;
         Debug.Log("Enemy took damage. Current health: " + currentHealth);
+        GetComponent<VFX_ColorChange>().GetHit();
         if (currentHealth <= 0) {
             Die();
         } else {
-            animation.DamageTakenEnemy(0.1f);
+            animTween.DamageTakenEnemy(0.1f);
         }
     }
 
@@ -199,7 +200,7 @@ public class EnemyPathfinder : MonoBehaviour
         if(willDropPotion && healthPotionPrefab != null)
             Instantiate(healthPotionPrefab, transform.position, transform.rotation);
 
-        animation.DieEnemy(0.3f);
+        animTween.DieEnemy(0.3f);
         // Destroy the enemy's root GameObject.
         Destroy(transform.root.gameObject, 0.5f);
     }

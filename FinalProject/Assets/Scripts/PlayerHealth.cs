@@ -26,6 +26,8 @@ public class PlayerHealth : MonoBehaviour
 
     //animation/asset manager
     [SerializeField] private GameObject asset;
+    [SerializeField] private GameObject vcam;
+    CameraShake shake;
     private new AnimationGeneric animation;
 
     void Start()
@@ -45,6 +47,7 @@ public class PlayerHealth : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
         animation = asset.GetComponent<AnimationGeneric>();
+        shake = vcam.GetComponent<CameraShake>();
     }
 
     void Update()
@@ -64,6 +67,7 @@ public class PlayerHealth : MonoBehaviour
         playerStats.currentHealth -= damage;
         playSFX();
         animation.DamageTaken(0.5f);
+        shake.ShakeCamera(0.3f);
         UpdateUI();
         lastDisplayedHealth = playerStats.currentHealth;
         Debug.Log("Player took damage. Current health: " + playerStats.currentHealth);

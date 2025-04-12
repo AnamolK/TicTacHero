@@ -57,7 +57,7 @@ public class AnimationGeneric : MonoBehaviour
     }
 
     public void DamageTaken(float duration) {
-        asset.DOShakePosition (duration, 0.3f, 20, 90, false, true, ShakeRandomnessMode.Full).OnComplete(() => {
+        asset.DOShakePosition (duration, 0.5f, 20, 90, false, true, ShakeRandomnessMode.Full).OnComplete(() => {
             resetPosition(1f);
         });
         Debug.Log("Animation Played: DamageTaken");

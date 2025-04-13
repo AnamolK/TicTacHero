@@ -479,7 +479,6 @@ GameObject:
   - component: {fileID: 968443355347425706}
   - component: {fileID: 3779764873409761429}
   - component: {fileID: 7220879646143906988}
-  - component: {fileID: 7906167028856313420}
   - component: {fileID: 4053359616879805501}
   m_Layer: 3
   m_Name: Enemy_DRAGON
@@ -626,18 +625,6 @@ MonoBehaviour:
   currentAttackSide: None
   willDropPotion: 0
   healthPotionPrefab: {fileID: 5676807617435308758, guid: 1b91245b846ebe440be5eac50e8d69e9, type: 3}
---- !u!114 &7906167028856313420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5168872523443544771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55aa8b0ab76a24c3f9f9319c69f82b2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4053359616879805501
 MonoBehaviour:
   m_ObjectHideFlags: 0

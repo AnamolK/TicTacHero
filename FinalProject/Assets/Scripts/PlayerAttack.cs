@@ -84,6 +84,28 @@ public class PlayerAttack : MonoBehaviour
                     int damage = (playerStats != null) ? playerStats.currentAttackDamage : 1;
                     playSFX();
                     currentEnemy.TakeDamage(damage);
+                    if (playerStats != null && playerStats.aoeAttackUnlocked)
+                    {
+                        float aoeRadius = 2.5f; // adjust to taste
+                        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, aoeRadius);
+
+                        foreach (Collider2D hit in hits)
+                        {
+                            if (hit.CompareTag("Attackable"))
+                            {
+                                EnemyPathfinder enemy = hit.GetComponentInParent<EnemyPathfinder>();
+                                DragonPathfinder dragon = hit.GetComponentInParent<DragonPathfinder>();
+
+                                if ((enemy != null && enemy != currentEnemy) || dragon != null)
+                                {
+                                    if (enemy != null) enemy.TakeDamage(damage);
+                                    if (dragon != null) dragon.TakeDamage(damage);
+                                }
+                            }
+                        }
+
+                        Debug.Log(" AOE attack applied to nearby enemies!");
+                    }
                     animation.AttackMelee(AttackAnimationDirection(hitSide), 0.2f);
                 }
                 else

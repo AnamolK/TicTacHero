@@ -11,6 +11,8 @@ public class PlayerStats : MonoBehaviour
 
     // HP Regen flag unlocked with health upgrade level 3.
     public bool regenUnlocked = false;
+    public bool aoeAttackUnlocked = false;
+
 
     void Start()
     {
@@ -56,4 +58,11 @@ public class PlayerStats : MonoBehaviour
         currentHealth = Mathf.Min(currentMaxHealth, currentHealth + amount);
         Debug.Log("Player healed " + amount + " point(s). Current health: " + currentHealth);
     }
+
+    public void UnlockAOEAttack()
+    {
+        aoeAttackUnlocked = true;
+        Debug.Log("AOE attack unlocked!");
+    }
+
 }

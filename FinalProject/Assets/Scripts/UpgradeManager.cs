@@ -22,6 +22,8 @@ public class UpgradeManager : MonoBehaviour
     public Button turretUpgradeButton;
     public Button continueButton;
     public PlayerStats playerStats;
+    public bool unlockPlayerMovement = false;
+
     void Awake()
     {
         if (Instance == null)
@@ -104,16 +106,23 @@ public class UpgradeManager : MonoBehaviour
             UpdateUI();
         }
     }
-    public void UpgradeAttack()
-    {
-        if (upgradePoints > 0 && playerStats != null)
+        public void UpgradeAttack()
         {
-            attackLevel++;
-            upgradePoints--;
-            playerStats.IncreaseAttackDamage(attackUpgradeAmount);
-            UpdateUI();
+            if (upgradePoints > 0 && playerStats != null)
+            {
+                attackLevel++;
+                upgradePoints--;
+                playerStats.IncreaseAttackDamage(attackUpgradeAmount);
+
+                if (attackLevel == 3)
+                {
+                    playerStats.UnlockAOEAttack();
+                    Debug.Log("Player movement-based damage upgrade unlocked!");
+                }
+
+                UpdateUI();
+            }
         }
-    }
     public void UpgradeTurret()
     {
         if (upgradePoints >= turretUpgradeCost)

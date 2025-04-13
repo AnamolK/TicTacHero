@@ -89,9 +89,18 @@ public class UpgradeManager : MonoBehaviour
     {
         if (upgradePoints > 0 && playerStats != null)
         {
-            healthLevel++;
             upgradePoints--;
-            playerStats.IncreaseMaxHealth(healthUpgradeAmount);
+            if (healthLevel == 2) {
+                // 3rd level: Unlock HP Regen instead of increasing max health.
+                healthLevel++;
+                playerStats.UnlockHealthRegen();
+                Debug.Log("HP Regen unlocked: 1 health per wave.");
+            }
+            else
+            {
+                healthLevel++;
+                playerStats.IncreaseMaxHealth(healthUpgradeAmount);
+            }
             UpdateUI();
         }
     }

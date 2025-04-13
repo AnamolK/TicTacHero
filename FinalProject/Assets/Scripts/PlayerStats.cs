@@ -9,17 +9,17 @@ public class PlayerStats : MonoBehaviour
     public int baseAttackDamage = 1;
     public int currentAttackDamage;
 
+    // HP Regen flag unlocked with health upgrade level 3.
+    public bool regenUnlocked = false;
+
     void Start()
     {
         currentMaxHealth = baseMaxHealth;
         currentHealth = baseMaxHealth;
         currentAttackDamage = baseAttackDamage;
     }
-
- 
     public void IncreaseMaxHealth(int amount)
     {
-
         int oldMax = currentMaxHealth;
         currentMaxHealth += 1;
         
@@ -42,5 +42,18 @@ public class PlayerStats : MonoBehaviour
     {
         currentAttackDamage += amount;
         Debug.Log("Player attack damage increased to: " + currentAttackDamage);
+    }
+    
+    public void UnlockHealthRegen()
+    {
+        regenUnlocked = true;
+        Debug.Log("Player health regen unlocked.");
+    }
+
+    // New Heal method added to support the HP Regen functionality in WaveManager.
+    public void Heal(int amount)
+    {
+        currentHealth = Mathf.Min(currentMaxHealth, currentHealth + amount);
+        Debug.Log("Player healed " + amount + " point(s). Current health: " + currentHealth);
     }
 }

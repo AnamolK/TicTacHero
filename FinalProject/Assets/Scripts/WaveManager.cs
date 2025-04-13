@@ -102,10 +102,6 @@ public class WaveManager : MonoBehaviour
                 yield return new WaitForSeconds(spawnDelay);
             }
 
-
-            
-    
-
             // After Each wave (all enemies dead) ----------------------------------------------------
             yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Enemy").Length == 0);
             Debug.Log("Wave " + waveNumber + " cleared.");
@@ -114,6 +110,13 @@ public class WaveManager : MonoBehaviour
             int pointsAwarded = (waveNumber % 3 == 0) ? 2 : 1;
             UpgradeManager.Instance.AwardPoints(pointsAwarded);
             Debug.Log("Awarded " + pointsAwarded + " upgrade point(s).");
+
+            // Apply HP Regen effect if unlocked: heal player by 1 health per wave.
+            if(UpgradeManager.Instance.playerStats != null && UpgradeManager.Instance.playerStats.regenUnlocked)
+            {
+                UpgradeManager.Instance.playerStats.Heal(1);
+                Debug.Log("HP Regen applied: Recovered 1 health.");
+            }
 
             // Set checkpoint if wave is a multiple of 3
             if (waveNumber % 3 == 0)

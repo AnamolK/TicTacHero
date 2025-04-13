@@ -18,7 +18,12 @@ public class Bullet : MonoBehaviour
             EnemyPathfinder enemy = collision.GetComponentInParent<EnemyPathfinder>();
             if(enemy != null)
             {
-                int turretDamageBonus = Mathf.RoundToInt(UpgradeManager.Instance.turretUpgradeDamageIncrease * UpgradeManager.Instance.turretUpgradeLevel);
+                // Calculate turret damage bonus based on turret upgrade level.
+                int turretDamageBonus = 0;
+                if(UpgradeManager.Instance != null && UpgradeManager.Instance.turretUpgradeLevel >= 3)
+                {
+                    turretDamageBonus = 2 * (UpgradeManager.Instance.turretUpgradeLevel - 2);
+                }
                 int totalDamage = baseDamage + turretDamageBonus;
                 enemy.TakeDamage(totalDamage);
             }

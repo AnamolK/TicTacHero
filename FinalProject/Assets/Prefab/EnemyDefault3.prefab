@@ -203,7 +203,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 999
-  m_Sprite: {fileID: 21300000, guid: 657bcc3299789dc4ca10bbede8205f2d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ec5e0e67e1f785a44a93c32868d9a60c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -480,9 +480,9 @@ GameObject:
   - component: {fileID: 3418904213258064237}
   - component: {fileID: 2363896178217870654}
   - component: {fileID: 968443355347425706}
-  - component: {fileID: 7206165464810316162}
+  - component: {fileID: 7220879646143906988}
   m_Layer: 3
-  m_Name: EnemyDefault2
+  m_Name: EnemyDefault3
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -526,10 +526,10 @@ MonoBehaviour:
     m_Bits: 9
   asset: {fileID: 2926859044733998614}
   images:
-  - {fileID: 21300000, guid: 657bcc3299789dc4ca10bbede8205f2d, type: 3}
-  - {fileID: 21300000, guid: 333470b63ae7fff42bfa2da4155d351c, type: 3}
-  - {fileID: 21300000, guid: 63c3b4512e7c7e444b61c8b5d1c50cf4, type: 3}
-  - {fileID: 21300000, guid: 26c5af24be68a5644b899499d6dca348, type: 3}
+  - {fileID: 21300000, guid: ec5e0e67e1f785a44a93c32868d9a60c, type: 3}
+  - {fileID: 21300000, guid: 920b134da511b3040be5fa7c4e1e3158, type: 3}
+  - {fileID: 21300000, guid: f6241c80a2461a24f83e5f3d7ff178fc, type: 3}
+  - {fileID: 21300000, guid: 31ddceec7efce804eaa838e3fba5ef25, type: 3}
   imageContainer: {fileID: 3705427870613234339}
 --- !u!61 &3206640182839788183
 BoxCollider2D:
@@ -641,7 +641,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5168872523443544771}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dfb3bbfff0bf95a4ea79b4c48588bd8e, type: 3}
   m_Name: 
@@ -681,7 +681,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &7206165464810316162
+--- !u!114 &7220879646143906988
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -690,14 +690,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 5168872523443544771}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9a45cd9682ad482598b65072f261d00, type: 3}
+  m_Script: {fileID: 11500000, guid: 2972ced9772cd4743ba339057ae155a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  getHitColor: {r: 0.9339623, g: 0, b: 0, a: 1}
-  returnGetHitDelay: 0.5
-  anticipationColor: {r: 0.8631663, g: 0.9622642, b: 0, a: 1}
-  returnAnticipateDelay: 1
-  characterSpriteRenderer: {fileID: 3556953007525815131}
+  moveTickDuration: 1
+  maxHealth: 30
+  movePoint: {fileID: 7318825270291879427}
+  occupancyCheckRadius: 0.3
+  asset: {fileID: 2926859044733998614}
+  fireRange: 2
+  telegraphDuration: 1
+  firePrefab: {fileID: 7513205716422833131, guid: fb667c45e61514b63a013fa6340501aa, type: 3}
+  currentAttackSide: None
+  willDropPotion: 0
+  healthPotionPrefab: {fileID: 5676807617435308758, guid: 1b91245b846ebe440be5eac50e8d69e9, type: 3}
 --- !u!1 &5496485408107937801
 GameObject:
   m_ObjectHideFlags: 0

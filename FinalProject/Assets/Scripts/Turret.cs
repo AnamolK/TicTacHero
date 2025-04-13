@@ -1,6 +1,5 @@
-using System.Collections;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Turret : MonoBehaviour
 {
     public float fireRate = 1.0f;
@@ -8,9 +7,24 @@ public class Turret : MonoBehaviour
     public float range = 5f;
     public GameObject bulletPrefab;
     public Transform firePoint;
-
+    public int unlockWave = 4;
+    private SpriteRenderer sr;
+    void Start()
+    {
+        transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), transform.position.z);
+        sr = GetComponent<SpriteRenderer>();
+    }
     void Update()
     {
+        WaveManager wm = FindObjectOfType<WaveManager>();
+        if (wm != null && wm.waveNumber < unlockWave)
+        {
+            if (sr != null)
+                sr.enabled = false;
+            return;
+        }
+        if (sr != null)
+            sr.enabled = true;
         fireCooldown -= Time.deltaTime;
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         GameObject nearestEnemy = null;
@@ -36,7 +50,6 @@ public class Turret : MonoBehaviour
             }
         }
     }
-
     void Fire()
     {
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);

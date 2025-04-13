@@ -39,6 +39,7 @@ public class AnimationGeneric : MonoBehaviour
     }
 
     public void MoveShift(Vector3 direction, float duration) {
+        resetPosition(0.01f);
         asset.localPosition = Vector3.zero;
         asset.DOPunchPosition(direction, duration, 1, 0.5f, false).OnComplete(() => {
             resetPosition(0.3f);
@@ -47,6 +48,7 @@ public class AnimationGeneric : MonoBehaviour
     }
 
     public void AttackMelee(Vector3 direction, float duration) {
+        resetPosition(0.01f);
         asset.localPosition = Vector3.zero;
         asset.DOPunchPosition(direction, duration, 3, 0.5f, false).OnComplete(() => {
             resetPosition(1f);
@@ -55,7 +57,7 @@ public class AnimationGeneric : MonoBehaviour
     }
 
     public void DamageTaken(float duration) {
-        asset.DOShakePosition (duration, 0.3f, 20, 90, false, true, ShakeRandomnessMode.Full).OnComplete(() => {
+        asset.DOShakePosition (duration, 0.5f, 20, 90, false, true, ShakeRandomnessMode.Full).OnComplete(() => {
             resetPosition(1f);
         });
         Debug.Log("Animation Played: DamageTaken");

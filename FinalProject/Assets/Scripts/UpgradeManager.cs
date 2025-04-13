@@ -22,11 +22,6 @@ public class UpgradeManager : MonoBehaviour
     public Button turretUpgradeButton;
     public Button continueButton;
     public PlayerStats playerStats;
-    public bool hasHealthRegen = false;
-    public bool unlockPlayerMovement = false;
-    public GameObject turretPrefab;
-    public Transform turretSpawnPoint; // Optional if you're placing one
-
     void Awake()
     {
         if (Instance == null)
@@ -90,24 +85,25 @@ public class UpgradeManager : MonoBehaviour
     {
         HideUpgradePanel();
     }
- public void UpgradeHealth()
+    public void UpgradeHealth()
     {
         if (upgradePoints > 0 && playerStats != null)
         {
-            healthLevel++;
             upgradePoints--;
-            playerStats.IncreaseMaxHealth(healthUpgradeAmount);
-
-            if (healthLevel == 3)
-            {
-                hasHealthRegen = true;
-                Debug.Log(" Health Regen unlocked!");
+            if (healthLevel == 2) {
+                // 3rd level: Unlock HP Regen instead of increasing max health.
+                healthLevel++;
+                playerStats.UnlockHealthRegen();
+                Debug.Log("HP Regen unlocked: 1 health per wave.");
             }
-
+            else
+            {
+                healthLevel++;
+                playerStats.IncreaseMaxHealth(healthUpgradeAmount);
+            }
             UpdateUI();
         }
     }
-
     public void UpgradeAttack()
     {
         if (upgradePoints > 0 && playerStats != null)
@@ -115,51 +111,16 @@ public class UpgradeManager : MonoBehaviour
             attackLevel++;
             upgradePoints--;
             playerStats.IncreaseAttackDamage(attackUpgradeAmount);
-
-            if (attackLevel == 3)
-            {
-                unlockPlayerMovement = true;
-                Debug.Log(" Player movement-based damage upgrade unlocked!");
-            }
-
             UpdateUI();
         }
     }
-
     public void UpgradeTurret()
     {
         if (upgradePoints >= turretUpgradeCost)
         {
             turretUpgradeLevel++;
             upgradePoints -= turretUpgradeCost;
-
-            switch (turretUpgradeLevel)
-            {
-                case 1:
-                    Debug.Log("Turret unlocked: you can now place it.");
-                    // You can instantiate turretPrefab here if desired:
-                    // Instantiate(turretPrefab, turretSpawnPoint.position, Quaternion.identity);
-                    break;
-                case 2:
-                    Debug.Log(" Turret range increased!");
-                    break;
-                case 3:
-                    Debug.Log(" Turret damage increased!");
-                    break;
-            }
-
             UpdateUI();
         }
     }
-
-    void Update()
-    {
-        if (hasHealthRegen && playerStats.currentHealth < playerStats.currentMaxHealth)
-        {
-            playerStats.currentHealth += 1;
-            UpdateUI();
-        }
-    }
-
-
 }

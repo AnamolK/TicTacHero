@@ -87,6 +87,8 @@ public class PlayerAttack : MonoBehaviour
                     if (playerStats != null && playerStats.aoeAttackUnlocked)
                     {
                         float aoeRadius = 2.5f; // adjust to taste
+                        // Cap AOE damage to 2 regardless of player's attack stat.
+                        int aoeDamage = Mathf.Min(damage, 2);
                         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, aoeRadius);
 
                         foreach (Collider2D hit in hits)
@@ -98,8 +100,8 @@ public class PlayerAttack : MonoBehaviour
 
                                 if ((enemy != null && enemy != currentEnemy) || dragon != null)
                                 {
-                                    if (enemy != null) enemy.TakeDamage(damage);
-                                    if (dragon != null) dragon.TakeDamage(damage);
+                                    if (enemy != null) enemy.TakeDamage(aoeDamage);
+                                    if (dragon != null) dragon.TakeDamage(aoeDamage);
                                 }
                             }
                         }

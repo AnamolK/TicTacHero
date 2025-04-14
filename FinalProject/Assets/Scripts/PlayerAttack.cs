@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
 
     // Reference to the enemy currently in the attackable area.
     private EnemyPathfinder currentEnemy;
-    private DragonPathfinder currentEnemyDragon;
+    // private DragonPathfinder currentEnemyDragon;
 
     // Reference to the PlayerStats component for upgraded attack damage.
     private PlayerStats playerStats;
@@ -36,15 +36,15 @@ public class PlayerAttack : MonoBehaviour
         if (collision.CompareTag("Attackable"))
         {
             EnemyPathfinder enemyPathfinder = collision.GetComponentInParent<EnemyPathfinder>();
-            DragonPathfinder enemyPathfinderDragon = collision.GetComponentInParent<DragonPathfinder>();
+            // DragonPathfinder enemyPathfinderDragon = collision.GetComponentInParent<DragonPathfinder>();
             if (enemyPathfinder != null)
             {
                 currentEnemy = enemyPathfinder;
             } 
-            else if (enemyPathfinderDragon != null)
-            {   
-                currentEnemyDragon = enemyPathfinderDragon;
-            }
+            // else if (enemyPathfinderDragon != null)
+            // {   
+            //     currentEnemyDragon = enemyPathfinderDragon;
+            // }
         }
     }
 
@@ -53,15 +53,15 @@ public class PlayerAttack : MonoBehaviour
         if (collision.CompareTag("Attackable"))
         {
             EnemyPathfinder enemyPathfinder = collision.GetComponentInParent<EnemyPathfinder>();
-            DragonPathfinder enemyPathfinderDragon = collision.GetComponentInParent<DragonPathfinder>();
+            // DragonPathfinder enemyPathfinderDragon = collision.GetComponentInParent<DragonPathfinder>();
             if (enemyPathfinder != null && enemyPathfinder == currentEnemy)
             {
                 currentEnemy = null;
             }
-            else if (enemyPathfinderDragon != null && enemyPathfinderDragon == currentEnemy)
-            {
-                currentEnemyDragon = null;
-            }
+            // else if (enemyPathfinderDragon != null && enemyPathfinderDragon == currentEnemy)
+            // {
+            //     currentEnemyDragon = null;
+            // }
         }
     }
 

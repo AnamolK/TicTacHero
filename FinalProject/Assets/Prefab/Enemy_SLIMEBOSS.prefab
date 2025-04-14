@@ -480,6 +480,7 @@ GameObject:
   - component: {fileID: 3779764873409761429}
   - component: {fileID: 6924290288310081745}
   - component: {fileID: 4053359616879805501}
+  - component: {fileID: -2785827746448183811}
   m_Layer: 3
   m_Name: Enemy_SLIMEBOSS
   m_TagString: Enemy
@@ -609,7 +610,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5168872523443544771}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98ca78778ddd9405a892e3f7d2ddeb79, type: 3}
   m_Name: 
@@ -646,6 +647,36 @@ MonoBehaviour:
   anticipationColor: {r: 0.9914521, g: 1, b: 0, a: 1}
   returnAnticipateDelay: 1
   characterSpriteRenderer: {fileID: 3556953007525815131}
+--- !u!114 &-2785827746448183811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5168872523443544771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfb3bbfff0bf95a4ea79b4c48588bd8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 2
+  moveTickDuration: 1
+  maxHealth: 10
+  currentHealth: 0
+  currentAttackSide: None
+  movePoint: {fileID: 7318825270291879427}
+  occupancyCheckRadius: 0.3
+  willDropPotion: 0
+  healthPotionPrefab: {fileID: 5676807617435308758, guid: 1b91245b846ebe440be5eac50e8d69e9, type: 3}
+  asset: {fileID: 2926859044733998614}
+  dragonFireRange: 2
+  dragonTelegraphDuration: 1
+  dragonFirePrefab: {fileID: 0}
+  jumpRange: 2
+  jumpTickInterval: 6
+  jumpDamage: 2
+  slimeMinionPrefab: {fileID: 5168872523443544771, guid: 0984675420878f340b07933a0d0bd69a, type: 3}
+  minionsToSpawn: 2
 --- !u!1 &5496485408107937801
 GameObject:
   m_ObjectHideFlags: 0

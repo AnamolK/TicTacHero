@@ -45,7 +45,7 @@ public class DragonMovementController : MonoBehaviour
         if (movePoint != null && ((movePoint.position.x % 1 == 0 && movePoint.position.y % 1 == 0) || (movePoint.position.x % 0.5 == 0 && movePoint.position.y % 0.5 == 0)))
         {
             Collider2D collider = playerObj.GetComponent<Collider2D>();
-            if (!collider.IsTouching(gameObject.GetComponent<Collider2D>()))
+            if (!collider.IsTouching(movePoint.GetComponent<Collider2D>()))
             {
                 moveTo = new Vector3(movePoint.position.x, movePoint.position.y, 0f);
             }

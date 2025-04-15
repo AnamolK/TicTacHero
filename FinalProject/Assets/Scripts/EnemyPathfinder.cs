@@ -494,6 +494,7 @@ public class EnemyPathfinder : MonoBehaviour
             if (fireCol.IsTouching(playerObj.GetComponent<Collider2D>())) {
                 PlayerHealth ph = playerObj.GetComponent<PlayerHealth>();
                 if (ph != null) ph.TakeDamage(2);
+                Debug.Log("fire damage 2");
             }
 
             // GameObject fireObj = Instantiate(dragonFirePrefab, transform.position, Quaternion.identity);

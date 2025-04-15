@@ -1,7 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class EnemyMovementController : MonoBehaviour
+public class DragonMovementController : MonoBehaviour
 {
     public float moveSpeed = 999f;
     public Transform movePoint;
@@ -17,6 +18,8 @@ public class EnemyMovementController : MonoBehaviour
     private new AnimationGeneric animation;
     public Sprite[] images;
     public GameObject imageContainer;
+    public GameObject fireContainer;
+    public Transform rotateFire;
     
 
     void Start()
@@ -45,11 +48,11 @@ public class EnemyMovementController : MonoBehaviour
             if (!collider.IsTouching(gameObject.GetComponent<Collider2D>()))
             {
                 moveTo = new Vector3(movePoint.position.x, movePoint.position.y, 0f);
-                
             }
             else
             {
                 rotateAsset(movePoint.position);
+                Debug.Log("NOT MOVING ASSET");
             }
         }
 
@@ -73,14 +76,24 @@ public class EnemyMovementController : MonoBehaviour
 
     void setImage(string val)
     {
-        if (val == "N")
+        if (val == "N") {
             imageContainer.GetComponent<SpriteRenderer>().sprite = images[1];
-        else if (val == "E")
+            //fireContainer.GetComponent<SpriteRenderer>().sprite = images[5];
+            rotateFire.localEulerAngles = new Vector3(0, 0, 90);
+        }
+        else if (val == "E"){
             imageContainer.GetComponent<SpriteRenderer>().sprite = images[3];
-        else if (val == "W")
+            //fireContainer.GetComponent<SpriteRenderer>().sprite = images[7];
+            rotateFire.localEulerAngles = new Vector3(0, 0, 0);
+        } else if (val == "W"){
             imageContainer.GetComponent<SpriteRenderer>().sprite = images[2];
-        else if (val == "S")
+            //fireContainer.GetComponent<SpriteRenderer>().sprite = images[6];
+            rotateFire.localEulerAngles = new Vector3(0, 0, 180);
+        } else if (val == "S") {
             imageContainer.GetComponent<SpriteRenderer>().sprite = images[0];
+            //fireContainer.GetComponent<SpriteRenderer>().sprite = images[4];
+            rotateFire.localEulerAngles = new Vector3(0, 0, 270);
+        }
     }
 
     public void Die()

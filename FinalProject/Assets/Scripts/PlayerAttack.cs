@@ -96,12 +96,10 @@ public class PlayerAttack : MonoBehaviour
                             if (hit.CompareTag("Attackable"))
                             {
                                 EnemyPathfinder enemy = hit.GetComponentInParent<EnemyPathfinder>();
-                                DragonPathfinder dragon = hit.GetComponentInParent<DragonPathfinder>();
 
-                                if ((enemy != null && enemy != currentEnemy) || dragon != null)
+                                if (enemy != null && enemy != currentEnemy)
                                 {
                                     if (enemy != null) enemy.TakeDamage(aoeDamage);
-                                    if (dragon != null) dragon.TakeDamage(aoeDamage);
                                 }
                             }
                         }

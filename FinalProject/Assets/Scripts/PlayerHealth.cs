@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
 
@@ -124,26 +125,15 @@ public class PlayerHealth : MonoBehaviour
     // Coroutine to apply damage repeatedly at fixed intervals.
     IEnumerator ApplyDamageOverTime()
     {
-        TakeDamage(CalculateDamage());
+        // Apply damage immediately.
+        TakeDamage(1);
         yield return new WaitForSeconds(damageInterval);
 
         while (true)
         {
-            TakeDamage(CalculateDamage());
+            TakeDamage(1);
             yield return new WaitForSeconds(damageInterval);
         }
-    }
-
-    int CalculateDamage()
-    {
-        int count = 0;
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1f);
-        foreach (Collider2D hit in hits)
-        {
-            if (hit.CompareTag("Enemy"))
-                count++;
-        }
-        return count;
     }
 
     void playSFX()

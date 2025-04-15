@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8189007781879901748}
   - component: {fileID: 8946049399214454262}
   - component: {fileID: 7576993357446184198}
+  - component: {fileID: 9199827153511802781}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -131,6 +132,7 @@ MonoBehaviour:
   soundList:
   - {fileID: 8300000, guid: 7942a6e4e36c77d499f39eb7632c6e6f, type: 3}
   asset: {fileID: 7296475643305464596}
+  vcam: {fileID: 0}
 --- !u!114 &8189007781879901748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,6 +150,8 @@ MonoBehaviour:
   currentHealth: 0
   baseAttackDamage: 1
   currentAttackDamage: 0
+  regenUnlocked: 0
+  aoeAttackUnlocked: 0
 --- !u!114 &8946049399214454262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,6 +265,33 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!50 &9199827153511802781
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3563559185194465737}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1 &3758594791987281825
 GameObject:
   m_ObjectHideFlags: 0

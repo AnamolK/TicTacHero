@@ -601,7 +601,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ec5e0e67e1f785a44a93c32868d9a60c, type: 3}
   - {fileID: 21300000, guid: 920b134da511b3040be5fa7c4e1e3158, type: 3}
   - {fileID: 21300000, guid: f6241c80a2461a24f83e5f3d7ff178fc, type: 3}
-  - {fileID: 21300000, guid: e2d0668dce5235a42b1b1d1e173cee4f, type: 3}
+  - {fileID: 21300000, guid: 31ddceec7efce804eaa838e3fba5ef25, type: 3}
   imageContainer: {fileID: 3705427870613234339}
 --- !u!114 &7220879646143906988
 MonoBehaviour:
@@ -654,8 +654,8 @@ MonoBehaviour:
   jumpRange: 2
   jumpTickInterval: 6
   jumpDamage: 2
-  slimeMinionPrefab: {fileID: 0}
-  minionsToSpawn: 2
+  slimeMinionPrefab: {fileID: 5168872523443544771, guid: 0984675420878f340b07933a0d0bd69a, type: 3}
+  minionsToSpawn: 4
 --- !u!114 &4053359616879805501
 MonoBehaviour:
   m_ObjectHideFlags: 0

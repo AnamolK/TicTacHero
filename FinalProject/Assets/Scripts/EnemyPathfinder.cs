@@ -559,7 +559,7 @@ public class EnemyPathfinder : MonoBehaviour
         }
 
         if (willDropPotion && healthPotionPrefab != null)
-            Instantiate(healthPotionPrefab, transform.position, transform.rotation);
+            Instantiate(healthPotionPrefab, transform.position+new Vector3(-1,1,0), transform.rotation);
 
         animTween.DieEnemy(0.3f);
 

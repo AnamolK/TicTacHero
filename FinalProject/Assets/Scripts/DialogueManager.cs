@@ -1,12 +1,13 @@
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
     [Header("UI References")]
     public GameObject dialogueBox;     
-    public Text dialogueText;            
-    public Button nextButton;      
+    public TMP_Text dialogueText;        
+    public Button nextButton;
 
     [Header("Dialogue Lines")]
     [TextArea(2, 5)]

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuController : MonoBehaviour
 {
-    public GameObject pauseMenuUI; // Assign PAUSEMENU object here
+    public GameObject pauseMenuUI; 
 
     private Button resumeButton;
     private Button restartButton;
@@ -14,17 +14,16 @@ public class PauseMenuController : MonoBehaviour
 
     void Start()
     {
-        // Find buttons inside the existing PAUSEMENU
+        // buttons inside PAUSEMENU
         resumeButton = pauseMenuUI.transform.Find("Button_Resume").GetComponent<Button>();
         restartButton = pauseMenuUI.transform.Find("Button_Restart").GetComponent<Button>();
         quitButton = pauseMenuUI.transform.Find("Button_Quit").GetComponent<Button>();
 
-        // Hook up buttons
         resumeButton.onClick.AddListener(ResumeGame);
         restartButton.onClick.AddListener(RestartGame);
         quitButton.onClick.AddListener(QuitGame);
 
-        pauseMenuUI.SetActive(false); // Make sure it starts hidden
+        pauseMenuUI.SetActive(false); // hidden at start
     }
 
     void Update()

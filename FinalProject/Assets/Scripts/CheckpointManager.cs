@@ -28,6 +28,6 @@ public class CheckpointManager : MonoBehaviour
         PlayerStats stats = FindObjectOfType<PlayerStats>();
         if (stats != null)
             stats.currentHealth = stats.currentMaxHealth;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("GameScene"); 
     }
 }

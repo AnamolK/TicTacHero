@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
 
@@ -93,9 +94,8 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        CheckpointManager.Instance.RestartFromCheckpoint();
+        SceneManager.LoadScene("LoseScene");
     }
-
 
     // When an enemy collides, start applying damage over time.
     void OnTriggerEnter2D(Collider2D collision)

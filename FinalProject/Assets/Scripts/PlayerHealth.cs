@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
 
@@ -94,7 +93,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        SceneManager.LoadScene("LoseScene");
+        CheckpointManager.Instance.RestartFromCheckpoint();
     }
 
     // When an enemy collides, start applying damage over time.
@@ -125,15 +124,26 @@ public class PlayerHealth : MonoBehaviour
     // Coroutine to apply damage repeatedly at fixed intervals.
     IEnumerator ApplyDamageOverTime()
     {
-        // Apply damage immediately.
-        TakeDamage(1);
+        TakeDamage(CalculateDamage());
         yield return new WaitForSeconds(damageInterval);
 
         while (true)
         {
-            TakeDamage(1);
+            TakeDamage(CalculateDamage());
             yield return new WaitForSeconds(damageInterval);
         }
+    }
+
+    int CalculateDamage()
+    {
+        int count = 0;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1f);
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.CompareTag("Enemy"))
+                count++;
+        }
+        return count;
     }
 
     void playSFX()

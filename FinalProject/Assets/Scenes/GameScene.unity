@@ -496,7 +496,10 @@ MonoBehaviour:
     EndDialogue: 7
   waveText: {fileID: 385203418}
   waveDisplayDuration: 1.5
-  waveNumber: 1
+  waveNumber: 0
+  slimeBossPrefab: {fileID: 0}
+  slimeSpawnPosition: {x: 2, y: 4, z: 0}
+  slimeIntroDialogue: -1
 --- !u!4 &136503986
 Transform:
   m_ObjectHideFlags: 0
@@ -4206,6 +4209,7 @@ MonoBehaviour:
   - Use WASD to move and attack.
   - Defeat enemies by dashing into them.
   - But careful, remember to avoid their vicious attacks!
+  - 'Oh my! A slime is nearby, but it looks like it''s stuck... finish it hero! '
   tutorialAfter:
   - Wonderful! But those are not the last of them.
   - Here, some upgrades to prepare you for what's to com

@@ -33,17 +33,28 @@ public class WaveManager : MonoBehaviour
         public int EndDialogue;
     }
 
-
     [Header("UI Elements")]
     public TMP_Text waveText;
     // Duration to show the wave message.
     public float waveDisplayDuration = 2f;
  
     // Current wave number.
-    public int waveNumber = 1;
+    public int waveNumber = 0;
+
+    [Header("Intro Slime")]
+    public GameObject slimeBossPrefab;
+    public Vector3 slimeSpawnPosition = new Vector3(2,9,0);
+    public int slimeIntroDialogue = -1;
 
     void Start()
     {
+        DialogueManager dm = FindObjectOfType<DialogueManager>();
+        if (slimeBossPrefab != null)
+        {
+            GameObject slime = Instantiate(slimeBossPrefab, slimeSpawnPosition, Quaternion.identity);
+            if (slimeIntroDialogue != -1)
+                dm.StartDialogue(slimeIntroDialogue);
+        }
         if (CheckpointManager.checkpointWave > 0) { waveNumber = CheckpointManager.checkpointWave; CheckpointManager.checkpointWave = 0; }
         StartCoroutine(SpawnWaves());
     }
@@ -53,6 +64,38 @@ public class WaveManager : MonoBehaviour
         DialogueManager dm = FindObjectOfType<DialogueManager>();
         while (true)
         {
+            // tutorial wave
+            if (waveNumber == 0)
+            {
+                if (waveText != null)
+                {
+                    waveText.text = "Tutorial";
+                    waveText.gameObject.SetActive(true);
+                }
+                yield return new WaitForSeconds(waveDisplayDuration);
+
+                if (waveText != null)
+                    waveText.gameObject.SetActive(false);
+
+               
+                GameObject prefab = enemiesTypes[waveArray[0].enemies[0].typeInd];
+                Vector3 spawnPos = slimeSpawnPosition;
+                GameObject tutEnemy = Instantiate(prefab, spawnPos, Quaternion.identity);
+                EnemyPathfinder epTut = tutEnemy.GetComponent<EnemyPathfinder>();
+                epTut.moveTickDuration = Mathf.Infinity;
+
+                Vector3 playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+                Vector2 diff = new Vector2(playerPos.x - spawnPos.x, playerPos.y - spawnPos.y);
+                if (Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
+                    epTut.currentAttackSide = diff.x > 0 ? "Right" : "Left";
+                else
+                    epTut.currentAttackSide = diff.y > 0 ? "Up" : "Down";
+
+                yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Enemy").Length == 0);
+                waveNumber = 1;
+                continue;
+            }
+
             // 1) Display wave text
             if (waveText != null)
             {
@@ -90,7 +133,6 @@ public class WaveManager : MonoBehaviour
                 EnemyPathfinder ep = enemyInstance.GetComponent<EnemyPathfinder>();
 
                 ep.maxHealth = currEnemy.health;
-                
 
                 // Possibly mark this enemy to drop a potion
                 if (currEnemy.dropHp)

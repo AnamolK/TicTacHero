@@ -82,4 +82,8 @@ public class AnimationGeneric : MonoBehaviour
             
         }
     }
+
+    void OnDestroy() {
+        DOTween.KillAll();
+    }
 }

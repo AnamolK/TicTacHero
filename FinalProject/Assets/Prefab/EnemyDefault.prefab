@@ -646,14 +646,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb3bbfff0bf95a4ea79b4c48588bd8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   moveTickDuration: 1.5
   maxHealth: 5
+  currentHealth: 0
   currentAttackSide: None
   movePoint: {fileID: 7318825270291879427}
   occupancyCheckRadius: 0.3
-  asset: {fileID: 2926859044733998614}
   willDropPotion: 0
   healthPotionPrefab: {fileID: 5676807617435308758, guid: 1b91245b846ebe440be5eac50e8d69e9, type: 3}
+  asset: {fileID: 2926859044733998614}
+  dragonFireRange: 2
+  dragonTelegraphDuration: 1
+  dragonFirePrefab: {fileID: 0}
+  jumpRange: 2
+  jumpTickInterval: 6
+  jumpDamage: 2
+  slimeMinionPrefab: {fileID: 0}
+  minionsToSpawn: 2
 --- !u!50 &-8538647889282488464
 Rigidbody2D:
   serializedVersion: 4
@@ -920,7 +930,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6221828935755872875}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

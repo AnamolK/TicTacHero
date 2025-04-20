@@ -71,8 +71,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3655506259612996754}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.02, y: 0.98, z: 0}
+  m_LocalScale: {x: 2.0290926, y: 2.0290926, z: 2.0290926}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6817851173497780043}
@@ -323,8 +323,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3984293262926377313}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.0178, y: -1.0022, z: 0}
+  m_LocalScale: {x: 2.0232008, y: 2.0232008, z: 2.0232008}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6817851173497780043}
@@ -407,8 +407,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5148341155120233834}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.98, y: -0.01, z: 0}
+  m_LocalScale: {x: 2.0211, y: 2.0211, z: 2.0211}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6817851173497780043}
@@ -549,7 +549,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.95, y: 0.95}
+  m_Size: {x: 3, y: 3}
   m_EdgeRadius: 0
 --- !u!50 &968443355347425706
 Rigidbody2D:
@@ -672,11 +672,11 @@ MonoBehaviour:
   dragonFireRange: 2
   dragonTelegraphDuration: 1
   dragonFirePrefab: {fileID: 0}
-  jumpRange: 2
-  jumpTickInterval: 6
+  jumpRange: 4
+  jumpTickInterval: 8
   jumpDamage: 2
   slimeMinionPrefab: {fileID: 5168872523443544771, guid: 0984675420878f340b07933a0d0bd69a, type: 3}
-  minionsToSpawn: 2
+  minionsToSpawn: 1
 --- !u!1 &5496485408107937801
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,7 +704,7 @@ Transform:
   m_GameObject: {fileID: 5496485408107937801}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7327405371286860026}
@@ -876,7 +876,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4, y: 4}
   m_EdgeRadius: 0
 --- !u!50 &4025939953437629993
 Rigidbody2D:
@@ -930,8 +930,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7562904474450949799}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 1.023, y: 0.007, z: 0}
+  m_LocalScale: {x: 1.9989789, y: 1.9989789, z: 1.9989789}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6817851173497780043}

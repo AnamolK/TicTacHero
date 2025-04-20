@@ -356,6 +356,7 @@ MonoBehaviour:
   - {fileID: 5168872523443544771, guid: 0984675420878f340b07933a0d0bd69a, type: 3}
   - {fileID: 5168872523443544771, guid: e3f160fca56251d4f93ab99a691640fb, type: 3}
   - {fileID: 5168872523443544771, guid: 2b2bb8a374b364491b70711ee29231b5, type: 3}
+  - {fileID: 5168872523443544771, guid: 2caf20732bf534b9aabbeebaabe7933a, type: 3}
   spawnPoints:
   - {fileID: 1799518150}
   - {fileID: 1665769440}
@@ -486,7 +487,7 @@ MonoBehaviour:
     StartDialogue: -1
     EndDialogue: 5
   - enemies:
-    - typeInd: 0
+    - typeInd: 3
       health: 50
       atk: 1
       dropHp: 0
@@ -1650,7 +1651,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1002893945}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.56, z: -10}
+  m_LocalPosition: {x: -0.4749999, y: 4.56, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

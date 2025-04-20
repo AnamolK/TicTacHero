@@ -315,11 +315,7 @@ public class EnemyPathfinder : MonoBehaviour
             }
             else if (enemyType == EnemyType.SlimeBoss)
             {
-                // Example: Slime boss moves like a normal enemy, but also jump attacks every X ticks
-                if (!isAttackingSlime)
-                {
-                    MoveOneStepTowardPlayer();
-                }
+                MoveOneStepTowardPlayer();
 
                 if (!isAttackingSlime && tickCounter % jumpTickInterval == 0)
                 {
@@ -468,53 +464,116 @@ public class EnemyPathfinder : MonoBehaviour
     }
 
     // Slimeboss jump attack
+    // private IEnumerator SlimeBossJumpAttack()
+    // {
+    //     isAttackingSlime = true;
+    //     Debug.Log("SlimeBoss telegraphs jump attack...");
+
+    //     // optional telegraph animation
+    //     animTween.AttackMelee(new Vector3(0, 0.2f, 0), 0.5f);
+    //     yield return new WaitForSeconds(0.5f);
+
+    //     // pick random jump offset
+    //     // target the player's grid‐snapped position, but no farther than jumpRange
+    //     Vector3 oldPos = movePoint.position;
+
+    //     // get the player's position snapped to grid
+    //     Vector3 playerGrid = new Vector3(
+    //         SnapToGrid(player.position.x),
+    //         SnapToGrid(player.position.y),
+    //         oldPos.z
+    //     );
+
+    //     // vector from us to the player
+    //     Vector3 toPlayer = playerGrid - oldPos;
+    //     float distToPlayer = toPlayer.magnitude;
+
+    //     // clamp the jump distance so we never exceed jumpRange
+    //     float jumpDist = Mathf.Min(distToPlayer, jumpRange);
+    //     Vector3 clampedOffset = toPlayer.normalized * jumpDist;
+
+    //     // final destination
+    //     Vector3 newPos = oldPos + clampedOffset;
+    //     newPos.x = SnapToGrid(newPos.x);
+    //     newPos.y = SnapToGrid(newPos.y);
+
+    //     movePoint.position = newPos;
+
+    //     // if you land on the player
+    //     if (player != null)
+    //     {
+    //         float dist = Vector2.Distance(newPos, player.position);
+    //         if (dist < 0.75f)
+    //         {
+    //             Debug.Log("SlimeBoss landed on player for " + jumpDamage + " damage!");
+    //             // call your player's TakeDamage or whatever
+    //             PlayerHealth ph = player.GetComponent<PlayerHealth>();
+    //             if (ph != null) ph.TakeDamage(jumpDamage);
+    //         }
+    //     }
+
+    //     // spawn minions
+    //     for (int i = 0; i < minionsToSpawn; i++)
+    //     {
+    //         if (slimeMinionPrefab != null)
+    //         {
+    //             Vector3 spawnPos = new Vector3(
+    //                 newPos.x + Random.Range(-1, 2),
+    //                 newPos.y + Random.Range(-1, 2),
+    //                 newPos.z
+    //             );
+    //             Instantiate(slimeMinionPrefab, spawnPos, Quaternion.identity);
+    //         }
+    //     }
+
+    //     isAttackingSlime = false;
+    // }
+
     private IEnumerator SlimeBossJumpAttack()
     {
         isAttackingSlime = true;
-        Debug.Log("SlimeBoss telegraphs jump attack...");
 
-        // optional telegraph animation
+        //Telegraphing
         animTween.AttackMelee(new Vector3(0, 0.2f, 0), 0.5f);
         yield return new WaitForSeconds(0.5f);
 
-        // pick random jump offset
+        //Compute the jump target toward the player
         Vector3 oldPos = movePoint.position;
-        Vector3 newPos = oldPos + new Vector3(
-            Random.Range(-jumpRange, jumpRange),
-            Random.Range(-jumpRange, jumpRange),
-            0
+        Vector3 playerGrid = new Vector3(
+            SnapToGrid(player.position.x),
+            SnapToGrid(player.position.y),
+            oldPos.z
         );
-
+        Vector3 toPlayer = playerGrid - oldPos;
+        float jumpDist = Mathf.Min(toPlayer.magnitude, jumpRange);
+        Vector3 newPos = oldPos + toPlayer.normalized * jumpDist;
         newPos.x = SnapToGrid(newPos.x);
         newPos.y = SnapToGrid(newPos.y);
 
+        // Telling the MovementController to go there
         movePoint.position = newPos;
 
-        // if you land on the player
-        if (player != null)
+        // Waiting here until the boss has actually moved there
+        while (Vector2.Distance(transform.position, newPos) > 0.05f)
+            yield return null;
+
+        // Since it landed we do the damage
+        if (Vector2.Distance(transform.position, player.position) < 0.75f)
         {
-            float dist = Vector2.Distance(newPos, player.position);
-            if (dist < 0.75f)
-            {
-                Debug.Log("SlimeBoss landed on player for " + jumpDamage + " damage!");
-                // call your player's TakeDamage or whatever
-                PlayerHealth ph = player.GetComponent<PlayerHealth>();
-                if (ph != null) ph.TakeDamage(jumpDamage);
-            }
+            Debug.Log("SlimeBoss lands and hits for " + jumpDamage);
+            var ph = player.GetComponent<PlayerHealth>();
+            if (ph != null) ph.TakeDamage(jumpDamage);
         }
 
-        // spawn minions
+        // Spawning the minions
         for (int i = 0; i < minionsToSpawn; i++)
         {
-            if (slimeMinionPrefab != null)
-            {
-                Vector3 spawnPos = new Vector3(
-                    newPos.x + Random.Range(-1, 2),
-                    newPos.y + Random.Range(-1, 2),
-                    newPos.z
-                );
-                Instantiate(slimeMinionPrefab, spawnPos, Quaternion.identity);
-            }
+            Vector3 spawnPos = newPos + new Vector3(
+                Random.Range(-1, 2),
+                Random.Range(-1, 2),
+                0
+            );
+            Instantiate(slimeMinionPrefab, spawnPos, Quaternion.identity);
         }
 
         isAttackingSlime = false;

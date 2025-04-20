@@ -295,9 +295,13 @@ public class EnemyPathfinder : MonoBehaviour
         // animation
         animTween = asset.GetComponent<AnimationGeneric>();
 
+        if (enemyType == EnemyType.Dragon && fireHitbox != null)
+            fireHitbox.SetActive(false);
+
         // Start the main routine
         StartCoroutine(MoveTick());
     }
+
 
     IEnumerator MoveTick()
     {

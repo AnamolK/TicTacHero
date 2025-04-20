@@ -3263,7 +3263,7 @@ MonoBehaviour:
   timeBetweenWaves: 3
   waveArray:
   - enemies:
-    - typeInd: 3
+    - typeInd: 2
       health: 8
       atk: 1
       dropHp: 1

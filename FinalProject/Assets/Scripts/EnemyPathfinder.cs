@@ -260,6 +260,8 @@ public class EnemyPathfinder : MonoBehaviour
 
     // track ticks
     private int tickCounter = 0;
+    private bool isStunned = false;
+
 
     void Start()
     {
@@ -292,6 +294,13 @@ public class EnemyPathfinder : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(moveTickDuration);
+
+            if (isStunned)
+            {
+                Debug.Log($"{gameObject.name} is stunned. Skipping this tick.");
+                continue;
+            }
+
             tickCounter++;
 
             // Movement
@@ -441,6 +450,13 @@ public class EnemyPathfinder : MonoBehaviour
         float dist = Vector2.Distance(movePoint.position, player.position);
         return (dist <= dragonFireRange);
     }
+    
+    public void Stun(float duration)
+    {
+        if (!isStunned) {
+            StartCoroutine(StunRoutine(duration));
+        }
+    }
 
     private IEnumerator DragonFireSequence()
     {
@@ -448,6 +464,10 @@ public class EnemyPathfinder : MonoBehaviour
 
         // Telegraphed wait
         yield return new WaitForSeconds(dragonTelegraphDuration);
+
+    
+        yield return new WaitForSeconds(moveTickDuration);
+        tickCounter++;
 
         // Spew fire
         if (player != null && dragonFirePrefab != null)
@@ -461,6 +481,7 @@ public class EnemyPathfinder : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
         isAttackingDragon = false;
+        
     }
 
     // Slimeboss jump attack
@@ -531,6 +552,24 @@ public class EnemyPathfinder : MonoBehaviour
         }
     }
 
+    private IEnumerator StunRoutine(float duration)
+    {
+        isStunned = true;
+        Debug.Log($"{gameObject.name} stunned for {duration} seconds!");
+
+        // Optional: Visual feedback
+        // GetComponent<SpriteRenderer>().color = Color.cyan;
+
+        yield return new WaitForSeconds(duration);
+
+        isStunned = false;
+        Debug.Log($"{gameObject.name} recovered from stun.");
+
+        // Optional: Reset visuals
+        // GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
+
     private void Die()
     {
         Debug.Log($"Enemy ({enemyType}) died.");
@@ -552,9 +591,9 @@ public class EnemyPathfinder : MonoBehaviour
             movePoint = null;
         }
 
-        if (willDropPotion && healthPotionPrefab != null)
+        if (willDropPotion && healthPotionPrefab != null) {
             Instantiate(healthPotionPrefab, transform.position+new Vector3(-1,1,0), transform.rotation);
-
+        }
         animTween.DieEnemy(0.3f);
 
         Destroy(transform.root.gameObject, 0.5f);

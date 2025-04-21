@@ -106,23 +106,32 @@ public class UpgradeManager : MonoBehaviour
             UpdateUI();
         }
     }
-        public void UpgradeAttack()
+    public void UpgradeAttack()
+    {
+        if (upgradePoints > 0 && playerStats != null)
         {
-            if (upgradePoints > 0 && playerStats != null)
+            attackLevel++;
+            upgradePoints--;
+            playerStats.IncreaseAttackDamage(attackUpgradeAmount);
+
+            if (attackLevel == 3)
             {
-                attackLevel++;
-                upgradePoints--;
-                playerStats.IncreaseAttackDamage(attackUpgradeAmount);
-
-                if (attackLevel == 3)
-                {
-                    playerStats.UnlockAOEAttack();
-                    Debug.Log("Player movement-based damage upgrade unlocked!");
-                }
-
-                UpdateUI();
+                playerStats.UnlockAOEAttack();
+                Debug.Log("AOE attack unlocked at Level 3!");
             }
+
+            if (attackLevel == 6)
+            {
+                playerStats.UnlockDash();
+                playerStats.UnlockStun();
+                Debug.Log("Dash and Stun unlocked at Level 6!");
+            }
+
+            UpdateUI();
         }
+    }
+
+
     public void UpgradeTurret()
     {
         if (upgradePoints >= turretUpgradeCost)

@@ -84,6 +84,15 @@ public class PlayerAttack : MonoBehaviour
                     int damage = (playerStats != null) ? playerStats.currentAttackDamage : 1;
                     playSFX();
                     currentEnemy.TakeDamage(damage);
+                    if (playerStats != null && playerStats.stunUnlocked)
+                    {
+                        float chanceToStun = 0.2f;
+                        if (Random.value < chanceToStun)
+                        {
+                            Debug.Log("⚡ Stun triggered!");
+                            if (currentEnemy != null) currentEnemy.Stun(1f);
+                        }
+                    }
                     if (playerStats != null && playerStats.aoeAttackUnlocked)
                     {
                         float aoeRadius = 2.5f; // adjust to taste

@@ -31,6 +31,7 @@ public class DragonPathfinder : MonoBehaviour
  // If you want to optionally drop items on death
     public bool willDropPotion = false;
     public GameObject healthPotionPrefab;
+    private bool isStunned = false;
 
     void Start()
     {
@@ -64,6 +65,11 @@ public class DragonPathfinder : MonoBehaviour
         {
             // Wait for the designated “tick” duration
             yield return new WaitForSeconds(moveTickDuration);
+            if (isStunned)
+            {
+                Debug.Log($"{gameObject.name} is stunned. Skipping tick.");
+                continue;
+            }
 
             // If the dragon isn't attacking, try to move
             if (!isAttacking)
@@ -211,6 +217,32 @@ public class DragonPathfinder : MonoBehaviour
         else
             return direction.y > 0 ? "Up" : "Down";
     }
+
+    public void Stun(float duration)
+    {
+        if (!isStunned)
+        {
+            StartCoroutine(StunRoutine(duration));
+        }
+    }
+
+    private IEnumerator StunRoutine(float duration)
+    {
+        isStunned = true;
+        Debug.Log($"{gameObject.name} stunned for {duration} seconds!");
+
+        // Optional: Visual feedback
+        // GetComponent<SpriteRenderer>().color = Color.cyan;
+
+        yield return new WaitForSeconds(duration);
+
+        isStunned = false;
+        Debug.Log($"{gameObject.name} recovered from stun.");
+
+        // Optional: Reset visuals
+        // GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
 
 // Same damage logic from your original pathfinder
     public void TakeDamage(int damage)

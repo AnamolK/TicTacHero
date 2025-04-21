@@ -12,6 +12,9 @@ public class PlayerStats : MonoBehaviour
     // HP Regen flag unlocked with health upgrade level 3.
     public bool regenUnlocked = false;
     public bool aoeAttackUnlocked = false;
+    public bool dashUnlocked = false;
+    public bool stunUnlocked = false;
+
 
 
     void Start()
@@ -64,5 +67,18 @@ public class PlayerStats : MonoBehaviour
         aoeAttackUnlocked = true;
         Debug.Log("AOE attack unlocked!");
     }
+
+    public void UnlockDash()
+    {
+        dashUnlocked = true;
+        Debug.Log("Dash ability unlocked!");
+    }
+
+    public void UnlockStun()
+    {
+        stunUnlocked = true;
+        Debug.Log("Stun chance unlocked!");
+    }
+
 
 }

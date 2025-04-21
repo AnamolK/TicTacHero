@@ -120,11 +120,13 @@ public class UpgradeManager : MonoBehaviour
                 Debug.Log("AOE attack unlocked at Level 3!");
             }
 
-            if (attackLevel == 6)
+            if (attackLevel == 4)
             {
                 playerStats.UnlockDash();
+            }
+            if (attackLevel == 5)
+            {
                 playerStats.UnlockStun();
-                Debug.Log("Dash and Stun unlocked at Level 6!");
             }
 
             UpdateUI();

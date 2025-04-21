@@ -1,16 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class PauseMenuController : MonoBehaviour
 {
     public GameObject pauseMenuUI; 
+
 
     private Button resumeButton;
     private Button restartButton;
     private Button quitButton;
 
     private bool isPaused = false;
+    public Slider volumeSlider;
+    public AudioMixer audioMixer;
+    
+
 
     void Start()
     {
@@ -22,6 +28,15 @@ public class PauseMenuController : MonoBehaviour
         resumeButton.onClick.AddListener(ResumeGame);
         restartButton.onClick.AddListener(RestartGame);
         quitButton.onClick.AddListener(QuitGame);
+
+        if (volumeSlider != null)
+    {
+        float currentVolume;
+        audioMixer.GetFloat("MusicVolume", out currentVolume);
+        volumeSlider.value = Mathf.Pow(10f, currentVolume / 20f);
+        volumeSlider.onValueChanged.AddListener(SetVolume);
+    }
+
 
         pauseMenuUI.SetActive(false); // hidden at start
     }
@@ -56,6 +71,14 @@ public class PauseMenuController : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    public void SetVolume(float sliderValue)
+    {
+        float dB = Mathf.Log10(Mathf.Clamp(sliderValue, 0.0001f, 1f)) * 20f;
+        audioMixer.SetFloat("MusicVolume", dB); //  USE THE NAME FROM THE MIXER
+    }
+
+
 
     public void QuitGame()
     {

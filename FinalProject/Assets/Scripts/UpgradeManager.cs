@@ -23,6 +23,8 @@ public class UpgradeManager : MonoBehaviour
     public Button continueButton;
     public PlayerStats playerStats;
     public bool unlockPlayerMovement = false;
+    public TMP_Text upgradeAttackButtonText;
+
 
     void Awake()
     {
@@ -44,6 +46,8 @@ public class UpgradeManager : MonoBehaviour
             turretUpgradeButton.onClick.AddListener(UpgradeTurret);
         if (continueButton != null)
             continueButton.onClick.AddListener(OnContinue);
+
+        
         if (playerStats == null)
         {
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -61,6 +65,30 @@ public class UpgradeManager : MonoBehaviour
             attackText.text = "Attack Level: " + attackLevel;
         if (turretText != null)
             turretText.text = "Turret Level: " + turretUpgradeLevel;
+        if (upgradeAttackButtonText != null)
+        {
+            switch (attackLevel)
+            {
+                case 0:
+                case 1:
+                case 2:
+                    upgradeAttackButtonText.text = "Upgrade Attack (+1 Damage)";
+                    break;
+                case 3:
+                    upgradeAttackButtonText.text = "Upgrade Attack: Unlock AOE!";
+                    break;
+                case 4:
+                    upgradeAttackButtonText.text = "Upgrade Attack: Unlock Dash!";
+                    break;
+                case 5:
+                    upgradeAttackButtonText.text = "Upgrade Attack: Unlock Stun!";
+                    break;
+                default:
+                    upgradeAttackButtonText.text = "Upgrade Attack: Attack Maxed!";
+                    break;
+            }
+        }
+
     }
     public void AwardPoints(int points)
     {

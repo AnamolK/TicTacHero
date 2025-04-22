@@ -43,16 +43,16 @@ public class WaveManager : MonoBehaviour
     public int waveNumber = 0;
 
     [Header("Intro Slime")]
-    public GameObject slimeBossPrefab;
+    public GameObject slimeTutorial;
     public Vector3 slimeSpawnPosition = new Vector3(2,9,0);
     public int slimeIntroDialogue = -1;
 
     void Start()
     {
         DialogueManager dm = FindObjectOfType<DialogueManager>();
-        if (slimeBossPrefab != null)
+        if (slimeTutorial != null)
         {
-            GameObject slime = Instantiate(slimeBossPrefab, slimeSpawnPosition, Quaternion.identity);
+            //GameObject slime = Instantiate(slimeTutorial, slimeSpawnPosition, Quaternion.identity);
             if (slimeIntroDialogue != -1)
                 dm.StartDialogue(slimeIntroDialogue);
         }
@@ -79,7 +79,7 @@ public class WaveManager : MonoBehaviour
                     waveText.gameObject.SetActive(false);
 
                
-                GameObject prefab = enemiesTypes[waveArray[0].enemies[0].typeInd];
+                GameObject prefab = slimeTutorial;
                 Vector3 spawnPos = slimeSpawnPosition;
                 GameObject tutEnemy = Instantiate(prefab, spawnPos, Quaternion.identity);
                 EnemyPathfinder epTut = tutEnemy.GetComponent<EnemyPathfinder>();
@@ -88,10 +88,10 @@ public class WaveManager : MonoBehaviour
                 Vector3 playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
                 Vector2 diff = new Vector2(playerPos.x - spawnPos.x, playerPos.y - spawnPos.y);
                 diff = -diff;
-                if (Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
-                    epTut.currentAttackSide = diff.x > 0 ? "Right" : "Left";
-                else
-                    epTut.currentAttackSide = diff.y > 0 ? "Up" : "Down";
+                // if (Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
+                //     epTut.currentAttackSide = diff.x > 0 ? "Right" : "Left";
+                // else
+                //     epTut.currentAttackSide = diff.y > 0 ? "Up" : "Down";
 
                 yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Enemy").Length == 0);
                 waveNumber = 1;

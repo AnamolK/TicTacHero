@@ -14,6 +14,10 @@ public class PlayerAttack : MonoBehaviour
     // Reference to the PlayerStats component for upgraded attack damage.
     private PlayerStats playerStats;
 
+    private string mostRecentPress;
+    [SerializeField] private bool isHeldHori;
+    [SerializeField] private bool isHeldVert;
+
     //animation/asset manager
     [SerializeField] private GameObject asset;
     private new AnimationGeneric animation;
@@ -67,6 +71,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+
         if (currentEnemy != null)
         {
             Vector2 enemyPos = currentEnemy.transform.position;
@@ -123,19 +128,23 @@ public class PlayerAttack : MonoBehaviour
                 }
             }
         }
+        checkForHoldHori();
+        checkForHoldVert();
     }
 
     bool CheckInputAgainstHitSide(string side)
     {
-        if (Input.GetKeyDown(KeyCode.D) && side == "Left")
+        if (Input.GetAxisRaw("Horizontal") == -1f && !isHeldHori && side == "Right")
             return true;
-        else if (Input.GetKeyDown(KeyCode.A) && side == "Right")
+        else if (Input.GetAxisRaw("Horizontal") == 1f && !isHeldHori && side == "Left")
             return true;
-        else if (Input.GetKeyDown(KeyCode.W) && side == "Down")
+        else if (Input.GetAxisRaw("Vertical") == -1f && !isHeldVert && side == "Up")
             return true;
-        else if (Input.GetKeyDown(KeyCode.S) && side == "Up")
+        else if (Input.GetAxisRaw("Vertical") == 1f && !isHeldVert && side == "Down")
             return true;
         else
+            checkForHoldHori();
+            checkForHoldVert();
             return false;
     }
 
@@ -168,4 +177,23 @@ public class PlayerAttack : MonoBehaviour
         audioSource.clip = selected;
         audioSource.PlayOneShot(selected);
     }
+
+    bool checkForHoldHori() {
+        if (Input.GetAxisRaw("Horizontal") == 0f) {
+            isHeldHori = false;
+        } else {
+            isHeldHori = true;
+        }
+        return isHeldHori;
+    }
+
+        bool checkForHoldVert() {
+        if (Input.GetAxisRaw("Vertical") == 0f) {
+            isHeldVert = false;
+        } else {
+            isHeldVert = true;
+        }
+        return isHeldVert;
+    }
+
 }

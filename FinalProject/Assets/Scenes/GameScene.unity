@@ -376,6 +376,7 @@ MonoBehaviour:
   - {fileID: 5168872523443544771, guid: e3f160fca56251d4f93ab99a691640fb, type: 3}
   - {fileID: 5168872523443544771, guid: 2b2bb8a374b364491b70711ee29231b5, type: 3}
   - {fileID: 5168872523443544771, guid: 2caf20732bf534b9aabbeebaabe7933a, type: 3}
+  - {fileID: 5168872523443544771, guid: 730ee86884487c041ac7f62861366399, type: 3}
   spawnPoints:
   - {fileID: 1799518150}
   - {fileID: 1665769440}
@@ -386,9 +387,9 @@ MonoBehaviour:
   timeBetweenWaves: 3
   waveArray:
   - enemies:
-    - typeInd: 0
-      health: 8
-      atk: 1
+    - typeInd: 4
+      health: 5
+      atk: 0
       dropHp: 1
       spawnDelay: 0
     numEnemies: 1
@@ -414,7 +415,7 @@ MonoBehaviour:
     StartDialogue: -1
     EndDialogue: -1
   - enemies:
-    - typeInd: 1
+    - typeInd: 2
       health: 20
       atk: 1
       dropHp: 0
@@ -517,7 +518,7 @@ MonoBehaviour:
   waveText: {fileID: 385203418}
   waveDisplayDuration: 1.5
   waveNumber: 0
-  slimeBossPrefab: {fileID: 0}
+  slimeTutorial: {fileID: 5168872523443544771, guid: 730ee86884487c041ac7f62861366399, type: 3}
   slimeSpawnPosition: {x: 2, y: 4, z: 0}
   slimeIntroDialogue: -1
 --- !u!4 &136503986
@@ -4102,6 +4103,7 @@ MonoBehaviour:
   - Use WASD to move and attack.
   - Defeat enemies by dashing into them.
   - But careful, remember to avoid their vicious attacks!
+  - Try not to stand in front of them to avoid their advances.
   - 'Oh my! A slime is nearby, but it looks like it''s stuck... finish it hero! '
   tutorialAfter:
   - Wonderful! But those are not the last of them.

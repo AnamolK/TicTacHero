@@ -441,9 +441,11 @@ public class EnemyPathfinder : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapCircleAll(destination, occupancyCheckRadius);
         foreach (Collider2D col in colliders)
         {
-            Collider2D collider = playerObj.GetComponent<Collider2D>();
-            if (collider.IsTouching(gameObject.GetComponent<Collider2D>())){
-                return true;
+            Collider2D collider = col.GetComponent<Collider2D>();
+            if (collider.tag == "Enemy") {
+                if (collider.gameObject != gameObject && collider.gameObject != movePointObj) {                
+                    return true;
+                }
             }
         }
         return false;

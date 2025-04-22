@@ -376,7 +376,6 @@ MonoBehaviour:
   - {fileID: 5168872523443544771, guid: e3f160fca56251d4f93ab99a691640fb, type: 3}
   - {fileID: 5168872523443544771, guid: 2b2bb8a374b364491b70711ee29231b5, type: 3}
   - {fileID: 5168872523443544771, guid: 2caf20732bf534b9aabbeebaabe7933a, type: 3}
-  - {fileID: 5168872523443544771, guid: 730ee86884487c041ac7f62861366399, type: 3}
   spawnPoints:
   - {fileID: 1799518150}
   - {fileID: 1665769440}
@@ -387,7 +386,7 @@ MonoBehaviour:
   timeBetweenWaves: 3
   waveArray:
   - enemies:
-    - typeInd: 4
+    - typeInd: 0
       health: 5
       atk: 0
       dropHp: 1

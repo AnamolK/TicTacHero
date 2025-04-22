@@ -10,6 +10,7 @@ TagManager:
   - GameHandler
   - Attackable
   - Turret
+  - AOE
   layers:
   - Default
   - TransparentFX

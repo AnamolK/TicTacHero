@@ -42,7 +42,7 @@ public class DragonMovementController : MonoBehaviour
 
         Vector3 moveTo = new Vector3(transform.position.x, transform.position.y, 0f);
 
-        if (movePoint != null && ((movePoint.position.x % 1 == 0 && movePoint.position.y % 1 == 0) || (movePoint.position.x % 0.5 == 0 && movePoint.position.y % 0.5 == 0)))
+        if (movePoint != null && movePoint.position.x % 0.5 == 0 && movePoint.position.y % 0.5 == 0)
         {
             Collider2D collider = playerObj.GetComponent<Collider2D>();
             if (!collider.IsTouching(movePoint.GetComponent<Collider2D>()))
@@ -52,7 +52,6 @@ public class DragonMovementController : MonoBehaviour
             else
             {
                 rotateAsset(movePoint.position);
-                Debug.Log("NOT MOVING ASSET");
             }
         }
 

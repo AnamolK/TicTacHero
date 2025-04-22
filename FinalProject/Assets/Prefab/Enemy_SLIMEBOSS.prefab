@@ -156,8 +156,8 @@ Transform:
   m_GameObject: {fileID: 3705427870613234339}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.45, y: 0.45, z: 0}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4692235778670584474}
   m_RootOrder: -1
@@ -478,7 +478,6 @@ GameObject:
   - component: {fileID: 3206640182839788183}
   - component: {fileID: 968443355347425706}
   - component: {fileID: 3779764873409761429}
-  - component: {fileID: 6924290288310081745}
   - component: {fileID: 4053359616879805501}
   - component: {fileID: -2785827746448183811}
   m_Layer: 3
@@ -496,7 +495,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5168872523443544771}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -603,33 +602,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7ab578c7c73b83d4e86b2cf0ab70ed32, type: 3}
   - {fileID: 21300000, guid: 7ab578c7c73b83d4e86b2cf0ab70ed32, type: 3}
   imageContainer: {fileID: 3705427870613234339}
---- !u!114 &6924290288310081745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5168872523443544771}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98ca78778ddd9405a892e3f7d2ddeb79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveTickDuration: 1
-  occupancyCheckRadius: 0.3
-  movePoint: {fileID: 7318825270291879427}
-  maxHealth: 20
-  clampToUpperArea: 1
-  upperArenaY: 2
-  meleeRange: 1.1
-  meleeDamage: 1
-  meleeTickInterval: 2
-  jumpTickInterval: 6
-  jumpRange: 3
-  jumpDamage: 2
-  minionsToSpawn: 2
-  slimeMinionPrefab: {fileID: 5168872523443544771, guid: 0984675420878f340b07933a0d0bd69a, type: 3}
-  asset: {fileID: 0}
 --- !u!114 &4053359616879805501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -758,19 +730,19 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.8, y: 0.8}
-      - {x: -0.8, y: 0.2}
-      - {x: 0.2, y: 0.2}
-      - {x: 0.2, y: -0.8}
-      - {x: 0.8, y: -0.8}
-      - {x: 0.8, y: 0.2}
-      - {x: 0.8, y: 0.2}
-      - {x: 1.8, y: 0.2}
-      - {x: 1.8, y: 0.8}
-      - {x: 0.8, y: 0.8}
-      - {x: 0.8, y: 1.8}
-      - {x: 0.2, y: 1.8}
-      - {x: 0.2, y: 0.8}
+    - - {x: -0.7, y: 1.2}
+      - {x: -0.7, y: -0.2}
+      - {x: -0.2, y: -0.2}
+      - {x: -0.2, y: -0.7}
+      - {x: 1.2, y: -0.7}
+      - {x: 1.2, y: -0.2}
+      - {x: 1.2, y: -0.2}
+      - {x: 1.8, y: -0.2}
+      - {x: 1.8, y: 1.2}
+      - {x: 1.2, y: 1.2}
+      - {x: 1.2, y: 1.7}
+      - {x: -0.2, y: 1.7}
+      - {x: -0.2, y: 1.2}
   m_UseDelaunayMesh: 0
 --- !u!50 &7756806573769494820
 Rigidbody2D:

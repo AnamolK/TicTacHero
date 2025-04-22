@@ -107,6 +107,11 @@ public class PlayerHealth : MonoBehaviour
                 damageCoroutine = StartCoroutine(ApplyDamageOverTime());
             }
         }
+
+        if (collision.CompareTag("AOE"))
+        {
+            TakeDamage(2);
+        }
     }
 
     // When the enemy leaves, stop the damage coroutine.

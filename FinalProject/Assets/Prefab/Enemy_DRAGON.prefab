@@ -63,7 +63,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 1.5, y: 0}
@@ -95,7 +95,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8127066728896099023
 Transform:
   m_ObjectHideFlags: 0
@@ -514,8 +514,8 @@ MonoBehaviour:
   healthPotionPrefab: {fileID: 5676807617435308758, guid: 1b91245b846ebe440be5eac50e8d69e9, type: 3}
   asset: {fileID: 2926859044733998614}
   fireHitbox: {fileID: 2148360068486414039}
-  dragonFireRange: 2
-  dragonFireTickSkip: 4
+  dragonFireRange: 4
+  dragonFireTickSkip: 0
   dragonTelegraphDuration: 1
   dragonFirePrefab: {fileID: 7513205716422833131, guid: fb667c45e61514b63a013fa6340501aa, type: 3}
   jumpRange: 2
@@ -552,7 +552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b336708070520c74499097f147acdb9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 999
+  moveSpeed: 5
   movePoint: {fileID: 7318825270291879427}
   playerPosition: {fileID: 0}
   playerObj: {fileID: 2702591824075528570}

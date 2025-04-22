@@ -248,8 +248,8 @@ public class EnemyPathfinder : MonoBehaviour
     // Dragon
     [Header("Dragon Settings")]
     public GameObject fireHitbox;
-    public float dragonFireRange = 3f; // Distance to start telegraphing
-    public int dragonFireTickSkip = 4;
+    public float dragonFireRange = 1.5f; // Distance to start telegraphing
+    public int dragonFireTickSkip = 2;
     private int dragonFireTickCount = 0;
     public float dragonTelegraphDuration = 1f; // Pause time
     public GameObject dragonFirePrefab;
@@ -282,27 +282,20 @@ public class EnemyPathfinder : MonoBehaviour
         if (movePoint != null && enemyType == EnemyType.Normal)
         {
             movePoint.position = new Vector3(
-                // SnapToGrid(transform.position.x),
-                // SnapToGrid(transform.position.y),
-                // transform.position.z
                 transform.position.x,
                 transform.position.y,
                 transform.position.z
             );
         } else {
             movePoint.position = new Vector3(
-                transform.position.x + 0.5f,
-                transform.position.y - 0.5f,
+                SnapToGrid(transform.position.x) + 0.5f,
+                SnapToGrid(transform.position.y) - 0.5f,
                 transform.position.z
             );
         }
 
         // animation
         animTween = asset.GetComponent<AnimationGeneric>();
-
-        if (enemyType == EnemyType.Dragon && fireHitbox != null)
-            fireHitbox.SetActive(false);
-
         // Start the main routine
         StartCoroutine(MoveTick());
     }
@@ -330,10 +323,9 @@ public class EnemyPathfinder : MonoBehaviour
             }
             else if (enemyType == EnemyType.Dragon)
             {
+                MoveOneStepTowardPlayer(1);
                 if (!isAttackingDragon)
                 {
-                    MoveOneStepTowardPlayer(1);
-
                     // Check if we want to do a Fire Attack
                     if (PlayerInDragonRange() && dragonFireTickCount >= dragonFireTickSkip)
                     {
@@ -389,41 +381,41 @@ public class EnemyPathfinder : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            // fallback logic if blocked
-            Vector2 alt = Vector2.zero;
-            if (direction.x != 0)
-                alt = new Vector2(0, Mathf.Sign(player.position.y - movePoint.position.y));
-            else if (direction.y != 0)
-                alt = new Vector2(Mathf.Sign(player.position.x - movePoint.position.x), 0);
+        // else
+        // {
+        //     // fallback logic if blocked
+        //     Vector2 alt = Vector2.zero;
+        //     if (direction.x != 0)
+        //         alt = new Vector2(0, Mathf.Sign(player.position.y - movePoint.position.y));
+        //     else if (direction.y != 0)
+        //         alt = new Vector2(Mathf.Sign(player.position.x - movePoint.position.x), 0);
 
-            if (alt != Vector2.zero)
-            {
-                Vector3 altDest = currentDestination + new Vector3(alt.x, alt.y, 0);
-                altDest = new Vector3(
-                    // SnapToGrid(altDest.x),
-                    // SnapToGrid(altDest.y),
-                    // altDest.z
-                    altDest.x,
-                    altDest.y,
-                    altDest.z
-                );
-                if (!IsCellOccupied(altDest))
-                {
-                    movePoint.position = altDest;
-                    currentAttackSide = GetDirectionString(alt);
-                    if (!IsCellOccupiedForAnimation(altDest))
-                    {
-                        if (enemyInd == 0) {
-                            animTween.MoveBounce(0.4f);
-                        } else if (enemyInd == 1) {
-                            animTween.MoveDragon(0.4f);
-                        }
-                    }
-                }
-            }
-        }
+        //     if (alt != Vector2.zero)
+        //     {
+        //         Vector3 altDest = currentDestination + new Vector3(alt.x, alt.y, 0);
+        //         altDest = new Vector3(
+        //             // SnapToGrid(altDest.x),
+        //             // SnapToGrid(altDest.y),
+        //             // altDest.z
+        //             altDest.x,
+        //             altDest.y,
+        //             altDest.z
+        //         );
+        //         if (!IsCellOccupied(altDest))
+        //         {
+        //             movePoint.position = altDest;
+        //             currentAttackSide = GetDirectionString(alt);
+        //             if (!IsCellOccupiedForAnimation(altDest))
+        //             {
+        //                 if (enemyInd == 0) {
+        //                     animTween.MoveBounce(0.4f);
+        //                 } else if (enemyInd == 1) {
+        //                     animTween.MoveDragon(0.4f);
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
     }
 
     private Vector2 GetMoveDirection()
@@ -446,14 +438,14 @@ public class EnemyPathfinder : MonoBehaviour
 
     bool IsCellOccupied(Vector3 destination)
     {
-        // Collider2D[] colliders = Physics2D.OverlapCircleAll(destination, occupancyCheckRadius);
-        // foreach (Collider2D col in colliders)
-        // {
-        //     Collider2D collider = playerObj.GetComponent<Collider2D>();
-        //     if (!collider.IsTouching(gameObject.GetComponent<Collider2D>())){
-        //         return true;
-        //     }
-        // }
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(destination, occupancyCheckRadius);
+        foreach (Collider2D col in colliders)
+        {
+            Collider2D collider = playerObj.GetComponent<Collider2D>();
+            if (collider.IsTouching(gameObject.GetComponent<Collider2D>())){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -500,8 +492,6 @@ public class EnemyPathfinder : MonoBehaviour
 
         // Telegraphed wait
         yield return new WaitForSeconds(dragonTelegraphDuration);
-
-    
         yield return new WaitForSeconds(moveTickDuration);
         tickCounter++;
 
@@ -511,21 +501,16 @@ public class EnemyPathfinder : MonoBehaviour
             Vector2 toPlayer = (player.position - transform.position).normalized;
             animTween.AttackMelee(toPlayer * 0.5f, 0.3f);
 
-            fireHitbox.SetActive(true);
-            Collider2D fireCol = fireHitbox.GetComponent<Collider2D>();
-
-            if (fireCol.IsTouching(playerObj.GetComponent<Collider2D>())) {
-                PlayerHealth ph = playerObj.GetComponent<PlayerHealth>();
-                if (ph != null) ph.TakeDamage(2);
-                Debug.Log("fire damage 2");
-            }
+            fireHitbox.tag = "AOE";
+            fireHitbox.transform.GetChild(0).gameObject.SetActive(true);
 
             // GameObject fireObj = Instantiate(dragonFirePrefab, transform.position, Quaternion.identity);
             // // If you have FireProjectile, do e.g. fireObj.GetComponent<FireProjectile>()?.Init(toPlayer);
         }
 
-        yield return new WaitForSeconds(0.3f);
-        fireHitbox.SetActive(false);
+        yield return new WaitForSeconds(moveTickDuration);
+        fireHitbox.tag = "Untagged";
+        fireHitbox.transform.GetChild(0).gameObject.SetActive(false);
         isAttackingDragon = false;
         
     }

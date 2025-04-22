@@ -86,6 +86,7 @@ public class WaveManager : MonoBehaviour
 
                 Vector3 playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
                 Vector2 diff = new Vector2(playerPos.x - spawnPos.x, playerPos.y - spawnPos.y);
+                diff = -diff;
                 if (Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
                     epTut.currentAttackSide = diff.x > 0 ? "Right" : "Left";
                 else

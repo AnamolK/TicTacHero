@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asset: {fileID: 4692235778670584474}
+  shadowAsset: {fileID: 0}
 --- !u!1 &3655506259612996754
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,6 +593,7 @@ MonoBehaviour:
   moveSpeed: 5
   movePoint: {fileID: 7318825270291879427}
   playerPosition: {fileID: 0}
+  playerObj: {fileID: 0}
   BlockedArea:
     serializedVersion: 2
     m_Bits: 9
@@ -637,18 +639,21 @@ MonoBehaviour:
   currentHealth: 0
   currentAttackSide: None
   movePoint: {fileID: 7318825270291879427}
+  movePointObj: {fileID: 0}
   occupancyCheckRadius: 0.3
   willDropPotion: 0
   healthPotionPrefab: {fileID: 5676807617435308758, guid: 1b91245b846ebe440be5eac50e8d69e9, type: 3}
   asset: {fileID: 2926859044733998614}
+  fireHitbox: {fileID: 0}
   dragonFireRange: 2
+  dragonFireTickSkip: 2
   dragonTelegraphDuration: 1
   dragonFirePrefab: {fileID: 0}
   jumpRange: 4
-  jumpTickInterval: 8
+  jumpTickInterval: 6
   jumpDamage: 2
   slimeMinionPrefab: {fileID: 5168872523443544771, guid: 0984675420878f340b07933a0d0bd69a, type: 3}
-  minionsToSpawn: 1
+  minionsToSpawn: 2
 --- !u!1 &5496485408107937801
 GameObject:
   m_ObjectHideFlags: 0

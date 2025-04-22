@@ -94,7 +94,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        CheckpointManager.Instance.RestartFromCheckpoint();
+        SceneManager.LoadScene("LoseScene"); 
     }
 
     // When an enemy collides, start applying damage over time.

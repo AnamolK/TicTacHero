@@ -21,6 +21,7 @@ using UnityEngine;
 public class AnimationGeneric : MonoBehaviour
 {
     [SerializeField] private Transform asset;
+    [SerializeField] private Transform shadowAsset;
     
     // Start is called before the first frame update
     void Start()
@@ -38,36 +39,39 @@ public class AnimationGeneric : MonoBehaviour
         });
     }
 
+    public void MoveDragon(float duration) {
+        asset.localPosition = Vector3.zero;
+        asset.DOPunchRotation(new Vector3(0,0,15), duration, 4, 0.8f).OnComplete(() => {
+            resetPosition(1f);
+        });
+    }
+
     public void MoveShift(Vector3 direction, float duration) {
         resetPosition(0.01f);
         asset.localPosition = Vector3.zero;
         asset.DOPunchPosition(direction, duration, 1, 0.5f, false).OnComplete(() => {
             resetPosition(0.3f);
         });
-        Debug.Log("Animation Played: MoveShift");
     }
 
     public void AttackMelee(Vector3 direction, float duration) {
         resetPosition(0.01f);
         asset.localPosition = Vector3.zero;
-        asset.DOPunchPosition(direction, duration, 3, 0.5f, false).OnComplete(() => {
+        asset.DOPunchPosition(direction, duration, 3, 0.35f, false).OnComplete(() => {
             resetPosition(1f);
         });
-        Debug.Log("Animation Played: AttackMelee");
     }
 
     public void DamageTaken(float duration) {
         asset.DOShakePosition (duration, 0.5f, 20, 90, false, true, ShakeRandomnessMode.Full).OnComplete(() => {
             resetPosition(1f);
         });
-        Debug.Log("Animation Played: DamageTaken");
     }
 
     public void DamageTakenEnemy(float duration) {
-        asset.DOPunchRotation(new Vector3(0,0,0), duration, 20, 0.3f).OnComplete(() => {
+        asset.DOPunchRotation(new Vector3(0,0,30), duration, 20, 0.3f).OnComplete(() => {
             resetPosition(1f);
         });
-        Debug.Log("Animation Played: DamageTakenEnemy");
     }
 
     public void DieEnemy(float duration) {

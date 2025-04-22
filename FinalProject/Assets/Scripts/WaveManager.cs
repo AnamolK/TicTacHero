@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class WaveManager : MonoBehaviour
 {
@@ -179,7 +180,11 @@ public class WaveManager : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenWaves);
 
             // Increment wave
-            waveNumber++;
+            if (waveNumber < waveArray.Length) {
+                waveNumber++;
+            } else {         
+                SceneManager.LoadScene("WinScene");
+            }
         }
     }
 }

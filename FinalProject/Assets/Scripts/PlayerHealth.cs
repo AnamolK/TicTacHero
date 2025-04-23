@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
@@ -9,11 +10,13 @@ public class PlayerHealth : MonoBehaviour
     private PlayerStats playerStats;
 
     // UI elements for displaying health and game over text.
-    public TMP_Text healthText;
+    public GameObject heartHolder;
+    public GameObject heartImg;
+    public Sprite[] hearts;
     public TMP_Text gameOverText;
 
     // Time (in seconds) between damage ticks.
-    public float damageInterval = 1f;
+    public float damageInterval = 1.5f;
 
     private Coroutine damageCoroutine;
 
@@ -23,7 +26,9 @@ public class PlayerHealth : MonoBehaviour
     private AudioClip selected;
 
     // Store the last displayed health to detect changes.
-    private int lastDisplayedHealth;
+    private int lastMaxHp;
+    private int lastCurrHp;
+    private int lastHeartSpot;
 
     //animation/asset manager
     [SerializeField] private GameObject asset;
@@ -41,7 +46,8 @@ public class PlayerHealth : MonoBehaviour
         }
         
         UpdateUI();
-        lastDisplayedHealth = playerStats.currentHealth;
+        lastMaxHp = playerStats.currentMaxHealth;
+        lastCurrHp = playerStats.currentHealth;
         
         if (gameOverText != null)
             gameOverText.gameObject.SetActive(false);
@@ -54,11 +60,11 @@ public class PlayerHealth : MonoBehaviour
     void Update()
     {
         // Check if current health has changed since the last UI update.
-        if (playerStats.currentHealth != lastDisplayedHealth ||
-            playerStats.currentMaxHealth != lastDisplayedHealth) // optional: if you want to update for max health changes too
+        if (playerStats.currentHealth != lastCurrHp || playerStats.currentMaxHealth != lastMaxHp)
         {
             UpdateUI();
-            lastDisplayedHealth = playerStats.currentHealth;
+            lastMaxHp = playerStats.currentMaxHealth;
+            lastCurrHp = playerStats.currentHealth;
         }
     }
 
@@ -70,7 +76,8 @@ public class PlayerHealth : MonoBehaviour
         animation.DamageTaken(0.5f);
         shake.ShakeCamera(0.3f);
         UpdateUI();
-        lastDisplayedHealth = playerStats.currentHealth;
+        lastMaxHp = playerStats.currentMaxHealth;
+        lastCurrHp = playerStats.currentHealth;
         Debug.Log("Player took damage. Current health: " + playerStats.currentHealth);
 
         if (playerStats.currentHealth <= 0)
@@ -82,14 +89,40 @@ public class PlayerHealth : MonoBehaviour
         // Heal the player without exceeding the current maximum.
         playerStats.currentHealth = Mathf.Min(playerStats.currentMaxHealth, playerStats.currentHealth + amount);
         UpdateUI();
-        lastDisplayedHealth = playerStats.currentHealth;
+        lastMaxHp = playerStats.currentMaxHealth;
+        lastCurrHp = playerStats.currentHealth;
     }
 
     void UpdateUI()
     {
-        // Update the health text to display current and maximum health.
-        if (healthText != null)
-            healthText.text = "Health: " + playerStats.currentHealth + " / " + playerStats.currentMaxHealth;
+        // // Update the health text to display current and maximum health.
+        // if (healthText != null)
+        //     healthText.text = "Health: " + playerStats.currentHealth + " / " + playerStats.currentMaxHealth;
+
+        //reset hearts
+        foreach (Transform child in heartHolder.transform)
+            Destroy(child.gameObject);
+
+        for (int i = 0; i < playerStats.currentMaxHealth; i++)
+        {
+            GameObject heart = Instantiate(heartImg, heartHolder.transform);
+            RectTransform rt = heart.GetComponent<RectTransform>();
+            
+            //shrink heart overall distance (DOESNT WORK)
+            if (playerStats.currentMaxHealth * 90 > 600) {
+                int transformAmount = 500/playerStats.currentMaxHealth;
+                rt.anchoredPosition = new Vector2(i*transformAmount, 0);
+            } else  {
+                rt.anchoredPosition = new Vector2(i * 90, 0);
+            }
+
+            // Change sprite if within currentHealth
+            Image heartImage = heart.GetComponent<Image>();
+            if (i < playerStats.currentHealth)
+                heartImage.sprite = hearts[0];
+            else
+                heartImage.sprite = hearts[1];
+        }
     }
 
     void Die()

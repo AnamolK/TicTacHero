@@ -127,6 +127,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthText: {fileID: 0}
+  heartHolder: {fileID: 0}
+  heartImg: {fileID: 3886114059829945315, guid: 45d811a822c0b5c489a34fba46fab61a, type: 3}
+  hearts:
+  - {fileID: 21300000, guid: 519e324f26c4d86439eb65432fe58b37, type: 3}
+  - {fileID: 21300000, guid: 2865a19dc95619946bca526e2ed68b5a, type: 3}
   gameOverText: {fileID: 0}
   damageInterval: 1.5
   soundList:
@@ -152,6 +157,8 @@ MonoBehaviour:
   currentAttackDamage: 0
   regenUnlocked: 0
   aoeAttackUnlocked: 0
+  dashUnlocked: 0
+  stunUnlocked: 0
 --- !u!114 &8946049399214454262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,6 +175,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d68e09bd5b92fd4abcf8a0f4da49741, type: 3}
   - {fileID: 8300000, guid: 7e57bebfb38688f4a86b1d08e3c36cbf, type: 3}
   - {fileID: 8300000, guid: 1f3ea98f253ff3640a84bfd225b5218c, type: 3}
+  isHeldHori: 0
+  isHeldVert: 0
   asset: {fileID: 7296475643305464596}
 --- !u!82 &7576993357446184198
 AudioSource:
@@ -542,3 +551,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asset: {fileID: 196919662512329192}
+  shadowAsset: {fileID: 0}

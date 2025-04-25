@@ -650,7 +650,7 @@ MonoBehaviour:
   dragonTelegraphDuration: 1
   dragonFirePrefab: {fileID: 0}
   jumpRange: 4
-  jumpTickInterval: 6
+  jumpTickInterval: 5
   jumpDamage: 2
   slimeMinionPrefab: {fileID: 5168872523443544771, guid: 0984675420878f340b07933a0d0bd69a, type: 3}
   minionsToSpawn: 2

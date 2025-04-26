@@ -74,7 +74,7 @@ public class PlayerMove : MonoBehaviour
         }      
         checkForHoldHori(); 
         checkForHoldVert();
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && playerStats != null && playerStats.dashUnlocked)
+        if (Input.GetKeyDown(KeyCode.Space) && canDash && playerStats != null && playerStats.dashUnlocked)
         {
             StartCoroutine(PerformDash());
         }
@@ -144,16 +144,24 @@ public class PlayerMove : MonoBehaviour
         audioSource.PlayOneShot(selected);
     }
 
+    
     private IEnumerator PerformDash()
     {
         canDash = false;
 
-        Vector3 dashDirection = movePoint.position - transform.position;
-        if (dashDirection == Vector3.zero)
-            dashDirection = transform.right; // fallback in case
+        // Read input
+        Vector2 dashInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
-        Vector3 targetPos = movePoint.position + dashDirection.normalized * dashDistance;
+        if (dashInput == Vector2.zero)
+        {
+            // If no input, dash in last move direction (optional fallback)
+            dashInput = transform.right;
+        }
 
+        // Calculate target position
+        Vector3 targetPos = movePoint.position + (Vector3)(dashInput * dashDistance);
+
+        // Check if the target position is blocked
         if (!Physics2D.OverlapCircle(targetPos, 0.05f, BlockedArea))
         {
             movePoint.position = new Vector3(
@@ -161,7 +169,7 @@ public class PlayerMove : MonoBehaviour
                 Mathf.Round(targetPos.y),
                 movePoint.position.z
             );
-            Debug.Log("Dashed to " + movePoint.position);
+            Debug.Log("Dashed toward " + dashInput + " to " + movePoint.position);
         }
         else
         {
@@ -171,6 +179,7 @@ public class PlayerMove : MonoBehaviour
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
+
 }
 
 

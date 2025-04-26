@@ -26,6 +26,7 @@ public class UpgradeManager : MonoBehaviour
     public TMP_Text upgradeAttackButtonText;
 
 
+
     void Awake()
     {
         if (Instance == null)
@@ -67,19 +68,19 @@ public class UpgradeManager : MonoBehaviour
             turretText.text = "Turret Level: " + turretUpgradeLevel;
         if (upgradeAttackButtonText != null)
         {
-            if (attackLevel == 3)
+            if (attackLevel == 2)
             {
                 upgradeAttackButtonText.text = "Upgrade Attack: Stun";
             }
-            else if (attackLevel == 4)
+            else if (attackLevel == 3)
             {
                 upgradeAttackButtonText.text = "Upgrade Attack: Dash";
             }
-            else if (attackLevel == 5)
+            else if (attackLevel == 4)
             {
                 upgradeAttackButtonText.text = "Upgrade Attack: AOE";
             }
-            else if (attackLevel > 5)
+            else if (attackLevel > 4)
             {
                 upgradeAttackButtonText.text = "Upgrade Attack: Maxed";
             }
@@ -145,16 +146,19 @@ public class UpgradeManager : MonoBehaviour
             if (attackLevel == 3)
             {
                 playerStats.UnlockStun();
+                Debug.Log("Stun unlocked at Level 3!");
             }
 
             if (attackLevel == 4)
             {
                 playerStats.UnlockDash();
+                DialogueManager.Instance.StartDialogue(8);
+                Debug.Log("Dash unlocked at Level 4!");
             }
             if (attackLevel == 5)
             {
                 playerStats.UnlockAOEAttack();
-                Debug.Log("AOE attack unlocked at Level 3!");
+                Debug.Log("AOE attack unlocked at Level 5!");
             }
 
             UpdateUI();

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
+    public static DialogueManager Instance;
     [Header("UI References")]
     public GameObject dialogueBox;     
     public TMP_Text dialogueText;        
@@ -22,9 +23,19 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private string[] Warning2After;
     [SerializeField] private string[] SlimeBefore;
     [SerializeField] private string[] SlimeAfter;
+    [SerializeField] private string[] dashUnlockDialogue;
+
 
     private int currentLine = 0;
     public bool dialogueActive = false;
+
+    void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     void Start()
     {
@@ -46,7 +57,7 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueSequenceSelector(sequence);
         Time.timeScale = 0;
-        Debug.Log("🟢 DialogueManager: StartDialogue called!");
+        Debug.Log(" DialogueManager: StartDialogue called!");
 
         if (currentLines.Length == 0)
         {
@@ -55,7 +66,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         dialogueBox.SetActive(true);
-        Debug.Log("✅ dialogueBox should now be active: " + dialogueBox.activeInHierarchy);
+        Debug.Log(" dialogueBox should now be active: " + dialogueBox.activeInHierarchy);
         currentLine = 0;
         dialogueText.text = currentLines[currentLine];
         dialogueActive = true;
@@ -78,7 +89,11 @@ public class DialogueManager : MonoBehaviour
             currentLines = SlimeBefore;
         } else if (sequence == 7) {
             currentLines = SlimeAfter;
-        }
+        } else if (sequence == 8) { 
+            currentLines = dashUnlockDialogue; 
+}
+
+
     }
 
     public void DisplayNextLine()
@@ -87,6 +102,7 @@ public class DialogueManager : MonoBehaviour
         if (currentLine < currentLines.Length)
         {
             dialogueText.text = currentLines[currentLine];
+            Time.timeScale = 0f;
         }
         else
         {

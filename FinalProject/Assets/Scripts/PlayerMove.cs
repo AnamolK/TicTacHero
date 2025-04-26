@@ -20,11 +20,17 @@ public class PlayerMove : MonoBehaviour
     private string mostRecentPress;
     private bool isHeldHori;
     private bool isHeldVert;
+    public float dashDistance = 2f;
+    public float dashCooldown = 1f;
+    private bool canDash = true;
+    private PlayerStats playerStats;
+
 
     //audio manager
     private AudioSource audioSource;
     public AudioClip[] soundList;
     private AudioClip selected;
+    
 
 
     void Start()
@@ -32,6 +38,8 @@ public class PlayerMove : MonoBehaviour
         movePoint.parent = null;
         audioSource = GetComponent<AudioSource>();
         animation = asset.GetComponent<AnimationGeneric>();
+        playerStats = GetComponent<PlayerStats>();
+
     }
 
     // Update is called once per frame
@@ -66,6 +74,11 @@ public class PlayerMove : MonoBehaviour
         }      
         checkForHoldHori(); 
         checkForHoldVert();
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && playerStats != null && playerStats.dashUnlocked)
+        {
+            StartCoroutine(PerformDash());
+        }
+
     }
 
     void checkKeyPressChange (string direction) {
@@ -130,4 +143,34 @@ public class PlayerMove : MonoBehaviour
         audioSource.clip = selected;
         audioSource.PlayOneShot(selected);
     }
+
+    private IEnumerator PerformDash()
+    {
+        canDash = false;
+
+        Vector3 dashDirection = movePoint.position - transform.position;
+        if (dashDirection == Vector3.zero)
+            dashDirection = transform.right; // fallback in case
+
+        Vector3 targetPos = movePoint.position + dashDirection.normalized * dashDistance;
+
+        if (!Physics2D.OverlapCircle(targetPos, 0.05f, BlockedArea))
+        {
+            movePoint.position = new Vector3(
+                Mathf.Round(targetPos.x),
+                Mathf.Round(targetPos.y),
+                movePoint.position.z
+            );
+            Debug.Log("Dashed to " + movePoint.position);
+        }
+        else
+        {
+            Debug.Log("Dash blocked!");
+        }
+
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+    }
 }
+
+

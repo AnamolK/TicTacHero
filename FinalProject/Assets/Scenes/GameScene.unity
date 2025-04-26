@@ -6083,7 +6083,7 @@ MonoBehaviour:
   continueButton: {fileID: 1680696317928371373}
   playerStats: {fileID: 1417145937126153586}
   unlockPlayerMovement: 0
-  upgradeAttackButtonText: {fileID: 0}
+  upgradeAttackButtonText: {fileID: 550931997}
 --- !u!1 &1799518149
 GameObject:
   m_ObjectHideFlags: 0
@@ -6967,6 +6967,26 @@ PrefabInstance:
       propertyPath: gameOverText
       value: 
       objectReference: {fileID: 353655035}
+    - target: {fileID: 8056185728391435882, guid: b22ca0e15b20e814a8ad898698279f1e, type: 3}
+      propertyPath: damageInterval
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8189007781879901748, guid: b22ca0e15b20e814a8ad898698279f1e, type: 3}
+      propertyPath: dashUnlocked
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8189007781879901748, guid: b22ca0e15b20e814a8ad898698279f1e, type: 3}
+      propertyPath: stunUnlocked
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8189007781879901748, guid: b22ca0e15b20e814a8ad898698279f1e, type: 3}
+      propertyPath: baseAttackDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8189007781879901748, guid: b22ca0e15b20e814a8ad898698279f1e, type: 3}
+      propertyPath: aoeAttackUnlocked
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

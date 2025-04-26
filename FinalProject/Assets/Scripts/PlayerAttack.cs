@@ -109,6 +109,7 @@ public class PlayerAttack : MonoBehaviour
                         {
                             if (hit.CompareTag("Attackable"))
                             {
+                                Debug.Log("AOE hit: " + hit.gameObject.name);
                                 EnemyPathfinder enemy = hit.GetComponentInParent<EnemyPathfinder>();
 
                                 if (enemy != null && enemy != currentEnemy)

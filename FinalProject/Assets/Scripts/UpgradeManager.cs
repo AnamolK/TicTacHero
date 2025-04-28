@@ -146,6 +146,7 @@ public class UpgradeManager : MonoBehaviour
             if (attackLevel == 3)
             {
                 playerStats.UnlockStun();
+                DialogueManager.Instance.StartDialogue(9);
                 Debug.Log("Stun unlocked at Level 3!");
             }
 
@@ -158,6 +159,7 @@ public class UpgradeManager : MonoBehaviour
             if (attackLevel == 5)
             {
                 playerStats.UnlockAOEAttack();
+                DialogueManager.Instance.StartDialogue(10);
                 Debug.Log("AOE attack unlocked at Level 5!");
             }
 

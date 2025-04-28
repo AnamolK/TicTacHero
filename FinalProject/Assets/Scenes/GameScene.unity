@@ -6204,7 +6204,13 @@ MonoBehaviour:
   - Dash Unlocked!
   - Press Space to dash quickly in your movement direction!
   - Use it to dodge enemies or escape danger!
-  dialogueActive: 0
+  stunUnlockDialogue:
+  - Stun Unlocked!
+  - You are given a 20% to stun the enemy attacked for 1 second!
+  aoeUnlockDialogue:
+  - AOE Unlocked!
+  - Attack all enemies within a 2.5 radius all at once!
+  dialogueActive: 1
 --- !u!1 &1907061145
 GameObject:
   m_ObjectHideFlags: 0

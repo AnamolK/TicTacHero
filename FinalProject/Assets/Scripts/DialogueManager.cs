@@ -24,6 +24,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private string[] SlimeBefore;
     [SerializeField] private string[] SlimeAfter;
     [SerializeField] private string[] dashUnlockDialogue;
+    [SerializeField] private string[] stunUnlockDialogue;
+    [SerializeField] private string[] aoeUnlockDialogue;
 
 
     private int currentLine = 0;
@@ -91,9 +93,11 @@ public class DialogueManager : MonoBehaviour
             currentLines = SlimeAfter;
         } else if (sequence == 8) { 
             currentLines = dashUnlockDialogue; 
-}
-
-
+        } else if (sequence == 9) { 
+            currentLines = stunUnlockDialogue; 
+        } else if (sequence == 10) { 
+            currentLines = aoeUnlockDialogue; 
+        }
     }
 
     public void DisplayNextLine()

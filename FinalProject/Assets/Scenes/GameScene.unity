@@ -1081,14 +1081,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2199901820945819763, guid: ab88e4f324d534fc1b72094e2b42d895, type: 3}
-      propertyPath: m_fontSize
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 2199901820945819763, guid: ab88e4f324d534fc1b72094e2b42d895, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 35
-      objectReference: {fileID: 0}
     - target: {fileID: 3885013595411576195, guid: ab88e4f324d534fc1b72094e2b42d895, type: 3}
       propertyPath: m_Name
       value: ButtonPAUSE
@@ -1097,34 +1089,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 963067910}
-    - target: {fileID: 4606048356884474848, guid: ab88e4f324d534fc1b72094e2b42d895, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PauseGame
-      objectReference: {fileID: 0}
-    - target: {fileID: 4606048356884474848, guid: ab88e4f324d534fc1b72094e2b42d895, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PauseMenuController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4606048356884474848, guid: ab88e4f324d534fc1b72094e2b42d895, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 5868026111276853212, guid: ab88e4f324d534fc1b72094e2b42d895, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 884699dd5508b2244abea33ad9ba4d08, type: 3}
-    - target: {fileID: 5868026111276853212, guid: ab88e4f324d534fc1b72094e2b42d895, type: 3}
-      propertyPath: m_Maskable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5868026111276853212, guid: ab88e4f324d534fc1b72094e2b42d895, type: 3}
-      propertyPath: m_FillCenter
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5868026111276853212, guid: ab88e4f324d534fc1b72094e2b42d895, type: 3}
-      propertyPath: m_PixelsPerUnitMultiplier
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

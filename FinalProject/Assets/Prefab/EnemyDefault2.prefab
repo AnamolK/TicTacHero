@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asset: {fileID: 4692235778670584474}
+  shadowAsset: {fileID: 0}
 --- !u!1 &3655506259612996754
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,16 +522,17 @@ MonoBehaviour:
   moveSpeed: 5
   movePoint: {fileID: 7318825270291879427}
   playerPosition: {fileID: 0}
+  playerObj: {fileID: 0}
   BlockedArea:
     serializedVersion: 2
     m_Bits: 9
-  asset: {fileID: 2926859044733998614}
+  assetContainer: {fileID: 2926859044733998614}
   images:
   - {fileID: 21300000, guid: 657bcc3299789dc4ca10bbede8205f2d, type: 3}
   - {fileID: 21300000, guid: 333470b63ae7fff42bfa2da4155d351c, type: 3}
   - {fileID: 21300000, guid: 63c3b4512e7c7e444b61c8b5d1c50cf4, type: 3}
   - {fileID: 21300000, guid: 26c5af24be68a5644b899499d6dca348, type: 3}
-  imageContainer: {fileID: 3705427870613234339}
+  image: {fileID: 3705427870613234339}
 --- !u!61 &3206640182839788183
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -646,14 +648,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb3bbfff0bf95a4ea79b4c48588bd8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   moveTickDuration: 1
   maxHealth: 3
+  currentHealth: 0
   currentAttackSide: None
   movePoint: {fileID: 7318825270291879427}
+  movePointObj: {fileID: 0}
   occupancyCheckRadius: 0.3
-  asset: {fileID: 2926859044733998614}
   willDropPotion: 0
   healthPotionPrefab: {fileID: 5676807617435308758, guid: 1b91245b846ebe440be5eac50e8d69e9, type: 3}
+  asset: {fileID: 2926859044733998614}
+  shadow: {fileID: 0}
+  fire: {fileID: 0}
+  dragonFireRange: 1.5
+  dragonFireTickSkip: 3
+  dragonTelegraphDuration: 1.5
+  jumpRange: 2
+  spawnTickInterval: 12
+  JumpTickInterval: 2
+  jumpDamage: 3
+  slimeMinionPrefab: {fileID: 0}
+  minionsToSpawn: 2
 --- !u!50 &968443355347425706
 Rigidbody2D:
   serializedVersion: 4

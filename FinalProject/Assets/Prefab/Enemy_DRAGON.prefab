@@ -513,13 +513,14 @@ MonoBehaviour:
   willDropPotion: 0
   healthPotionPrefab: {fileID: 5676807617435308758, guid: 1b91245b846ebe440be5eac50e8d69e9, type: 3}
   asset: {fileID: 2926859044733998614}
-  fireHitbox: {fileID: 2148360068486414039}
+  shadow: {fileID: 0}
+  fire: {fileID: 2148360068486414039}
   dragonFireRange: 4
   dragonFireTickSkip: 0
   dragonTelegraphDuration: 1
-  dragonFirePrefab: {fileID: 7513205716422833131, guid: fb667c45e61514b63a013fa6340501aa, type: 3}
   jumpRange: 2
-  jumpTickInterval: 6
+  spawnTickInterval: 12
+  JumpTickInterval: 2
   jumpDamage: 2
   slimeMinionPrefab: {fileID: 5168872523443544771, guid: 0984675420878f340b07933a0d0bd69a, type: 3}
   minionsToSpawn: 4
@@ -555,7 +556,7 @@ MonoBehaviour:
   moveSpeed: 5
   movePoint: {fileID: 7318825270291879427}
   playerPosition: {fileID: 0}
-  playerObj: {fileID: 2702591824075528570}
+  playerObj: {fileID: 0}
   BlockedArea:
     serializedVersion: 2
     m_Bits: 9

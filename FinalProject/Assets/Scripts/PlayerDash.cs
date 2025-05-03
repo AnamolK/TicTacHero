@@ -47,18 +47,12 @@ public class PlayerDash : MonoBehaviour
 
             // Deal 2x damage and stun
             EnemyPathfinder e = enemy.GetComponentInParent<EnemyPathfinder>();
-            DragonPathfinder d = enemy.GetComponentInParent<DragonPathfinder>();
             int damage = playerStats.currentAttackDamage * 2;
 
             if (e != null)
             {
                 e.TakeDamage(damage);
                 e.Stun(1f);
-            }
-            else if (d != null)
-            {
-                d.TakeDamage(damage);
-                d.Stun(1f);
             }
 
             Debug.Log("💨Dash success: dealt 2x damage and stunned enemy.");

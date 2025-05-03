@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
+
 public class PlayerHealth : MonoBehaviour
 {
     // Reference to the PlayerStats component that holds health values.
@@ -19,6 +20,7 @@ public class PlayerHealth : MonoBehaviour
     public float damageInterval = 1.5f;
 
     private Coroutine damageCoroutine;
+    private Collider2D currCollision;
 
     // Audio/SFX variables.
     private AudioSource audioSource;
@@ -66,6 +68,16 @@ public class PlayerHealth : MonoBehaviour
             lastMaxHp = playerStats.currentMaxHealth;
             lastCurrHp = playerStats.currentHealth;
         }
+
+        if (currCollision.CompareTag("Enemy"))
+        {
+            if (damageCoroutine != null)
+            {
+                StopCoroutine(damageCoroutine);
+                damageCoroutine = null;
+            }
+        }
+
     }
 
     public void TakeDamage(int damage)
@@ -135,6 +147,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
+            currCollision = collision;
             if (damageCoroutine == null)
             {
                 damageCoroutine = StartCoroutine(ApplyDamageOverTime());
@@ -144,19 +157,6 @@ public class PlayerHealth : MonoBehaviour
         if (collision.CompareTag("AOE"))
         {
             TakeDamage(2);
-        }
-    }
-
-    // When the enemy leaves, stop the damage coroutine.
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy"))
-        {
-            if (damageCoroutine != null)
-            {
-                StopCoroutine(damageCoroutine);
-                damageCoroutine = null;
-            }
         }
     }
 

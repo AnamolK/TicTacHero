@@ -525,7 +525,7 @@ MonoBehaviour:
   playerObj: {fileID: 0}
   BlockedArea:
     serializedVersion: 2
-    m_Bits: 9
+    m_Bits: 8
   assetContainer: {fileID: 2926859044733998614}
   images:
   - {fileID: 21300000, guid: 657bcc3299789dc4ca10bbede8205f2d, type: 3}
@@ -659,7 +659,6 @@ MonoBehaviour:
   willDropPotion: 0
   healthPotionPrefab: {fileID: 5676807617435308758, guid: 1b91245b846ebe440be5eac50e8d69e9, type: 3}
   asset: {fileID: 2926859044733998614}
-  shadow: {fileID: 0}
   fire: {fileID: 0}
   dragonFireRange: 1.5
   dragonFireTickSkip: 3

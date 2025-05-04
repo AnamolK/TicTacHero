@@ -23,7 +23,9 @@ public class UpgradeManager : MonoBehaviour
     public Button continueButton;
     public PlayerStats playerStats;
     public bool unlockPlayerMovement = false;
+    public TMP_Text upgradeHealthButtonText;
     public TMP_Text upgradeAttackButtonText;
+    public TMP_Text turretUpgradeButtonText;
 
 
 
@@ -59,34 +61,35 @@ public class UpgradeManager : MonoBehaviour
     void UpdateUI()
     {
         if (pointsText != null)
-            pointsText.text = "Upgrade Points: " + upgradePoints;
-        if (healthText != null)
-            healthText.text = "Health Level: " + healthLevel;
-        if (attackText != null)
-            attackText.text = "Attack Level: " + attackLevel;
-        if (turretText != null)
-            turretText.text = "Turret Level: " + turretUpgradeLevel;
+            pointsText.text = "Points: " + upgradePoints;
+        if (upgradeHealthButtonText != null)
+            upgradeHealthButtonText.text = "Lvl: " + healthLevel;
+        if (upgradeAttackButtonText != null)
+            upgradeAttackButtonText.text = "Lvl: " + attackLevel;
+        if (turretUpgradeButtonText != null)
+            turretUpgradeButtonText.text = "Lvl: " + turretUpgradeLevel;
+
         if (upgradeAttackButtonText != null)
         {
             if (attackLevel == 2)
             {
-                upgradeAttackButtonText.text = "Upgrade Attack: Stun";
+                attackText.text = "Unlock ATK: Stun";
             }
             else if (attackLevel == 3)
             {
-                upgradeAttackButtonText.text = "Upgrade Attack: Dash";
+                attackText.text = "Unlock ATK: Dash";
             }
             else if (attackLevel == 4)
             {
-                upgradeAttackButtonText.text = "Upgrade Attack: AOE";
+                attackText.text = "Unlock ATK: AOE";
             }
             else if (attackLevel > 4)
             {
-                upgradeAttackButtonText.text = "Upgrade Attack: Maxed";
+                attackText.text = "ATK: Maxed";
             }
             else
             {
-                upgradeAttackButtonText.text = "Upgrade Attack: +1 Damage";
+                attackText.text = "ATK: +1 dmg";
             }
         }
 
@@ -123,7 +126,7 @@ public class UpgradeManager : MonoBehaviour
             upgradePoints--;
             if (healthLevel == 2) {
                 // 3rd level: Unlock HP Regen instead of increasing max health.
-                healthLevel++;
+                healthLevel += 2;
                 playerStats.UnlockHealthRegen();
                 Debug.Log("HP Regen unlocked: 1 health per wave.");
             }

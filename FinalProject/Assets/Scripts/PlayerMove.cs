@@ -87,7 +87,7 @@ public class PlayerMove : MonoBehaviour
 
             if (!(Physics2D.OverlapCircle(movePoint.position + new Vector3(-1f, 0f, 0f), 0.05f, BlockedArea))) {
                 movePoint.position += new Vector3(-1f, 0f, 0f);
-                animation.MoveShift(new Vector3(-0.3f, 0f, 0f), 0.3f);
+                animation.MoveShift(new Vector3(-0.15f, 0f, 0f), 0.3f);
                 imageContainer.GetComponent<SpriteRenderer>().sprite = images[2];
             }
 
@@ -95,7 +95,7 @@ public class PlayerMove : MonoBehaviour
 
             if (!(Physics2D.OverlapCircle(movePoint.position + new Vector3(1f, 0f, 0f), 0.05f, BlockedArea))) {
                 movePoint.position += new Vector3(1f, 0f, 0f);
-                animation.MoveShift(new Vector3(0.3f, 0f, 0f), 0.2f);
+                animation.MoveShift(new Vector3(0.15f, 0f, 0f), 0.2f);
                 imageContainer.GetComponent<SpriteRenderer>().sprite = images[3];
             }
 
@@ -103,7 +103,7 @@ public class PlayerMove : MonoBehaviour
 
             if (!(Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, -1f, 0f), 0.05f, BlockedArea))) {
                 movePoint.position += new Vector3(0f, -1f, 0f);
-                animation.MoveShift(new Vector3(0f, -0.3f, 0f), 0.2f);
+                animation.MoveShift(new Vector3(0f, -0.15f, 0f), 0.2f);
                 imageContainer.GetComponent<SpriteRenderer>().sprite = images[0];
             }
 
@@ -111,7 +111,7 @@ public class PlayerMove : MonoBehaviour
 
             if (!(Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, 1f, 0f), 0.05f, BlockedArea))) {
                 movePoint.position += new Vector3(0f, 1f, 0f);
-                animation.MoveShift(new Vector3(0f, 0.3f, 0f), 0.2f);
+                animation.MoveShift(new Vector3(0f, 0.15f, 0f), 0.2f);
                 imageContainer.GetComponent<SpriteRenderer>().sprite = images[1];
             }
 

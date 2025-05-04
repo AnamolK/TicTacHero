@@ -152,13 +152,13 @@ public class PlayerAttack : MonoBehaviour
     Vector3 AttackAnimationDirection(string side)
     {
         if (side == "Left")
-            return new Vector3(1f,0,0);
+            return new Vector3(0.8f,0,0);
         else if (side == "Right")
-            return new Vector3(-1f,0,0);
+            return new Vector3(-0.8f,0,0);
         else if (side == "Down")
-            return new Vector3(0,1f,0);
+            return new Vector3(0,0.8f,0);
         else if (side == "Up")
-            return new Vector3(0,-1f,0);
+            return new Vector3(0,-0.8f,0);
         else
             return new Vector3(0,0,0);
     }

@@ -45,7 +45,6 @@ public class EnemyMovementController : MonoBehaviour
             if (!collider.IsTouching(gameObject.GetComponent<Collider2D>()))
             {
                 moveTo = new Vector3(movePoint.position.x, movePoint.position.y, 0f);
-                
             }
             else
             {

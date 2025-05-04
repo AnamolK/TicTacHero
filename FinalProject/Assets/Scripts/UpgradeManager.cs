@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+
 public class UpgradeManager : MonoBehaviour
 {
     public static UpgradeManager Instance;
@@ -26,6 +27,10 @@ public class UpgradeManager : MonoBehaviour
     public TMP_Text upgradeHealthButtonText;
     public TMP_Text upgradeAttackButtonText;
     public TMP_Text turretUpgradeButtonText;
+    public GameObject infoPopup;
+    public Text infoText; 
+    public Button infoButton;
+    public Button closeInfoButton;
 
 
 
@@ -49,6 +54,12 @@ public class UpgradeManager : MonoBehaviour
             turretUpgradeButton.onClick.AddListener(UpgradeTurret);
         if (continueButton != null)
             continueButton.onClick.AddListener(OnContinue);
+        if (infoButton != null)
+            infoButton.onClick.AddListener(ShowInfoPopup);
+
+        if (closeInfoButton != null)
+            closeInfoButton.onClick.AddListener(HideInfoPopup);
+
 
         
         if (playerStats == null)
@@ -180,4 +191,16 @@ public class UpgradeManager : MonoBehaviour
             UpdateUI();
         }
     }
+
+    public void ShowInfoPopup()
+    {
+        infoPopup.SetActive(true);
+        Time.timeScale = 0f; 
+    }
+
+    public void HideInfoPopup()
+    {
+        infoPopup.SetActive(false);
+    }
 }
+

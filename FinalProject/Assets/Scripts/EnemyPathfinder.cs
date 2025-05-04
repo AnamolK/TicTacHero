@@ -135,6 +135,7 @@ public class EnemyPathfinder : MonoBehaviour
                 } else {
                     isAttackingSlime = true;
                     movePointObj.tag = "Untagged";
+                    gameObject.GetComponent<Collider2D>().enabled = false;
                     MoveOneStepTowardPlayer(2);
                     StartCoroutine(slimeHitbox());
                 }
@@ -145,6 +146,7 @@ public class EnemyPathfinder : MonoBehaviour
     private IEnumerator slimeHitbox() {
         yield return new WaitForSeconds(2.5f);
         movePointObj.tag = "Enemy";
+        gameObject.GetComponent<Collider2D>().enabled = true;
         isAttackingSlime = false;
     }
 

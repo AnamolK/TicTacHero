@@ -59,7 +59,7 @@ public class PlayerHealth : MonoBehaviour
         shake = vcam.GetComponent<CameraShake>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Check if current health has changed since the last UI update.
         if (playerStats.currentHealth != lastCurrHp || playerStats.currentMaxHealth != lastMaxHp)
@@ -69,14 +69,19 @@ public class PlayerHealth : MonoBehaviour
             lastCurrHp = playerStats.currentHealth;
         }
 
-        if (currCollision.CompareTag("Enemy"))
-        {
-            if (damageCoroutine != null)
+        if (currCollision != null) {
+            Debug.Log(currCollision.tag);
+            if (!currCollision.CompareTag("Enemy"))
             {
-                StopCoroutine(damageCoroutine);
-                damageCoroutine = null;
+                
+                if (damageCoroutine != null)
+                {
+                    StopCoroutine(damageCoroutine);
+                    damageCoroutine = null;
+                }
             }
         }
+        
 
     }
 
@@ -90,7 +95,6 @@ public class PlayerHealth : MonoBehaviour
         UpdateUI();
         lastMaxHp = playerStats.currentMaxHealth;
         lastCurrHp = playerStats.currentHealth;
-        Debug.Log("Player took damage. Current health: " + playerStats.currentHealth);
 
         if (playerStats.currentHealth <= 0)
             Die();
@@ -157,6 +161,18 @@ public class PlayerHealth : MonoBehaviour
         if (collision.CompareTag("AOE"))
         {
             TakeDamage(2);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            if (damageCoroutine != null)
+            {
+                StopCoroutine(damageCoroutine);
+                damageCoroutine = null;
+            }
         }
     }
 

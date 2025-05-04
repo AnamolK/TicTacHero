@@ -19,6 +19,8 @@ public class SlimeBossController : MonoBehaviour
     private new AnimationGeneric animation;
     public Sprite[] images;
     public GameObject image;
+
+    private bool isJumping = false;
     
 
     void Start()
@@ -43,27 +45,24 @@ public class SlimeBossController : MonoBehaviour
 
         if (movePoint != null && movePoint.position.x % 0.5 == 0 && movePoint.position.y % 0.5 == 0)
         {
-            Collider2D collider = playerObj.GetComponent<Collider2D>();
-            if (!collider.IsTouching(movePoint.GetComponent<Collider2D>()))
-            {
                 moveTo = new Vector3(movePoint.position.x, movePoint.position.y, 0f);
-                jumpImgSequence();
-            }
-            else
-            {
-                jumpImgSequence();
-            }
         }
 
         transform.position = Vector3.MoveTowards(transform.position, moveTo, moveSpeed * Time.deltaTime);
+
+        if (assetContainer.GetComponent<Transform>().localPosition.y > 0) {
+            image.GetComponent<SpriteRenderer>().sprite = images[2];
+        } else {
+            image.GetComponent<SpriteRenderer>().sprite = images[0];
+        }
     }
 
     private IEnumerator jumpImgSequence() {
-        image.GetComponent<SpriteRenderer>().sprite = images[1];
-        yield return new WaitForSeconds(0.02f);
+        isJumping = true;
         image.GetComponent<SpriteRenderer>().sprite = images[2];
         yield return new WaitForSeconds(0.27f);
         image.GetComponent<SpriteRenderer>().sprite = images[0];
+        isJumping = false;
     }
     void setImage(string val)
     {

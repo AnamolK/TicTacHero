@@ -519,7 +519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785b1c9bb21b7cd489ffe56a7412b362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 20
+  moveSpeed: 3
   movePoint: {fileID: 7318825270291879427}
   playerPosition: {fileID: 0}
   playerObj: {fileID: 0}

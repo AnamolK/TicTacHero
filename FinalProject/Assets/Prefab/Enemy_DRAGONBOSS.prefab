@@ -215,8 +215,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1929265489843916020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -4, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -5.5, z: 0}
+  m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7971510299399950379}
@@ -407,7 +407,7 @@ Transform:
   - {fileID: 1848218003833011409}
   - {fileID: 1510463905511407251}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1149651901225956292
 Rigidbody2D:
@@ -506,8 +506,10 @@ MonoBehaviour:
   asset: {fileID: 8480224293066373219}
   fire: {fileID: 2010762137716862207}
   dragonFireRange: 8
-  dragonFireTickSkip: 0
-  dragonTelegraphDuration: 1
+  dragonFireTickSkip: 4
+  dragonTelegraphDuration: 0.5
+  leftClaw: {fileID: 0}
+  rightClaw: {fileID: 0}
   batMinionPrefab: {fileID: 0}
   jumpRange: 2
   spawnTickInterval: 12
@@ -1089,8 +1091,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8638878920284847681}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 4, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 7, z: 0}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7971510299399950379}

@@ -1015,9 +1015,11 @@ MonoBehaviour:
   healthPotionPrefab: {fileID: 5676807617435308758, guid: 1b91245b846ebe440be5eac50e8d69e9, type: 3}
   asset: {fileID: 4890521055033734694}
   fire: {fileID: 0}
-  dragonFireRange: 2
+  dragonFireRange: 4
   dragonFireTickSkip: 2
   dragonTelegraphDuration: 1
+  leftClaw: {fileID: 0}
+  rightClaw: {fileID: 0}
   batMinionPrefab: {fileID: 5168872523443544771, guid: e3f160fca56251d4f93ab99a691640fb, type: 3}
   jumpRange: 4
   spawnTickInterval: 12

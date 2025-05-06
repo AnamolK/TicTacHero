@@ -28,7 +28,7 @@ public class UpgradeManager : MonoBehaviour
     public TMP_Text upgradeAttackButtonText;
     public TMP_Text turretUpgradeButtonText;
     public GameObject infoPopup;
-    public Text infoText; 
+    public TMP_Text infoText; 
     public Button infoButton;
     public Button closeInfoButton;
 

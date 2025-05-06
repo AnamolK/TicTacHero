@@ -183,8 +183,11 @@ public class EnemyPathfinder : MonoBehaviour
                         movePoint.position = originalSpawn;
                         movingUp = false;
                         Debug.Log("Claw Reset");
-                        if (tickCounter > 16 && tickCounter % spawnTickInterval == 0) {
+                        if (dragonFireTickCount >= dragonFireTickSkip) {
                             StartCoroutine(dragonSpawnAttack());
+                            dragonFireTickCount = 0;
+                        } else {
+                            dragonFireTickCount++;
                         }
                         
                     }
@@ -348,21 +351,16 @@ public class EnemyPathfinder : MonoBehaviour
         isAttackingDragon = true;
 
         // Telegraphed wait
+        fire.transform.GetChild(1).gameObject.SetActive(true);
         yield return new WaitForSeconds(dragonTelegraphDuration);
         yield return new WaitForSeconds(moveTickDuration);
         tickCounter++;
 
-        // Spew fire
-        if (player != null)
-        {
-            Vector2 toPlayer = (player.position - transform.position).normalized;
-            animTween.AttackMelee(toPlayer * 0.5f, 0.4f);
-
-            fire.tag = "AOE";
-            fire.transform.GetChild(0).gameObject.SetActive(true);
-            AnimationGeneric fireTween = fire.GetComponent<AnimationGeneric>();
-            fireTween.fireHitboxSolverSmall(0.2f);
-        }
+        fire.tag = "AOE";
+        fire.transform.GetChild(1).gameObject.SetActive(false);
+        fire.transform.GetChild(0).gameObject.SetActive(true);
+        AnimationGeneric fireTween = fire.GetComponent<AnimationGeneric>();
+        fireTween.fireHitboxSolverSmall(0.2f);
 
         yield return new WaitForSeconds(moveTickDuration);
         fire.tag = "Untagged";

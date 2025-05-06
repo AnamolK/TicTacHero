@@ -41,6 +41,7 @@ public class WaveManager : MonoBehaviour
     
     public GameObject playerObj;
     public GameObject playerMovePoint;
+    public GameObject cameraFollower;
  
     // Current wave number.
     public int waveNumber = 0;
@@ -97,8 +98,12 @@ public class WaveManager : MonoBehaviour
                 //     epTut.currentAttackSide = diff.y > 0 ? "Up" : "Down";
 
                 yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Enemy").Length == 0);
-                waveNumber = 1;
+                waveNumber++;
                 continue;
+            } else if (waveNumber == 10) {
+                playerObj.transform.position = new Vector3(0, 23, 0);
+                playerMovePoint.transform.position = new Vector3(0, 23, 0);
+                cameraFollower.transform.position = new Vector3(0, 30, 0);
             }
 
             // 1) Display wave text
@@ -212,10 +217,6 @@ public class WaveManager : MonoBehaviour
             // Increment wave
             if (waveNumber < waveArray.Length) {
                 waveNumber++;
-            } else if (waveNumber == waveArray.Length - 1) {
-                playerObj.transform.position = new Vector3(0, 23, 0);
-                playerMovePoint.transform.position = new Vector3(0, 23, 0);
-                Debug.Log("MOVED PLAYER");
             } else {         
                 SceneManager.LoadScene("WinScene");
             }

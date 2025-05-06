@@ -583,7 +583,7 @@ MonoBehaviour:
     EndDialogue: -1
   - enemies:
     - typeInd: 2
-      health: 15
+      health: 20
       atk: 1
       dropHp: 0
       spawnDelay: 0

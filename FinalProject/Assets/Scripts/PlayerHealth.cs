@@ -31,6 +31,7 @@ public class PlayerHealth : MonoBehaviour
     private int lastMaxHp;
     private int lastCurrHp;
     private int lastHeartSpot;
+    private bool aoeTaken;
 
     //animation/asset manager
     [SerializeField] private GameObject asset;
@@ -57,6 +58,7 @@ public class PlayerHealth : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         animation = asset.GetComponent<AnimationGeneric>();
         shake = vcam.GetComponent<CameraShake>();
+        aoeTaken = false;
     }
 
     void FixedUpdate()
@@ -70,10 +72,8 @@ public class PlayerHealth : MonoBehaviour
         }
 
         if (currCollision != null) {
-            Debug.Log(currCollision.tag);
             if (!currCollision.CompareTag("Enemy"))
             {
-                
                 if (damageCoroutine != null)
                 {
                     StopCoroutine(damageCoroutine);
@@ -82,7 +82,6 @@ public class PlayerHealth : MonoBehaviour
             }
         }
         
-
     }
 
     public void TakeDamage(int damage)

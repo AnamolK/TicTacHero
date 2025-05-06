@@ -38,6 +38,9 @@ public class WaveManager : MonoBehaviour
     public TMP_Text waveText;
     // Duration to show the wave message.
     public float waveDisplayDuration = 2f;
+    
+    public GameObject playerObj;
+    public GameObject playerMovePoint;
  
     // Current wave number.
     public int waveNumber = 0;
@@ -119,31 +122,57 @@ public class WaveManager : MonoBehaviour
                 dm.StartDialogue(currWave.StartDialogue);
             }
 
-            for (int i = 0; i < enemyCount; i++) {
-                
-                // Choose random spawn point
-                Transform spawnPoint = spawnPoints[i % 5];
-                GameObject prefabToSpawn = null;
+            if (waveNumber == waveArray.Length) {
+                for (int i = 0; i < enemyCount; i++) {
+                    Transform spawnPoint = spawnPoints[5+i];
+                    GameObject prefabToSpawn = null;
 
-                EnemySettings currEnemy = currWave.enemies[i];
+                    EnemySettings currEnemy = currWave.enemies[i];
 
-                // Instantiate the enemy
-                prefabToSpawn = enemiesTypes[currEnemy.typeInd];
-                GameObject enemyInstance = Instantiate(prefabToSpawn, spawnPoint.position, spawnPoint.rotation);
+                    // Instantiate the enemy
+                    prefabToSpawn = enemiesTypes[currEnemy.typeInd];
+                    GameObject enemyInstance = Instantiate(prefabToSpawn, spawnPoint.position, spawnPoint.rotation);
 
-                //set enemy stats
-                EnemyPathfinder ep = enemyInstance.GetComponent<EnemyPathfinder>();
+                    //set enemy stats
+                    EnemyPathfinder ep = enemyInstance.GetComponent<EnemyPathfinder>();
 
-                ep.maxHealth = currEnemy.health;
+                    ep.maxHealth = currEnemy.health;
 
-                // Possibly mark this enemy to drop a potion
-                if (currEnemy.dropHp)
-                {
-                    if (ep != null)
-                        ep.willDropPotion = true;
+                    // Possibly mark this enemy to drop a potion
+                    if (currEnemy.dropHp)
+                    {
+                        if (ep != null)
+                            ep.willDropPotion = true;
+                    }
+                    yield return new WaitForSeconds(spawnDelay);
                 }
+            } else {
+                for (int i = 0; i < enemyCount; i++) {
+                    
+                    // Choose random spawn point
+                    Transform spawnPoint = spawnPoints[i % 5];
+                    GameObject prefabToSpawn = null;
 
-                yield return new WaitForSeconds(spawnDelay);
+                    EnemySettings currEnemy = currWave.enemies[i];
+
+                    // Instantiate the enemy
+                    prefabToSpawn = enemiesTypes[currEnemy.typeInd];
+                    GameObject enemyInstance = Instantiate(prefabToSpawn, spawnPoint.position, spawnPoint.rotation);
+
+                    //set enemy stats
+                    EnemyPathfinder ep = enemyInstance.GetComponent<EnemyPathfinder>();
+
+                    ep.maxHealth = currEnemy.health;
+
+                    // Possibly mark this enemy to drop a potion
+                    if (currEnemy.dropHp)
+                    {
+                        if (ep != null)
+                            ep.willDropPotion = true;
+                    }
+
+                    yield return new WaitForSeconds(spawnDelay);
+                }
             }
 
             // After Each wave (all enemies dead) ----------------------------------------------------
@@ -183,6 +212,10 @@ public class WaveManager : MonoBehaviour
             // Increment wave
             if (waveNumber < waveArray.Length) {
                 waveNumber++;
+            } else if (waveNumber == waveArray.Length - 1) {
+                playerObj.transform.position = new Vector3(0, 23, 0);
+                playerMovePoint.transform.position = new Vector3(0, 23, 0);
+                Debug.Log("MOVED PLAYER");
             } else {         
                 SceneManager.LoadScene("WinScene");
             }

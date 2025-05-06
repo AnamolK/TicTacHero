@@ -1,11 +1,14 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum EnemyType
 {
     Normal,
     Dragon,
-    SlimeBoss
+    SlimeBoss, 
+    DragonBoss,
+    Claw
 }
 
 public class EnemyPathfinder : MonoBehaviour
@@ -43,6 +46,11 @@ public class EnemyPathfinder : MonoBehaviour
     private int dragonFireTickCount = 0;
     public float dragonTelegraphDuration = 1.5f; // Pause time
     private bool isAttackingDragon = false; // track if the dragon is mid-telegraph
+    private bool movingUp = false;
+    private Vector3 originalSpawn;
+    public GameObject leftClaw;
+    public GameObject rightClaw;
+    public GameObject batMinionPrefab;
 
     // Slimeboss
     [Header("SlimeBoss Settings")]
@@ -62,6 +70,7 @@ public class EnemyPathfinder : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        originalSpawn = transform.position;
 
         // Find player
         playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -113,9 +122,9 @@ public class EnemyPathfinder : MonoBehaviour
             }
             else if (enemyType == EnemyType.Dragon)
             {
-                MoveOneStepTowardPlayer(1);
                 if (!isAttackingDragon)
                 {
+                    MoveOneStepTowardPlayer(1);
                     // Check if we want to do a Fire Attack
                     if (PlayerInDragonRange() && dragonFireTickCount >= dragonFireTickSkip)
                     {
@@ -128,7 +137,6 @@ public class EnemyPathfinder : MonoBehaviour
             }
             else if (enemyType == EnemyType.SlimeBoss)
             {
-
                 if (!isAttackingSlime && tickCounter % spawnTickInterval == 0)
                 {
                     StartCoroutine(slimeSpawnAttack());
@@ -137,13 +145,58 @@ public class EnemyPathfinder : MonoBehaviour
                     movePointObj.tag = "Untagged";
                     gameObject.GetComponent<Collider2D>().enabled = false;
                     MoveOneStepTowardPlayer(2);
-                    StartCoroutine(slimeHitbox());
+                    StartCoroutine(jumpHitbox());
                 }
+            } else if (enemyType == EnemyType.DragonBoss) {
+
+                if (!isAttackingDragon)
+                {
+                    if (movingUp == false) {
+                        movePoint.position = gameObject.transform.position + new Vector3(0, -1, 0);
+                    } else {
+                        movePoint.position = gameObject.transform.position + new Vector3(0, 1, 0);
+                    }
+
+                    if (gameObject.transform.position.y >= originalSpawn.y && movingUp) {
+                        movingUp = false;
+                    } else if (gameObject.transform.position.y <= originalSpawn.y - 2 && movingUp == false) {
+                        movingUp = true;
+                    }
+                    // Check if we want to do a Fire Attack
+                    if (PlayerInDragonRange() && dragonFireTickCount >= dragonFireTickSkip)
+                    {
+                        StartCoroutine(DragonBOSSFireSequence());
+                        dragonFireTickCount = 0;
+                    } else {
+                        dragonFireTickCount++;
+                    }
+                }
+            } else if (enemyType == EnemyType.Claw) {
+
+                if (movingUp == false) {
+                        isAttackingSlime = true;
+                        movePointObj.tag = "Untagged";
+                        gameObject.GetComponent<Collider2D>().enabled = false;
+                        MoveOneStepTowardPlayer(4);
+                        StartCoroutine(jumpHitbox());
+                    } else {
+                        movePoint.position = originalSpawn;
+                        movingUp = false;
+                        Debug.Log("Claw Reset");
+                        if (tickCounter > 16 && tickCounter % spawnTickInterval == 0) {
+                            StartCoroutine(dragonSpawnAttack());
+                        }
+                        
+                    }
+
+                    if (gameObject.transform.position.y <= originalSpawn.y - 1f) {
+                        movingUp = true;
+                    }                    
             }
         }
     }
 
-    private IEnumerator slimeHitbox() {
+    private IEnumerator jumpHitbox() {
         yield return new WaitForSeconds(2.5f);
         movePointObj.tag = "Enemy";
         gameObject.GetComponent<Collider2D>().enabled = true;
@@ -178,7 +231,9 @@ public class EnemyPathfinder : MonoBehaviour
                 } else if (enemyInd == 1) {
                     animTween.MoveDragon(0.4f);
                 } else if (enemyInd == 2) {
-                    animTween.MoveSlimeBoss(2.5f);
+                    animTween.MoveSlimeBoss(2.5f, 4f);
+                }  else if (enemyInd == 4) {
+                    animTween.MoveSlimeBoss(2.5f, 2f);
                 }
             }
         }
@@ -305,6 +360,8 @@ public class EnemyPathfinder : MonoBehaviour
 
             fire.tag = "AOE";
             fire.transform.GetChild(0).gameObject.SetActive(true);
+            AnimationGeneric fireTween = fire.GetComponent<AnimationGeneric>();
+            fireTween.fireHitboxSolverSmall(0.2f);
         }
 
         yield return new WaitForSeconds(moveTickDuration);
@@ -312,6 +369,47 @@ public class EnemyPathfinder : MonoBehaviour
         fire.transform.GetChild(0).gameObject.SetActive(false);
         isAttackingDragon = false;
         
+    }
+
+    private IEnumerator DragonBOSSFireSequence()
+    {
+        isAttackingDragon = true;
+        // Telegraphed wait
+        fire.transform.GetChild(1).gameObject.SetActive(true);
+        yield return new WaitForSeconds(dragonTelegraphDuration);
+
+        fire.tag = "AOE";
+        fire.transform.GetChild(1).gameObject.SetActive(false);
+        fire.transform.GetChild(0).gameObject.SetActive(true);
+        AnimationGeneric fireTween = fire.GetComponent<AnimationGeneric>();
+        fireTween.fireHitboxSolver(0.1f);
+        
+
+        yield return new WaitForSeconds(moveTickDuration);
+        fire.tag = "Untagged";
+        fire.transform.GetChild(0).gameObject.SetActive(false);
+        isAttackingDragon = false;
+        
+    }
+
+    private IEnumerator dragonSpawnAttack()
+    {
+        isAttackingSlime = true;
+
+        //Telegraphing
+        animTween.AttackBatSpawn(0.5f);
+        yield return new WaitForSeconds(2f);
+
+        Vector3 oldPos = movePoint.position;
+  
+        // Spawning the minion
+        Vector3 spawnPos = new Vector3(
+            SnapToGrid(Random.Range(-2, 2) + oldPos.x),
+            SnapToGrid(Random.Range(-2, 0) + oldPos.y),
+            0
+        );
+        Instantiate(batMinionPrefab, spawnPos, Quaternion.identity);
+        isAttackingSlime = false;
     }
 
     // Slimeboss spawn attack
@@ -402,6 +500,13 @@ public class EnemyPathfinder : MonoBehaviour
 
     private void Die()
     {
+        if (enemyType == EnemyType.Dragon) {
+            if (leftClaw != null) {
+                leftClaw.SetActive(false);
+            } else if (rightClaw != null) {
+                rightClaw.SetActive(false);
+            }
+        }
         Debug.Log($"Enemy ({enemyType}) died.");
         StopAllCoroutines();
         this.enabled = false;

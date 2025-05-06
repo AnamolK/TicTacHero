@@ -23,6 +23,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private string[] Warning2After;
     [SerializeField] private string[] SlimeBefore;
     [SerializeField] private string[] SlimeAfter;
+    [SerializeField] private string[] finalWarning;
+    [SerializeField] private string[] finalBefore;
+    [SerializeField] private string[] finalAfter;
     [SerializeField] private string[] dashUnlockDialogue;
     [SerializeField] private string[] stunUnlockDialogue;
     [SerializeField] private string[] aoeUnlockDialogue;
@@ -97,6 +100,12 @@ public class DialogueManager : MonoBehaviour
             currentLines = stunUnlockDialogue; 
         } else if (sequence == 10) { 
             currentLines = aoeUnlockDialogue; 
+        } else if (sequence == 11) { 
+            currentLines = finalWarning; 
+        } else if (sequence == 12) { 
+            currentLines = finalBefore; 
+        } else if (sequence == 13) { 
+            currentLines = finalAfter; 
         }
     }
 

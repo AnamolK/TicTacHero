@@ -18,6 +18,7 @@ public class PlayerMove : MonoBehaviour
     public GameObject imageContainer;
 
     private string mostRecentPress;
+    private string currFacing;
     private bool isHeldHori;
     private bool isHeldVert;
     public float dashDistance = 2f;
@@ -144,19 +145,34 @@ public class PlayerMove : MonoBehaviour
         audioSource.PlayOneShot(selected);
     }
 
+Vector2 DirForDash(string direction) {
+
+        if (direction == "left") {
+
+            return new Vector2(-1, 0);
+
+        } else if (direction == "right") {
+
+            return new Vector2(1, 0);
+
+        } else if (direction == "down") {
+
+            return new Vector2(0, -1);
+
+        } else if (direction == "up") {
+
+            return new Vector2(0, 1);
+        } else {
+            return new Vector2(0, 0);
+        }
+    }
     
     private IEnumerator PerformDash()
     {
         canDash = false;
+        Vector2 dashInput = DirForDash(mostRecentPress);
+;
 
-        // Read input
-        Vector2 dashInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-
-        if (dashInput == Vector2.zero)
-        {
-            // If no input, dash in last move direction (optional fallback)
-            dashInput = transform.right;
-        }
 
         // Calculate target position
         Vector3 targetPos = movePoint.position + (Vector3)(dashInput * dashDistance);

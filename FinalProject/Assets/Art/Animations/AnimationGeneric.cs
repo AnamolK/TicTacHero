@@ -34,7 +34,9 @@ public class AnimationGeneric : MonoBehaviour
     }
 
     public void FadeShadow(float duration, int amount) {
-        shadow.DOFade(amount, duration);
+        if (shadow != null) {
+            shadow.DOFade(amount, duration);
+        }
     }
 
     public void MoveBounce(float duration) {
@@ -51,14 +53,19 @@ public class AnimationGeneric : MonoBehaviour
         });
     }
 
-    public void MoveSlimeBoss(float duration) {
+    public void MoveSlimeBoss(float duration, float amount) {
+
+        if (shadowAsset == null) {
+            return;
+        }
+        
         shadow = shadowAsset.GetComponent<SpriteRenderer>();
         asset.localPosition = Vector3.zero;
         asset.DOLocalMoveY(0, duration*0.02f).OnComplete(() => {
 
             shadow.DOFade(0.8f, duration*0.01f);
             shadow.DOFade(0.3f, duration*0.57f);
-            asset.DOLocalMoveY(4f, duration*0.58f).SetEase(Ease.OutCubic).OnComplete(() => {
+            asset.DOLocalMoveY(amount, duration*0.58f).SetEase(Ease.OutCubic).OnComplete(() => {
                 asset.DOLocalMove(Vector3.zero, duration*0.35f).SetEase(Ease.InCubic).OnComplete(() => {
                     asset.DOShakeScale(duration*0.05f, new Vector3(0, 0.07f, 0), 3, 10, true, ShakeRandomnessMode.Harmonic);
                     resetPosition(0.001f);
@@ -93,6 +100,13 @@ public class AnimationGeneric : MonoBehaviour
         });
     }
 
+    public void AttackBatSpawn(float duration) {
+        asset.localPosition = Vector3.zero;
+        asset.DOShakePosition (duration, 0.3f, 20, 90, false, true, ShakeRandomnessMode.Full).OnComplete(() => {
+            resetPosition(1f);
+        });
+    }
+
     public void DamageTaken(float duration) {
         asset.DOShakePosition (duration, 0.5f, 20, 90, false, true, ShakeRandomnessMode.Full).OnComplete(() => {
             resetPosition(1f);
@@ -116,6 +130,15 @@ public class AnimationGeneric : MonoBehaviour
             asset.DOLocalRotate(new Vector3(0,0,0), duration);
             
         }
+    }
+    public void fireHitboxSolver(float duration) {
+        asset.DOScaleY(0f, 0f);
+        asset.DOScaleY(1f, duration);
+    }
+
+    public void fireHitboxSolverSmall(float duration) {
+        asset.DOScaleX(0f, 0f);
+        asset.DOScaleX(1f, duration);
     }
 
     void OnDestroy() {

@@ -54,6 +54,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void PauseGame()
     {
+        Debug.Log("[Game] PauseGame() called");
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
@@ -61,6 +62,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void ResumeGame()
     {
+        Debug.Log("[Game] ResumeGame() called");
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
@@ -74,6 +76,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void SetVolume(float sliderValue)
     {
+        Debug.Log($"[Audio] Slider changed to {sliderValue}");
         float dB = Mathf.Log10(Mathf.Clamp(sliderValue, 0.0001f, 1f)) * 20f;
         audioMixer.SetFloat("MusicVolume", dB); //  USE THE NAME FROM THE MIXER
     }
